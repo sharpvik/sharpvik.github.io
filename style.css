@@ -1,0 +1,26 @@
+* {
+    margin: 0;
+    padding: 0;
+    outline: none;
+}
+
+section {
+    padding: 10px 0;
+    background-color: white;
+    text-align: center;
+    font-family: monospace;
+    font-weight: 600;
+    font-size: 24px;
+}
+
+input {
+    width: 90px;
+    font-size: 20px;
+    border: none;
+    border-bottom: 2px solid white;
+    transition: 0.2s all;
+}
+input:focus {
+    border-bottom: 2px solid #cd7106;
+    transition: 0.2s all;
+}
