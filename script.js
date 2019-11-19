@@ -17,10 +17,6 @@ function randomHex() {
 }
 
 function setColor() {
-    let color = document.getElementById('hex').value;
-    document.body.style.background = color;
+    document.body.style.background = document.getElementById('hex').value;
 }
 
-(function() {
-    document.getElementById('hex').value = '#ffffff';
-})();
