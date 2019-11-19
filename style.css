@@ -41,8 +41,13 @@ button {
     cursor: pointer;
 }
 
-#demo {
+.demo {
     height: calc(100vh - 50px);
     background: white;
+    cursor: pointer;
+}
+
+.cursor-not-allowed {
+    cursor: not-allowed;
 }
 

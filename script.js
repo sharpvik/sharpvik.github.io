@@ -1,3 +1,6 @@
+/* Shortcut to "querySelector". */
+function $(selector) { return document.querySelector(selector); }
+
 /* 
  * clipboard.js framework (https://clipboardjs.com)
  * Initialize for button #cp.
@@ -5,18 +8,38 @@
 new ClipboardJS('#cp').on('success', function(e) { e.clearSelection(); });
 
 /* Ensure that input's value is always #ffffff on page (re)load. */
-document.getElementById('hex').value = '#ffffff';
+$('#hex').value = '#ffffff';
 
-/* Set background-color of #demo and input's value to a random color when
-   #demo is clicked. */
-document.addEventListener('click', function(e) {
-    if ( !e.target.matches('#demo') ) return;
-    let colour = randomHex();
-    document.getElementById('hex').value = colour;
-    document.getElementById('demo').style.background = colour;
-});
+/* The "rain" interval ids are to be held here. */
+var itrains = null;
 
-/* Return a random hex colour string. */
+/* Set background-color of #demo and input's value to a random color. */
+function changeColor() {
+    let color = randomHex();
+    $('#hex').value = color;
+    $('#demo').style.background = color;
+}
+
+/* 
+ * Toggle rain using "setInterval" and "clearInterval".
+ * The "itrains" variable is set to null when rain is no longer so that it is
+ * apparent whether it rains or not.
+ */
+function toggleRain() {
+    let rain = $('#rain');
+    if (itrains) {
+        clearInterval(itrains);
+        rain.innerHTML = 'Make It Rain!';
+        itrains = null;
+        $('#demo').classList.remove('cursor-not-allowed');
+    } else {
+        itrains = setInterval(changeColor, 300);
+        rain.innerHTML = 'Stop The Rain!';
+        $('#demo').classList.add('cursor-not-allowed');
+    }
+}
+
+/* Return a random hex color string. */
 function randomHex() {
     let hexOut = '#';
     for (let i = 0; i < 6; i++)
@@ -26,7 +49,7 @@ function randomHex() {
 
 /* Set background-color of #demo when user changes input's value. */
 function setColor() {
-    let colour = document.getElementById('hex').value;
-    document.getElementById('demo').style.background = colour;
+    let color = $('#hex').value;
+    $('#demo').style.background = color;
 }
 

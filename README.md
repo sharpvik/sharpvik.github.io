@@ -7,6 +7,10 @@ to get. All in a simple UI that everyone understands!
 
 Tap on the main area below and a random color will be generated for you. Didn't
 like the color? Not a problem! Tap on its hex value and input your own hex code.
+
+Use the *Copy* button to save hex to your computer's clipboard. *Make It Rain*
+to turn your screen into X-mas lights!
+
 With *Hexed* you can try 'em all!
 
 ## How to Run

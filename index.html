@@ -11,8 +11,14 @@
     <section id="topbar">
         <input type="text" name="color" id="hex" onchange="setColor()">
         <button id="cp" data-clipboard-target="#hex">Copy</button>
+        <button id="rain" data-clipboard-target="#hex" onclick="toggleRain()">
+            Make It Rain!
+        </button>
     </section>
-    <section id="demo"></section>
+
+    <section id="demo" class="demo" onclick="if (!itrains) changeColor()">
+    </section>
+
     <script src="clipboard.js/dist/clipboard.min.js"></script>
     <script src="script.js"></script>
 </body>
