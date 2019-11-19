@@ -8,11 +8,12 @@
     <title>Hexed</title>
 </head>
 <body>
-    <section>
-        <label for="color">Hex: </label>
-        <input type="text" name="color" id="hex" onchange="setColor()"
-               value="#ffffff">
+    <section id="topbar">
+        <input type="text" name="color" id="hex" onchange="setColor()">
+        <button id="cp" data-clipboard-target="#hex">Copy</button>
     </section>
+    <section id="demo"></section>
+    <script src="clipboard.js/dist/clipboard.min.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

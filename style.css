@@ -4,8 +4,9 @@
     outline: none;
 }
 
-section {
-    padding: 10px 0;
+#topbar {
+    height: 50px;
+    line-height: 40px;
     background-color: white;
     text-align: center;
     font-family: monospace;
@@ -13,9 +14,14 @@ section {
     font-size: 24px;
 }
 
+label {
+    vertical-align: sub;
+}
+
 input {
     width: 90px;
     font-size: 20px;
+    vertical-align: sub;
     border: none;
     border-bottom: 2px solid white;
     transition: 0.2s all;
@@ -24,3 +30,19 @@ input:focus {
     border-bottom: 2px solid #cd7106;
     transition: 0.2s all;
 }
+
+button {
+    background-color: #cd7106;
+    padding: 8px 13px;
+    border: none;
+    vertical-align: unset;
+    border-radius: 3px;
+    color: white;
+    cursor: pointer;
+}
+
+#demo {
+    height: calc(100vh - 50px);
+    background: white;
+}
+
