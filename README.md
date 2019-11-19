@@ -14,3 +14,7 @@ With *Hexed* you can try 'em all!
 Get yourself a copy of this repo and open *index.html* in your own browser or
 simply go to `sharpvik.github.io` and if you are lucky enough, this utility is
 still up there.
+
+# Dependencies
+
+* [clipboard.js](clipboard.js)
