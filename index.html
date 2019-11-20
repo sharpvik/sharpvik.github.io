@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+          rel="stylesheet">
     <link rel="stylesheet" href="style.css">
     <title>Hexed</title>
 </head>
@@ -15,6 +17,11 @@
             Make It Rain!
         </button>
     </section>
+
+    <div id="hider-container" onclick="toggleTopbar()">
+   <!-- <i id="hider" class="material-icons">arrow_drop_down_circle</i> -->
+        <i id="hider" class="material-icons">cancel</i>
+    </div>
 
     <section id="demo" class="demo" onclick="if (!itrains) changeColor()">
     </section>

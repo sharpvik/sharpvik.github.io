@@ -13,6 +13,9 @@ $('#hex').value = '#ffffff';
 /* The "rain" interval ids are to be held here. */
 var itrains = null;
 
+/* Boolean value to know whether topbar is hidden or not. */
+var topbarHidden = false;
+
 /* Set background-color of #demo and input's value to a random color. */
 function changeColor() {
     let color = randomHex();
@@ -26,16 +29,18 @@ function changeColor() {
  * apparent whether it rains or not.
  */
 function toggleRain() {
-    let rain = $('#rain');
+    let rain = $('#rain'),
+        demo = $('#demo');
+
     if (itrains) {
         clearInterval(itrains);
         rain.innerHTML = 'Make It Rain!';
         itrains = null;
-        $('#demo').classList.remove('cursor-not-allowed');
+        demo.classList.remove('cursor-not-allowed');
     } else {
         itrains = setInterval(changeColor, 300);
         rain.innerHTML = 'Stop The Rain!';
-        $('#demo').classList.add('cursor-not-allowed');
+        demo.classList.add('cursor-not-allowed');
     }
 }
 
@@ -51,5 +56,17 @@ function randomHex() {
 function setColor() {
     let color = $('#hex').value;
     $('#demo').style.background = color;
+}
+
+/* Show/hide topbar so that the color itself takes up the whole screen. */
+function toggleTopbar() {
+    let topbar = $('#topbar'),
+        hider = $('#hider'),
+        topbarHeight = topbar.clientHeight;
+
+    topbar.style.top = (topbarHidden) ? '0px' : -topbarHeight + 'px';
+    topbarHidden = !topbarHidden;
+
+    hider.innerHTML = (topbarHidden) ? 'arrow_drop_down_circle' : 'cancel';
 }
 

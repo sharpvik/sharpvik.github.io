@@ -4,7 +4,15 @@
     outline: none;
 }
 
+body {
+    position: relative;
+}
+
 #topbar {
+    position: fixed;
+    width: 100vw;
+    top: 0px;
+    left: 0;
     height: 50px;
     line-height: 40px;
     background-color: white;
@@ -12,6 +20,7 @@
     font-family: monospace;
     font-weight: 600;
     font-size: 24px;
+    transition: 0.2s top;
 }
 
 label {
@@ -41,8 +50,19 @@ button {
     cursor: pointer;
 }
 
+#hider-container {
+    position: fixed;
+    top: 10px;
+    right: 0px;
+    padding: 0 15px;
+    font-size: 20px;
+    line-height: 40px;
+    color: #666;
+    cursor: pointer;
+}
+
 .demo {
-    height: calc(100vh - 50px);
+    height: 100vh;
     background: white;
     cursor: pointer;
 }
