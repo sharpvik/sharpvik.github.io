@@ -1,32 +1,63 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-          rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-    <title>Hexed</title>
-</head>
-<body>
-    <section id="topbar">
-        <input type="text" name="color" id="hex" onchange="setColor()">
-        <button id="cp" data-clipboard-target="#hex">Copy</button>
-        <button id="rain" data-clipboard-target="#hex" onclick="toggleRain()">
-            Make It Rain!
-        </button>
-    </section>
+<html>
+	<head>
+		<title>What Time Is It?</title>
+		<link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/segment7" type="text/css"/> 
+<style>
+* {
+	margin: 0;
+	padding: 0;
+	outline: none;
+}
 
-    <div id="hider-container" onclick="toggleTopbar()">
-   <!-- <i id="hider" class="material-icons">arrow_drop_down_circle</i> -->
-        <i id="hider" class="material-icons">cancel</i>
-    </div>
+body {
+	background-color: black;
+	height: 100vh;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	text-align: center;
+}
 
-    <section id="demo" class="demo" onclick="if (!itrains) changeColor()">
-    </section>
+h1 {
+	font-size: 150px;
+	font-family: "Segment7Standard";
+	font-weight: normal;
+	font-style: italic;
+	color: #dd2e44;
+	line-height: 320px;
+}
 
-    <script src="clipboard.js/dist/clipboard.min.js"></script>
-    <script src="script.js"></script>
-</body>
+p {
+	color: white;
+	font-family: Verdana, sans-serif;
+}
+
+a {
+	color: #dd2e44;
+	font-weight: 600;
+}
+</style>
+	</head>
+	<body>
+		<h1><span id="h">00</span>:<span id="m">00</span>:<span id="s">00</span></h1>
+		<p>Made with ❤️ by <a href="https://github.com/sharpvik" target="blank">sharpvik</a></p>
+<script>
+var h = document.getElementById("h");
+var m = document.getElementById("m");
+var s = document.getElementById("s");
+var date;
+
+function pad(num, size) { return ('00' + num).substr(-size); }
+
+function update() {
+	date = new Date();
+	h.innerHTML = pad(date.getHours(), 2);
+	m.innerHTML = pad(date.getMinutes(), 2);
+	s.innerHTML = pad(date.getSeconds(), 2);
+}
+
+setInterval(update, 5);
+</script>
+	</body>
 </html>
