@@ -43,10 +43,12 @@ a {
 		<h1><span id="h">00</span>:<span id="m">00</span>:<span id="s">00</span></h1>
 		<p>Made with ❤️ by <a href="https://github.com/sharpvik" target="blank">sharpvik</a></p>
 <script>
-var h = document.getElementById("h");
-var m = document.getElementById("m");
-var s = document.getElementById("s");
-var date;
+function $(id) { return document.getElementById(id); }
+	
+var h = $("h"),
+    m = $("m"),
+    s = $("s"),
+    date = new Date();
 
 function pad(num, size) { return ('00' + num).substr(-size); }
 
