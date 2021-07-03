@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/vsh.css" rel="stylesheet" />
+    <script src="js/vsh.js"></script>
+  </head>
+  <body>
+    <h1>Hey, I'm Viktor!</h1>
+    <h3>This is the command line interface to my ❤️</h3>
+    <div id="vsh"></div>
+    <script>
+      document.onkeydown = e => e.preventDefault()
+      const app = Elm.Main.init({
+        node: document.getElementById("vsh")
+      })
+      app.ports.scroll.subscribe(e =>
+        setTimeout(() => {
+          const area = document.querySelector(".vsh-textarea")
+          area.scrollTop = area.scrollHeight
+        }, 50)
+      )
+    </script>
+  </body>
+</html>

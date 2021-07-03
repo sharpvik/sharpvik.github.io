@@ -1,0 +1,79 @@
+.vsh-window {
+  width: 95%;
+  max-width: 650px;
+  margin: 25px auto;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  -webkit-box-shadow: 0px 7px 17px -4px rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0px 7px 17px -4px rgba(0, 0, 0, 0.75);
+  box-shadow: 0px 7px 17px -4px rgba(0, 0, 0, 0.75);
+}
+
+.vsh-topbar {
+  background-color: #1f222a;
+  width: 100%;
+  display: flex;
+}
+
+.vsh-topbar p {
+  line-height: 45px;
+  font-size: 14px;
+  color: #eee;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  text-align: center;
+  flex-grow: 2;
+}
+
+.vsh-close {
+  width: 20px;
+  height: 20px;
+  border: none;
+  border-radius: 50%;
+  margin: 12.5px;
+  background-color: #ff4848;
+  cursor: pointer;
+}
+
+.vsh-textarea {
+  display: block;
+  border: none;
+  overflow: hidden;
+  scroll-behavior: smooth;
+  font-family: monospace;
+  font-weight: 600;
+  background-color: #2a2f3a;
+  color: #55aaff;
+  height: 400px;
+  padding: 5px;
+  font-size: 16px;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+
+.vsh-text {
+  color: inherit;
+  font-size: inherit;
+  font-family: inherit;
+}
+
+.vsh-yellow {
+  color: #ffaa00;
+}
+
+.vsh-magenta {
+  color: #ff007f;
+}
+
+.vsh-green {
+  color: #02f77d;
+}
+
+.vsh-caret {
+  display: inline-block;
+  width: 8px;
+  height: 17px;
+  background-color: #55aaff;
+  vertical-align: bottom;
+}
