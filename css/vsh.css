@@ -58,6 +58,12 @@
   font-family: inherit;
 }
 
+.vsh-textarea a {
+  color: #02f77d;
+  font-size: inherit;
+  font-family: inherit;
+}
+
 .vsh-yellow {
   color: #ffaa00;
 }

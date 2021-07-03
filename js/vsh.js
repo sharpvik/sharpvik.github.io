@@ -4355,6 +4355,43 @@ function _Browser_load(url)
 		}
 	}));
 }
+
+
+
+var _Bitwise_and = F2(function(a, b)
+{
+	return a & b;
+});
+
+var _Bitwise_or = F2(function(a, b)
+{
+	return a | b;
+});
+
+var _Bitwise_xor = F2(function(a, b)
+{
+	return a ^ b;
+});
+
+function _Bitwise_complement(a)
+{
+	return ~a;
+};
+
+var _Bitwise_shiftLeftBy = F2(function(offset, a)
+{
+	return a << offset;
+});
+
+var _Bitwise_shiftRightBy = F2(function(offset, a)
+{
+	return a >> offset;
+});
+
+var _Bitwise_shiftRightZfBy = F2(function(offset, a)
+{
+	return a >>> offset;
+});
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
 var $elm$core$Basics$LT = 0;
@@ -5138,6 +5175,8 @@ var $elm$core$Task$perform = F2(
 			A2($elm$core$Task$map, toMessage, task));
 	});
 var $elm$browser$Browser$element = _Browser_element;
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -5148,9 +5187,7 @@ var $elm$html$Html$Attributes$stringProperty = F2(
 	});
 var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
 var $elm$html$Html$span = _VirtualDom_node('span');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Main$vshText = F2(
+var $author$project$Vsh$text = F2(
 	function (classes, message) {
 		return A2(
 			$elm$html$Html$span,
@@ -5170,31 +5207,41 @@ var $author$project$Main$vshText = F2(
 var $author$project$Main$prompt = _List_fromArray(
 	[
 		A2(
-		$author$project$Main$vshText,
+		$author$project$Vsh$text,
 		_List_fromArray(
 			['vsh-yellow']),
-		'\n\nguest'),
-		A2($author$project$Main$vshText, _List_Nil, ' at '),
+		'guest'),
+		$elm$html$Html$text(' at '),
 		A2(
-		$author$project$Main$vshText,
+		$author$project$Vsh$text,
 		_List_fromArray(
 			['vsh-magenta']),
 		'sharpvik'),
-		A2($author$project$Main$vshText, _List_Nil, '\n❯ ')
+		$elm$html$Html$text('\n❯ ')
 	]);
-var $author$project$Main$greeting = _Utils_ap(
-	_List_fromArray(
-		[
-			$elm$html$Html$text('vsh v0.1.0 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>\n'),
-			$elm$html$Html$text('Enter '),
-			A2(
-			$author$project$Main$vshText,
+var $author$project$Command$version = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
 			_List_fromArray(
-				['vsh-green']),
-			'help'),
-			$elm$html$Html$text(' to see available commands!')
-		]),
-	$author$project$Main$prompt);
+				[
+					$elm$html$Html$text('vsh v0.1.0 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
+				]));
+	});
+var $author$project$Main$greeting = _Utils_ap(
+	A2($author$project$Command$version, 'version', _List_Nil),
+	_Utils_ap(
+		_List_fromArray(
+			[
+				$elm$html$Html$text('\nEnter '),
+				A2(
+				$author$project$Vsh$text,
+				_List_fromArray(
+					['vsh-green']),
+				'help'),
+				$elm$html$Html$text(' to see available commands!\n\n')
+			]),
+		$author$project$Main$prompt));
 var $author$project$Main$initModel = {v: '', F: $author$project$Main$greeting};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -5657,24 +5704,291 @@ var $author$project$Main$Model = F2(
 	function (display, command) {
 		return {v: command, F: display};
 	});
-var $author$project$Main$commandHelp = 'Available commands:\n\n    whoami  -- a bit about myself\n    touch   -- ways to get in touch (my contact info)\n    job     -- hire me if you\'re really impressed\n\n    help    -- display this message again';
-var $author$project$Main$commandJob = 'Before you offer me a job, I\'d like to tell you a few things:\n\n    1. I am a uni student; during my term time, I can only work 20hr./week\n    2. Nevertheless, full-time work is possible during the term breaks\n    3. I specialise in cloud services and web development, but I\'m open to\n       interesting offers\n       \nUse the \'touch\' command to get in touch.';
-var $author$project$Main$commandTouch = 'Ways to get in touch:\n    \n    email:      sharp.vik@gmail.com\n    github:     https://github.com/sharpvik\n    linkedin:   https://www.linkedin.com/in/sharpvik';
-var $author$project$Main$commandWhoAmI = 'Hey, my name is Viktor! \nI study Computer Science in the University of Southampton.\n\nAt work, I currently specialise in high-throughput microservices. I build them\nwith Go and Python. However, I also enjoy playing around with Haskell, Elm,\nVue.js, and Rust.\n\nIn my spare time, I dabble in compiler design and implementation. I love\ncreating new programming languages! Given a chance, I\'d like to do some\nprofessional research into deterministic garbage collection within pure\nfunctional languages.';
-var $author$project$Main$executeCommand = function (command) {
+var $author$project$Command$clear = F2(
+	function (_v0, _v1) {
+		return _List_Nil;
+	});
+var $author$project$Command$exit = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Shutting down...')
+				]));
+	});
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
+var $elm$core$Bitwise$and = _Bitwise_and;
+var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
+var $elm$core$String$repeatHelp = F3(
+	function (n, chunk, result) {
+		return (n <= 0) ? result : A3(
+			$elm$core$String$repeatHelp,
+			n >> 1,
+			_Utils_ap(chunk, chunk),
+			(!(n & 1)) ? result : _Utils_ap(result, chunk));
+	});
+var $elm$core$String$repeat = F2(
+	function (n, chunk) {
+		return A3($elm$core$String$repeatHelp, n, chunk, '');
+	});
+var $elm$core$String$padRight = F3(
+	function (n, _char, string) {
+		return _Utils_ap(
+			string,
+			A2(
+				$elm$core$String$repeat,
+				n - $elm$core$String$length(string),
+				$elm$core$String$fromChar(_char)));
+	});
+var $author$project$Command$help = F2(
+	function (_v0, display) {
+		var entry = F2(
+			function (command, description) {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('\n    '),
+						A2(
+						$author$project$Vsh$text,
+						_List_fromArray(
+							['vsh-green']),
+						A3($elm$core$String$padRight, 8, ' ', command)),
+						$elm$html$Html$text('-- ' + description)
+					]);
+			});
+		return _Utils_ap(
+			display,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Available commands:\n')
+					]),
+				_Utils_ap(
+					A2(entry, 'whoami', 'a bit about myself'),
+					_Utils_ap(
+						A2(entry, 'top', 'my top skills'),
+						_Utils_ap(
+							A2(entry, 'jobs', 'hire me if you\'re really impressed'),
+							_Utils_ap(
+								A2(entry, 'touch', 'ways to get in touch'),
+								_Utils_ap(
+									_List_fromArray(
+										[
+											$elm$html$Html$text('\n')
+										]),
+									_Utils_ap(
+										A2(entry, 'help', 'display this message again'),
+										_Utils_ap(
+											A2(entry, 'version', 'display vsh version'),
+											A2(entry, 'clear', 'clear screen'))))))))));
+	});
+var $author$project$Command$jobs = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Before you offer me a job, I\'d like to tell you a few things:\n\n    1. I specialise in cloud services and web development, but I\'m open to\n       interesting offers!\n    2. I am a uni student; during my term time, I can only work 20 hr./week.\n    3. Nevertheless, full-time work is possible during the term breaks.\n       \nUse the '),
+					A2(
+					$author$project$Vsh$text,
+					_List_fromArray(
+						['vsh-green']),
+					'touch'),
+					$elm$html$Html$text(' command to get in touch.')
+				]));
+	});
+var $elm$core$Basics$min = F2(
+	function (x, y) {
+		return (_Utils_cmp(x, y) < 0) ? x : y;
+	});
+var $elm$core$List$repeatHelp = F3(
+	function (result, n, value) {
+		repeatHelp:
+		while (true) {
+			if (n <= 0) {
+				return result;
+			} else {
+				var $temp$result = A2($elm$core$List$cons, value, result),
+					$temp$n = n - 1,
+					$temp$value = value;
+				result = $temp$result;
+				n = $temp$n;
+				value = $temp$value;
+				continue repeatHelp;
+			}
+		}
+	});
+var $elm$core$List$repeat = F2(
+	function (n, value) {
+		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
+	});
+var $author$project$Command$top = F2(
+	function (_v0, display) {
+		var bars = F2(
+			function (m, n) {
+				return A2($elm$core$Basics$min, m, n);
+			});
+		var coloredLevel = F3(
+			function (color, m, n) {
+				return A2(
+					$author$project$Vsh$text,
+					_List_fromArray(
+						['vsh-' + color]),
+					A2(
+						$elm$core$String$join,
+						'',
+						A2(
+							$elm$core$List$repeat,
+							A2(bars, n, m),
+							'|')));
+			});
+		var elementary = A2(coloredLevel, 'green', 12);
+		var intermediate = function (n20) {
+			return A3(coloredLevel, 'yellow', 5, n20 - 12);
+		};
+		var advanced = function (n20) {
+			return A3(coloredLevel, 'magenta', 3, n20 - 17);
+		};
+		var level = function (n) {
+			var n20 = A2($elm$core$Basics$min, n, 20);
+			var offset = A2(
+				$elm$core$String$join,
+				'',
+				A2($elm$core$List$repeat, 20 - n20, ' '));
+			return _List_fromArray(
+				[
+					elementary(n20),
+					intermediate(n20),
+					advanced(n20),
+					$elm$html$Html$text(offset)
+				]);
+		};
+		var skill = F2(
+			function (name, lvl) {
+				return A2(
+					$elm$core$List$cons,
+					$elm$html$Html$text(
+						'\n    ' + (A3($elm$core$String$padRight, 8, ' ', name) + '[')),
+					_Utils_ap(
+						level(lvl),
+						_List_fromArray(
+							[
+								$elm$html$Html$text(']')
+							])));
+			});
+		return _Utils_ap(
+			display,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$text('My top skills:\n')
+					]),
+				_Utils_ap(
+					A2(skill, 'Go', 20),
+					_Utils_ap(
+						A2(skill, 'Python', 18),
+						_Utils_ap(
+							A2(skill, 'Docker', 18),
+							_Utils_ap(
+								A2(skill, 'Vue.js', 16),
+								_Utils_ap(
+									A2(skill, 'Haskell', 12),
+									A2(skill, 'Elm', 9))))))));
+	});
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $author$project$Command$touch = F2(
+	function (_v0, display) {
+		var linkWithTheSameText = function (url) {
+			return A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href(url)
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(url)
+					]));
+		};
+		var entry = F2(
+			function (description, link) {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('\n    '),
+						$elm$html$Html$text(
+						A3($elm$core$String$padRight, 11, ' ', description + ':')),
+						link
+					]);
+			});
+		return _Utils_ap(
+			display,
+			_Utils_ap(
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Ways to get in touch:\n')
+					]),
+				_Utils_ap(
+					A2(
+						entry,
+						'email',
+						A2(
+							$elm$html$Html$a,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$href('mailto:sharp.vik@gmail.com')
+								]),
+							_List_fromArray(
+								[
+									$elm$html$Html$text('sharp.vik@gmail.com')
+								]))),
+					_Utils_ap(
+						A2(
+							entry,
+							'github',
+							linkWithTheSameText('https://github.com/sharpvik')),
+						A2(
+							entry,
+							'linkedin',
+							linkWithTheSameText('https://www.linkedin.com/in/sharpvik'))))));
+	});
+var $author$project$Command$whoami = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('Hey, my name is Viktor! \nI study Computer Science in the University of Southampton.\n\nAt work, I currently specialise in high-throughput microservices. I build them\nwith Go and Python. However, I also enjoy playing around with Haskell, Elm,\nVue.js, and Rust.\n\nIn my spare time, I dabble in compiler design and implementation. I love\ncreating new programming languages! Given a chance, I\'d like to do some\nprofessional research into deterministic garbage collection within pure\nfunctional languages.')
+				]));
+	});
+var $author$project$Command$eval = function (command) {
 	switch (command) {
 		case 'whoami':
-			return $author$project$Main$commandWhoAmI;
+			return $elm$core$Maybe$Just($author$project$Command$whoami);
+		case 'top':
+			return $elm$core$Maybe$Just($author$project$Command$top);
+		case 'jobs':
+			return $elm$core$Maybe$Just($author$project$Command$jobs);
 		case 'touch':
-			return $author$project$Main$commandTouch;
-		case 'job':
-			return $author$project$Main$commandJob;
+			return $elm$core$Maybe$Just($author$project$Command$touch);
 		case 'help':
-			return $author$project$Main$commandHelp;
+			return $elm$core$Maybe$Just($author$project$Command$help);
+		case 'version':
+			return $elm$core$Maybe$Just($author$project$Command$version);
+		case 'clear':
+			return $elm$core$Maybe$Just($author$project$Command$clear);
 		case 'exit':
-			return 'Shutting down...';
+			return $elm$core$Maybe$Just($author$project$Command$exit);
 		default:
-			return 'unknown command: \'' + (command + '\'');
+			return $elm$core$Maybe$Nothing;
 	}
 };
 var $elm$core$List$head = function (list) {
@@ -5687,31 +6001,64 @@ var $elm$core$List$head = function (list) {
 	}
 };
 var $elm$core$String$words = _String_words;
-var $author$project$Main$updateOnCommand = F2(
-	function (model, command) {
-		var output = A2(
-			$author$project$Main$vshText,
-			_List_Nil,
-			function () {
-				var _v0 = $elm$core$List$head(
-					$elm$core$String$words(command));
-				if (_v0.$ === 1) {
-					return 'weird command: \'' + (command + '\'');
-				} else {
-					var cmd = _v0.a;
-					return $author$project$Main$executeCommand(cmd);
-				}
-			}());
-		var display = _Utils_ap(
-			model.F,
-			_Utils_ap(
+var $author$project$Command$exec = F2(
+	function (command, display) {
+		var wrongCommand = F2(
+			function (label, string) {
+				return $elm$html$Html$text(label + (' command: \'' + (string + '\'')));
+			});
+		var maybeCommand = $elm$core$List$head(
+			$elm$core$String$words(command));
+		if (maybeCommand.$ === 1) {
+			return _Utils_ap(
+				display,
 				_List_fromArray(
 					[
-						A2($author$project$Main$vshText, _List_Nil, command + '\n'),
-						output
-					]),
-				$author$project$Main$prompt));
-		return A2($author$project$Main$Model, display, '');
+						A2(wrongCommand, 'weird', command)
+					]));
+		} else {
+			var cmd = maybeCommand.a;
+			var _v1 = $author$project$Command$eval(cmd);
+			if (_v1.$ === 1) {
+				return _Utils_ap(
+					display,
+					_List_fromArray(
+						[
+							A2(wrongCommand, 'unknown', command)
+						]));
+			} else {
+				var c = _v1.a;
+				return A2(c, command, display);
+			}
+		}
+	});
+var $elm$core$List$isEmpty = function (xs) {
+	if (!xs.b) {
+		return true;
+	} else {
+		return false;
+	}
+};
+var $author$project$Main$updateOnCommand = F2(
+	function (model, command) {
+		var display = A2(
+			$author$project$Command$exec,
+			command,
+			_Utils_ap(
+				model.F,
+				_List_fromArray(
+					[
+						$elm$html$Html$text(command + '\n')
+					])));
+		var promptWithOffset = A2(
+			$elm$core$List$cons,
+			$elm$html$Html$text(
+				$elm$core$List$isEmpty(display) ? '' : '\n\n'),
+			$author$project$Main$prompt);
+		return A2(
+			$author$project$Main$Model,
+			_Utils_ap(display, promptWithOffset),
+			'');
 	});
 var $author$project$Main$updateOnKeydown = F3(
 	function (msg, model, command) {
@@ -5835,7 +6182,7 @@ var $author$project$Main$view = function (model) {
 			model.F,
 			_List_fromArray(
 				[
-					A2($author$project$Main$vshText, _List_Nil, model.v)
+					$elm$html$Html$text(model.v)
 				])));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
