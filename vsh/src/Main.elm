@@ -2,10 +2,12 @@ port module Main exposing (..)
 
 import Browser
 import Browser.Events as Events
+import Command
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as Decode
+import Vsh
 
 
 
@@ -74,28 +76,21 @@ initModel =
 
 greeting : List (Html Msg)
 greeting =
-    [ text "vsh v0.1.0 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>\n"
-    , text "Enter "
-    , vshText [ "vsh-green" ] "help"
-    , text " to see available commands!"
-    ]
+    Command.version "version" []
+        ++ [ text "\nEnter "
+           , Vsh.text [ "vsh-green" ] "help"
+           , text " to see available commands!\n\n"
+           ]
         ++ prompt
 
 
 prompt : List (Html Msg)
 prompt =
-    [ vshText [ "vsh-yellow" ] "\n\nguest"
-    , vshText [] " at "
-    , vshText [ "vsh-magenta" ] "sharpvik"
-    , vshText [] "\n❯ "
+    [ Vsh.text [ "vsh-yellow" ] "guest"
+    , text " at "
+    , Vsh.text [ "vsh-magenta" ] "sharpvik"
+    , text "\n❯ "
     ]
-
-
-vshText : List String -> String -> Html Msg
-vshText classes message =
-    span
-        [ class <| String.join " " <| "vsh-text" :: classes ]
-        [ text message ]
 
 
 
@@ -104,7 +99,7 @@ vshText classes message =
 
 view : Model -> Html Msg
 view model =
-    vshDisplay <| model.display ++ [ vshText [] model.command ]
+    vshDisplay <| model.display ++ [ text model.command ]
 
 
 vshDisplay : List (Html Msg) -> Html Msg
@@ -164,88 +159,22 @@ updateOnKeydown msg model command =
 updateOnCommand : Model -> String -> Model
 updateOnCommand model command =
     let
-        output =
-            vshText [] <|
-                case List.head <| String.words command of
-                    Nothing ->
-                        "weird command: '" ++ command ++ "'"
-
-                    Just cmd ->
-                        executeCommand cmd
-
         display =
-            model.display ++ [ vshText [] (command ++ "\n"), output ] ++ prompt
+            Command.exec command <|
+                model.display
+                    ++ [ text (command ++ "\n") ]
+
+        promptWithOffset =
+            (text <|
+                if List.isEmpty display then
+                    ""
+
+                else
+                    "\n\n"
+            )
+                :: prompt
     in
-    Model display ""
-
-
-executeCommand : String -> String
-executeCommand command =
-    case command of
-        "whoami" ->
-            commandWhoAmI
-
-        "touch" ->
-            commandTouch
-
-        "job" ->
-            commandJob
-
-        "help" ->
-            commandHelp
-
-        "exit" ->
-            "Shutting down..."
-
-        _ ->
-            "unknown command: '" ++ command ++ "'"
-
-
-commandWhoAmI : String
-commandWhoAmI =
-    """Hey, my name is Viktor! 
-I study Computer Science in the University of Southampton.
-
-At work, I currently specialise in high-throughput microservices. I build them
-with Go and Python. However, I also enjoy playing around with Haskell, Elm,
-Vue.js, and Rust.
-
-In my spare time, I dabble in compiler design and implementation. I love
-creating new programming languages! Given a chance, I'd like to do some
-professional research into deterministic garbage collection within pure
-functional languages."""
-
-
-commandTouch : String
-commandTouch =
-    """Ways to get in touch:
-    
-    email:      sharp.vik@gmail.com
-    github:     https://github.com/sharpvik
-    linkedin:   https://www.linkedin.com/in/sharpvik"""
-
-
-commandJob : String
-commandJob =
-    """Before you offer me a job, I'd like to tell you a few things:
-
-    1. I am a uni student; during my term time, I can only work 20hr./week
-    2. Nevertheless, full-time work is possible during the term breaks
-    3. I specialise in cloud services and web development, but I'm open to
-       interesting offers
-       
-Use the 'touch' command to get in touch."""
-
-
-commandHelp : String
-commandHelp =
-    """Available commands:
-
-    whoami  -- a bit about myself
-    touch   -- ways to get in touch (my contact info)
-    job     -- hire me if you're really impressed
-
-    help    -- display this message again"""
+    Model (display ++ promptWithOffset) ""
 
 
 
@@ -281,6 +210,10 @@ toKeyDownMsg string =
 
                 else
                     Ignore
+
+
+
+-- PORTS
 
 
 port scroll : () -> Cmd msg
