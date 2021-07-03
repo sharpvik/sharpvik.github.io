@@ -69,11 +69,3 @@
 .vsh-green {
   color: #02f77d;
 }
-
-.vsh-caret {
-  display: inline-block;
-  width: 8px;
-  height: 17px;
-  background-color: #55aaff;
-  vertical-align: bottom;
-}

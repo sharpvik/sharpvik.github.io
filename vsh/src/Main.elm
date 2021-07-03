@@ -125,7 +125,7 @@ vshDisplay display =
             ]
         , pre
             [ class "vsh-textarea vsh-width-fill" ]
-            (display ++ [ div [ id "vsh-caret", class "vsh-caret" ] [] ])
+            (display ++ [ text "█" ])
         ]
 
 

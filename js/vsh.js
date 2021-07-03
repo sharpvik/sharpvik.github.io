@@ -5763,7 +5763,6 @@ var $author$project$Main$Exit = {$: 1};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$header = _VirtualDom_node('header');
-var $elm$html$Html$Attributes$id = $elm$html$Html$Attributes$stringProperty('id');
 var $elm$virtual_dom$VirtualDom$Normal = function (a) {
 	return {$: 0, a: a};
 };
@@ -5826,14 +5825,7 @@ var $author$project$Main$vshDisplay = function (display) {
 					display,
 					_List_fromArray(
 						[
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$id('vsh-caret'),
-									$elm$html$Html$Attributes$class('vsh-caret')
-								]),
-							_List_Nil)
+							$elm$html$Html$text('█')
 						])))
 			]));
 };
