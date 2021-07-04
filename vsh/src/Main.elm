@@ -1,5 +1,6 @@
 port module Main exposing (..)
 
+import Array exposing (Array)
 import Browser
 import Browser.Events as Events
 import Command
@@ -39,6 +40,8 @@ type alias Flags =
 type alias Model =
     { display : List (Html Msg)
     , command : String
+    , history : Array String
+    , histptr : Int
     }
 
 
@@ -55,6 +58,8 @@ type KeyDownType
     = Character String
     | Enter
     | Backspace
+    | ArrowUp
+    | ArrowDown
     | Ignore
 
 
@@ -71,6 +76,8 @@ initModel : Model
 initModel =
     { display = greeting
     , command = ""
+    , history = Array.empty
+    , histptr = 0
     }
 
 
@@ -149,11 +156,52 @@ updateOnKeydown msg model command =
             , Cmd.none
             )
 
+        KeyDown ArrowUp ->
+            ( historyLookup prevHistoryPointer model, Cmd.none )
+
+        KeyDown ArrowDown ->
+            ( historyLookup nextHistoryPointer model, Cmd.none )
+
         KeyDown Ignore ->
             ( model, Cmd.none )
 
         Exit ->
             ( updateOnCommand model "exit", Cmd.batch [ exit (), scroll () ] )
+
+
+historyLookup : (Model -> Int) -> Model -> Model
+historyLookup nextptr model =
+    let
+        ptr =
+            nextptr model
+    in
+    if Array.isEmpty model.history then
+        model
+
+    else
+        { model
+            | histptr = ptr
+            , command =
+                Maybe.withDefault "" <| Array.get ptr model.history
+        }
+
+
+nextHistoryPointer : Model -> Int
+nextHistoryPointer model =
+    if Array.length model.history > model.histptr + 1 then
+        model.histptr + 1
+
+    else
+        0
+
+
+prevHistoryPointer : Model -> Int
+prevHistoryPointer model =
+    if model.histptr == 0 then
+        Array.length model.history - 1
+
+    else
+        model.histptr - 1
 
 
 updateOnCommand : Model -> String -> Model
@@ -173,8 +221,15 @@ updateOnCommand model command =
                     "\n\n"
             )
                 :: prompt
+
+        history =
+            Array.push command model.history
     in
-    Model (display ++ promptWithOffset) ""
+    { display = display ++ promptWithOffset
+    , command = ""
+    , history = history
+    , histptr = Array.length history
+    }
 
 
 
@@ -200,6 +255,12 @@ toKeyDownMsg string =
 
             "Backspace" ->
                 Backspace
+
+            "ArrowUp" ->
+                ArrowUp
+
+            "ArrowDown" ->
+                ArrowDown
 
             "Tab" ->
                 Character "  "
