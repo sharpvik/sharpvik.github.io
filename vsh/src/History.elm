@@ -7,6 +7,19 @@ type alias History =
     { history : Array String, ptr : Int }
 
 
+empty : History
+empty =
+    History Array.empty 0
+
+
+update : String -> History -> History
+update command history =
+    { history
+        | history = Array.push command history.history
+        , ptr = Array.length history.history + 1
+    }
+
+
 lookup : (History -> Int) -> History -> Maybe ( String, History )
 lookup getptr history =
     let

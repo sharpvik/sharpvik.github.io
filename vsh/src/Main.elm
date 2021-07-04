@@ -1,9 +1,9 @@
 port module Main exposing (..)
 
-import Array exposing (Array)
 import Browser
 import Browser.Events as Events
 import Command
+import History exposing (History)
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -40,8 +40,7 @@ type alias Flags =
 type alias Model =
     { display : List (Html Msg)
     , command : String
-    , history : Array String
-    , histptr : Int
+    , history : History
     }
 
 
@@ -76,8 +75,7 @@ initModel : Model
 initModel =
     { display = greeting
     , command = ""
-    , history = Array.empty
-    , histptr = 0
+    , history = History.empty
     }
 
 
@@ -85,7 +83,7 @@ greeting : List (Html Msg)
 greeting =
     Command.version "version" []
         ++ [ text "\nEnter "
-           , Vsh.text [ "vsh-green" ] "help"
+           , Vsh.ctext Vsh.Green "help"
            , text " to see available commands!\n\n"
            ]
         ++ prompt
@@ -93,9 +91,9 @@ greeting =
 
 prompt : List (Html Msg)
 prompt =
-    [ Vsh.text [ "vsh-yellow" ] "guest"
+    [ Vsh.ctext Vsh.Yellow "guest"
     , text " at "
-    , Vsh.text [ "vsh-magenta" ] "sharpvik"
+    , Vsh.ctext Vsh.Magenta "sharpvik"
     , text "\n❯ "
     ]
 
@@ -157,10 +155,10 @@ updateOnKeydown msg model command =
             )
 
         KeyDown ArrowUp ->
-            ( historyLookup prevHistoryPointer model, Cmd.none )
+            ( maybeLookupHistory History.prev model, Cmd.none )
 
         KeyDown ArrowDown ->
-            ( historyLookup nextHistoryPointer model, Cmd.none )
+            ( maybeLookupHistory History.next model, Cmd.none )
 
         KeyDown Ignore ->
             ( model, Cmd.none )
@@ -169,39 +167,14 @@ updateOnKeydown msg model command =
             ( updateOnCommand model "exit", Cmd.batch [ exit (), scroll () ] )
 
 
-historyLookup : (Model -> Int) -> Model -> Model
-historyLookup nextptr model =
-    let
-        ptr =
-            nextptr model
-    in
-    if Array.isEmpty model.history then
-        model
+maybeLookupHistory : (History -> Int) -> Model -> Model
+maybeLookupHistory getptr model =
+    case History.lookup getptr model.history of
+        Nothing ->
+            model
 
-    else
-        { model
-            | histptr = ptr
-            , command =
-                Maybe.withDefault "" <| Array.get ptr model.history
-        }
-
-
-nextHistoryPointer : Model -> Int
-nextHistoryPointer model =
-    if Array.length model.history > model.histptr + 1 then
-        model.histptr + 1
-
-    else
-        0
-
-
-prevHistoryPointer : Model -> Int
-prevHistoryPointer model =
-    if model.histptr == 0 then
-        Array.length model.history - 1
-
-    else
-        model.histptr - 1
+        Just ( command, history ) ->
+            { model | command = command, history = history }
 
 
 updateOnCommand : Model -> String -> Model
@@ -221,14 +194,10 @@ updateOnCommand model command =
                     "\n\n"
             )
                 :: prompt
-
-        history =
-            Array.push command model.history
     in
     { display = display ++ promptWithOffset
     , command = ""
-    , history = history
-    , histptr = Array.length history
+    , history = History.update command model.history
     }
 
 

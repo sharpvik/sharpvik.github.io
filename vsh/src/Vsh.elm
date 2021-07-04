@@ -4,8 +4,29 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 
 
-text : List String -> String -> Html msg
-text classes message =
+ctext : Color -> String -> Html msg
+ctext color message =
     span
-        [ class <| String.join " " <| "vsh-text" :: classes ]
+        [ class <| "vsh-text " ++ colorToClass color ]
         [ Html.text message ]
+
+
+type Color
+    = Yellow
+    | Green
+    | Magenta
+
+
+colorToClass : Color -> String
+colorToClass c =
+    "vsh-"
+        ++ (case c of
+                Yellow ->
+                    "yellow"
+
+                Green ->
+                    "green"
+
+                Magenta ->
+                    "magenta"
+           )

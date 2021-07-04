@@ -16,16 +16,16 @@ exec command display =
             List.head <| String.words command
 
         wrongCommand label string =
-            text <| label ++ " command: '" ++ string ++ "'"
+            [ text <| label ++ " command: ", Vsh.ctext Vsh.Magenta string ]
     in
     case maybeCommand of
         Nothing ->
-            display ++ [ wrongCommand "weird" command ]
+            display ++ wrongCommand "Weird" command
 
         Just cmd ->
             case eval cmd of
                 Nothing ->
-                    display ++ [ wrongCommand "unknown" command ]
+                    display ++ wrongCommand "Unknown" command
 
                 Just c ->
                     c command display
@@ -91,18 +91,18 @@ top _ display =
             min m n
 
         coloredLevel color m n =
-            Vsh.text [ "vsh-" ++ color ] <|
+            Vsh.ctext color <|
                 String.join "" <|
                     List.repeat (bars n m) "|"
 
         elementary =
-            coloredLevel "green" 12
+            coloredLevel Vsh.Green 12
 
         intermediate n20 =
-            coloredLevel "yellow" 5 (n20 - 12)
+            coloredLevel Vsh.Yellow 5 (n20 - 12)
 
         advanced n20 =
-            coloredLevel "magenta" 3 (n20 - 17)
+            coloredLevel Vsh.Magenta 3 (n20 - 17)
 
         level n =
             let
@@ -117,7 +117,7 @@ top _ display =
         skill name lvl =
             (text <|
                 "\n    "
-                    ++ String.padRight 8 ' ' name
+                    ++ String.padRight 11 ' ' name
                     ++ "["
             )
                 :: level lvl
@@ -126,9 +126,10 @@ top _ display =
     display
         ++ [ text "My top skills:\n" ]
         ++ skill "Go" 20
-        ++ skill "Python" 18
+        ++ skill "Python" 19
         ++ skill "Docker" 18
         ++ skill "Vue.js" 16
+        ++ skill "JavaScript" 14
         ++ skill "Haskell" 12
         ++ skill "Elm" 9
 
@@ -155,7 +156,7 @@ jobs _ display =
     3. Nevertheless, full-time work is possible during the term breaks.
        
 Use the """
-           , Vsh.text [ "vsh-green" ] "touch"
+           , Vsh.ctext Vsh.Green "touch"
            , text " command to get in touch."
            ]
 
@@ -187,18 +188,22 @@ help _ display =
     let
         entry command description =
             [ text "\n    "
-            , Vsh.text [ "vsh-green" ] <| String.padRight 8 ' ' command
+            , Vsh.ctext Vsh.Green <| String.padRight 8 ' ' command
             , text <| "-- " ++ description
             ]
     in
     display
-        ++ [ text "Available commands:\n" ]
+        ++ [ text """vsh is a terminal emulator that helps you learn about me.
+Use up and down arrow keys to browse command history (unless it's empty).
+And most importantly -- have fun!
+
+Available commands:
+""" ]
         ++ entry "whoami" "a bit about myself"
         ++ entry "top" "my top skills"
         ++ entry "cv" "my curriculum vitae"
         ++ entry "jobs" "hire me if you're really impressed"
-        ++ entry "touch" "ways to get in touch"
-        ++ [ text "\n" ]
+        ++ entry "touch" "ways to get in touch\n"
         ++ entry "help" "display this message again"
         ++ entry "version" "display vsh version"
         ++ entry "clear" "clear screen"
@@ -207,7 +212,7 @@ help _ display =
 version : Command msg
 version _ display =
     display
-        ++ [ text "vsh v0.1.0 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
+        ++ [ text "vsh v0.1.1 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
 
 
 clear : Command msg
