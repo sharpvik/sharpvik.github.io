@@ -40,6 +40,9 @@ eval command =
         "top" ->
             Just top
 
+        "cv" ->
+            Just cv
+
         "jobs" ->
             Just jobs
 
@@ -130,6 +133,16 @@ top _ display =
         ++ skill "Elm" 9
 
 
+cv : Command msg
+cv _ display =
+    display
+        ++ [ text "My curriculum vitae: "
+           , a
+                [ href "https://docs.google.com/document/d/1hywF2mAq5So8Lvj9ckCM05n605-rYIurzZJud0y5izI/edit?usp=sharing" ]
+                [ text "Google Drive" ]
+           ]
+
+
 jobs : Command msg
 jobs _ display =
     display
@@ -182,6 +195,7 @@ help _ display =
         ++ [ text "Available commands:\n" ]
         ++ entry "whoami" "a bit about myself"
         ++ entry "top" "my top skills"
+        ++ entry "cv" "my curriculum vitae"
         ++ entry "jobs" "hire me if you're really impressed"
         ++ entry "touch" "ways to get in touch"
         ++ [ text "\n" ]

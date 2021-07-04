@@ -5708,6 +5708,32 @@ var $author$project$Command$clear = F2(
 	function (_v0, _v1) {
 		return _List_Nil;
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
+var $author$project$Command$cv = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('My curriculum vitae: '),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://docs.google.com/document/d/1hywF2mAq5So8Lvj9ckCM05n605-rYIurzZJud0y5izI/edit?usp=sharing')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('Google Drive')
+						]))
+				]));
+	});
 var $author$project$Command$exit = F2(
 	function (_v0, display) {
 		return _Utils_ap(
@@ -5771,19 +5797,21 @@ var $author$project$Command$help = F2(
 					_Utils_ap(
 						A2(entry, 'top', 'my top skills'),
 						_Utils_ap(
-							A2(entry, 'jobs', 'hire me if you\'re really impressed'),
+							A2(entry, 'cv', 'my curriculum vitae'),
 							_Utils_ap(
-								A2(entry, 'touch', 'ways to get in touch'),
+								A2(entry, 'jobs', 'hire me if you\'re really impressed'),
 								_Utils_ap(
-									_List_fromArray(
-										[
-											$elm$html$Html$text('\n')
-										]),
+									A2(entry, 'touch', 'ways to get in touch'),
 									_Utils_ap(
-										A2(entry, 'help', 'display this message again'),
+										_List_fromArray(
+											[
+												$elm$html$Html$text('\n')
+											]),
 										_Utils_ap(
-											A2(entry, 'version', 'display vsh version'),
-											A2(entry, 'clear', 'clear screen'))))))))));
+											A2(entry, 'help', 'display this message again'),
+											_Utils_ap(
+												A2(entry, 'version', 'display vsh version'),
+												A2(entry, 'clear', 'clear screen')))))))))));
 	});
 var $author$project$Command$jobs = F2(
 	function (_v0, display) {
@@ -5898,13 +5926,6 @@ var $author$project$Command$top = F2(
 									A2(skill, 'Haskell', 12),
 									A2(skill, 'Elm', 9))))))));
 	});
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
 var $author$project$Command$touch = F2(
 	function (_v0, display) {
 		var linkWithTheSameText = function (url) {
@@ -5975,6 +5996,8 @@ var $author$project$Command$eval = function (command) {
 			return $elm$core$Maybe$Just($author$project$Command$whoami);
 		case 'top':
 			return $elm$core$Maybe$Just($author$project$Command$top);
+		case 'cv':
+			return $elm$core$Maybe$Just($author$project$Command$cv);
 		case 'jobs':
 			return $elm$core$Maybe$Just($author$project$Command$jobs);
 		case 'touch':
