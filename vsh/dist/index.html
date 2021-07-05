@@ -12,7 +12,9 @@
   <body>
     <div id="vsh"></div>
     <script>
-      document.onkeydown = e => e.preventDefault()
+      document.onkeydown = e => {
+        if (!e.altKey && !e.ctrlKey) e.preventDefault()
+      }
       const app = Elm.Main.init({
         node: document.getElementById("vsh")
       })
