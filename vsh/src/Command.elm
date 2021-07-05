@@ -55,6 +55,9 @@ eval command =
         "version" ->
             Just version
 
+        "git" ->
+            Just git
+
         "clear" ->
             Just clear
 
@@ -206,13 +209,25 @@ Available commands:
         ++ entry "touch" "ways to get in touch\n"
         ++ entry "help" "display this message again"
         ++ entry "version" "display vsh version"
+        ++ entry "git" "explore vsh source code"
         ++ entry "clear" "clear screen"
+        ++ entry "exit" "exit vsh session"
 
 
 version : Command msg
 version _ display =
     display
-        ++ [ text "vsh v0.1.1 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
+        ++ [ text "vsh v0.1.2 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
+
+
+git : Command msg
+git _ display =
+    display
+        ++ [ text "vsh on GitHub: "
+           , a
+                [ href "https://github.com/sharpvik/sharpvik.github.io" ]
+                [ text "https://github.com/sharpvik/sharpvik.github.io" ]
+           ]
 
 
 clear : Command msg

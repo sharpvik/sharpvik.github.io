@@ -5234,7 +5234,7 @@ var $author$project$Command$version = F2(
 			display,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('vsh v0.1.1 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
+					$elm$html$Html$text('vsh v0.1.2 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
 				]));
 	});
 var $author$project$Main$greeting = _Utils_ap(
@@ -5844,6 +5844,25 @@ var $author$project$Command$exit = F2(
 					$elm$html$Html$text('Shutting down...')
 				]));
 	});
+var $author$project$Command$git = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('vsh on GitHub: '),
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$href('https://github.com/sharpvik/sharpvik.github.io')
+						]),
+					_List_fromArray(
+						[
+							$elm$html$Html$text('https://github.com/sharpvik/sharpvik.github.io')
+						]))
+				]));
+	});
 var $elm$core$String$cons = _String_cons;
 var $elm$core$String$fromChar = function (_char) {
 	return A2($elm$core$String$cons, _char, '');
@@ -5905,7 +5924,11 @@ var $author$project$Command$help = F2(
 										A2(entry, 'help', 'display this message again'),
 										_Utils_ap(
 											A2(entry, 'version', 'display vsh version'),
-											A2(entry, 'clear', 'clear screen'))))))))));
+											_Utils_ap(
+												A2(entry, 'git', 'explore vsh source code'),
+												_Utils_ap(
+													A2(entry, 'clear', 'clear screen'),
+													A2(entry, 'exit', 'exit vsh session'))))))))))));
 	});
 var $author$project$Command$jobs = F2(
 	function (_v0, display) {
@@ -6097,6 +6120,8 @@ var $author$project$Command$eval = function (command) {
 			return $elm$core$Maybe$Just($author$project$Command$help);
 		case 'version':
 			return $elm$core$Maybe$Just($author$project$Command$version);
+		case 'git':
+			return $elm$core$Maybe$Just($author$project$Command$git);
 		case 'clear':
 			return $elm$core$Maybe$Just($author$project$Command$clear);
 		case 'exit':
