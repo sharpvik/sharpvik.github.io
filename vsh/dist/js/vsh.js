@@ -5831,7 +5831,7 @@ var $author$project$Command$cv = F2(
 						]),
 					_List_fromArray(
 						[
-							$elm$html$Html$text('Google Drive')
+							$elm$html$Html$text('Google Docs')
 						]))
 				]));
 	});
