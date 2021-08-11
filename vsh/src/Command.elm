@@ -217,7 +217,7 @@ Available commands:
 version : Command msg
 version _ display =
     display
-        ++ [ text "vsh v0.1.2 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
+        ++ [ text "vsh v0.1.3 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
 
 
 git : Command msg

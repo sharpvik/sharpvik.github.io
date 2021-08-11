@@ -12,19 +12,20 @@
   <body>
     <div id="vsh"></div>
     <script>
-      document.onkeydown = e => {
-        if (!e.altKey && !e.ctrlKey) e.preventDefault()
-      }
+      document.onkeydown = (e) => {
+        console.log(e);
+        if (!e.altKey && !e.ctrlKey) e.preventDefault();
+      };
       const app = Elm.Main.init({
-        node: document.getElementById("vsh")
-      })
-      app.ports.scroll.subscribe(e =>
+        node: document.getElementById("vsh"),
+      });
+      app.ports.scroll.subscribe((e) =>
         setTimeout(() => {
-          const area = document.querySelector(".vsh-textarea")
-          area.scrollTop = area.scrollHeight
+          const area = document.querySelector(".vsh-textarea");
+          area.scrollTop = area.scrollHeight;
         }, 50)
-      )
-      app.ports.exit.subscribe(e => console.log("exiting..."))
+      );
+      app.ports.exit.subscribe((e) => console.log("exiting..."));
     </script>
   </body>
 </html>

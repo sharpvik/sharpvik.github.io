@@ -49,17 +49,22 @@ type alias Model =
 
 
 type Msg
-    = KeyDown KeyDownType
+    = KeyDown KeyboardEvent
+    | Clear
     | Exit
+    | Ignore
 
 
-type KeyDownType
-    = Character String
+type KeyboardEvent
+    = Symbol Char
+    | Tab
     | Enter
     | Backspace
     | ArrowUp
     | ArrowDown
-    | Ignore
+    | Ctrl Char
+    | Alt Char
+    | Other
 
 
 
@@ -138,21 +143,42 @@ update msg model =
     updateOnKeydown msg model model.command
 
 
+
+{-
+   type Msg
+       = KeyDown KeyboardEvent
+       | Clear
+       | Exit
+       | Ignore
+
+
+   type KeyboardEvent
+       = Symbol Char
+       | Tab
+       | Enter
+       | Backspace
+       | ArrowUp
+       | ArrowDown
+       | Ctrl Char
+       | Alt Char
+       | Other
+-}
+
+
 updateOnKeydown : Msg -> Model -> String -> ( Model, Cmd Msg )
 updateOnKeydown msg model command =
     case msg of
-        KeyDown (Character char) ->
-            ( { model | command = command ++ char }, Cmd.none )
+        KeyDown (Symbol char) ->
+            ( { model | command = command ++ String.fromChar char }, Cmd.none )
+
+        KeyDown Tab ->
+            ( { model | command = command ++ "  " }, Cmd.none )
 
         KeyDown Enter ->
-            ( updateOnCommand model command
-            , scroll ()
-            )
+            ( updateOnCommand model command, scroll () )
 
         KeyDown Backspace ->
-            ( { model | command = String.dropRight 1 command }
-            , Cmd.none
-            )
+            ( { model | command = String.dropRight 1 command }, Cmd.none )
 
         KeyDown ArrowUp ->
             ( maybeLookupHistory History.prev model, Cmd.none )
@@ -160,11 +186,23 @@ updateOnKeydown msg model command =
         KeyDown ArrowDown ->
             ( maybeLookupHistory History.next model, Cmd.none )
 
-        KeyDown Ignore ->
-            ( model, Cmd.none )
+        Clear ->
+            ( updateOnCommand model "clear", Cmd.none )
 
         Exit ->
             ( updateOnCommand model "exit", Cmd.batch [ exit (), scroll () ] )
+
+        Ignore ->
+            ( model, Cmd.none )
+
+        KeyDown (Ctrl _) ->
+            ( model, Cmd.none )
+
+        KeyDown (Alt _) ->
+            ( model, Cmd.none )
+
+        KeyDown Other ->
+            ( model, Cmd.none )
 
 
 maybeLookupHistory : (History -> Int) -> Model -> Model
@@ -210,15 +248,28 @@ subscriptions _ =
     Events.onKeyDown keydownHandler
 
 
-keydownHandler : Decode.Decoder Msg
-keydownHandler =
-    Decode.map toKeyDownMsg (Decode.field "key" Decode.string)
+eventDecoder : Decode.Decoder KeyboardEvent
+eventDecoder =
+    Decode.map3
+        eventConstructor
+        (Decode.field "ctrlKey" Decode.bool)
+        (Decode.field "altKey" Decode.bool)
+        (Decode.field "key" Decode.string)
 
 
-toKeyDownMsg : String -> Msg
-toKeyDownMsg string =
-    KeyDown <|
-        case string of
+eventConstructor : Bool -> Bool -> String -> KeyboardEvent
+eventConstructor ctrl alt key =
+    if ctrl then
+        specialKeyEvent Ctrl key
+
+    else if alt then
+        specialKeyEvent Alt key
+
+    else
+        case key of
+            "Tab" ->
+                Tab
+
             "Enter" ->
                 Enter
 
@@ -231,15 +282,43 @@ toKeyDownMsg string =
             "ArrowDown" ->
                 ArrowDown
 
-            "Tab" ->
-                Character "  "
+            char ->
+                specialKeyEvent Symbol char
 
-            _ ->
-                if String.length string == 1 then
-                    Character string
 
-                else
-                    Ignore
+specialKeyEvent : (Char -> KeyboardEvent) -> String -> KeyboardEvent
+specialKeyEvent event key =
+    if String.length key /= 1 then
+        Other
+
+    else
+        case String.uncons key of
+            Just ( char, _ ) ->
+                event char
+
+            Nothing ->
+                Other
+
+
+keydownHandler : Decode.Decoder Msg
+keydownHandler =
+    Decode.map toKeyDownMsg eventDecoder
+
+
+toKeyDownMsg : KeyboardEvent -> Msg
+toKeyDownMsg event =
+    case event of
+        Ctrl ';' ->
+            Clear
+
+        Ctrl 'e' ->
+            Exit
+
+        Other ->
+            Ignore
+
+        e ->
+            KeyDown e
 
 
 

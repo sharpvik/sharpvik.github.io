@@ -5234,7 +5234,7 @@ var $author$project$Command$version = F2(
 			display,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('vsh v0.1.2 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
+					$elm$html$Html$text('vsh v0.1.3 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
 				]));
 	});
 var $author$project$Main$greeting = _Utils_ap(
@@ -5247,48 +5247,108 @@ var $author$project$Main$greeting = _Utils_ap(
 				$elm$html$Html$text(' to see available commands!\n\n')
 			]),
 		$author$project$Main$prompt));
-var $author$project$Main$initModel = {n: '', B: $author$project$Main$greeting, o: $author$project$History$empty};
+var $author$project$Main$initModel = {k: '', B: $author$project$Main$greeting, o: $author$project$History$empty};
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$Main$init = function (_v0) {
 	return _Utils_Tuple2($author$project$Main$initModel, $elm$core$Platform$Cmd$none);
 };
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Main$ArrowDown = {$: 4};
-var $author$project$Main$ArrowUp = {$: 3};
-var $author$project$Main$Backspace = {$: 2};
-var $author$project$Main$Character = function (a) {
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
+var $author$project$Main$Alt = function (a) {
+	return {$: 7, a: a};
+};
+var $author$project$Main$ArrowDown = {$: 5};
+var $author$project$Main$ArrowUp = {$: 4};
+var $author$project$Main$Backspace = {$: 3};
+var $author$project$Main$Ctrl = function (a) {
+	return {$: 6, a: a};
+};
+var $author$project$Main$Enter = {$: 2};
+var $author$project$Main$Symbol = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$Enter = {$: 1};
-var $author$project$Main$Ignore = {$: 5};
+var $author$project$Main$Tab = {$: 1};
+var $author$project$Main$Other = {$: 8};
+var $elm$core$Basics$neq = _Utils_notEqual;
+var $author$project$Main$specialKeyEvent = F2(
+	function (event, key) {
+		if ($elm$core$String$length(key) !== 1) {
+			return $author$project$Main$Other;
+		} else {
+			var _v0 = $elm$core$String$uncons(key);
+			if (!_v0.$) {
+				var _v1 = _v0.a;
+				var _char = _v1.a;
+				return event(_char);
+			} else {
+				return $author$project$Main$Other;
+			}
+		}
+	});
+var $author$project$Main$eventConstructor = F3(
+	function (ctrl, alt, key) {
+		if (ctrl) {
+			return A2($author$project$Main$specialKeyEvent, $author$project$Main$Ctrl, key);
+		} else {
+			if (alt) {
+				return A2($author$project$Main$specialKeyEvent, $author$project$Main$Alt, key);
+			} else {
+				switch (key) {
+					case 'Tab':
+						return $author$project$Main$Tab;
+					case 'Enter':
+						return $author$project$Main$Enter;
+					case 'Backspace':
+						return $author$project$Main$Backspace;
+					case 'ArrowUp':
+						return $author$project$Main$ArrowUp;
+					case 'ArrowDown':
+						return $author$project$Main$ArrowDown;
+					default:
+						var _char = key;
+						return A2($author$project$Main$specialKeyEvent, $author$project$Main$Symbol, _char);
+				}
+			}
+		}
+	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$map3 = _Json_map3;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Main$eventDecoder = A4(
+	$elm$json$Json$Decode$map3,
+	$author$project$Main$eventConstructor,
+	A2($elm$json$Json$Decode$field, 'ctrlKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'altKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $author$project$Main$Clear = {$: 1};
+var $author$project$Main$Exit = {$: 2};
+var $author$project$Main$Ignore = {$: 3};
 var $author$project$Main$KeyDown = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$toKeyDownMsg = function (string) {
-	return $author$project$Main$KeyDown(
-		function () {
-			switch (string) {
-				case 'Enter':
-					return $author$project$Main$Enter;
-				case 'Backspace':
-					return $author$project$Main$Backspace;
-				case 'ArrowUp':
-					return $author$project$Main$ArrowUp;
-				case 'ArrowDown':
-					return $author$project$Main$ArrowDown;
-				case 'Tab':
-					return $author$project$Main$Character('  ');
-				default:
-					return ($elm$core$String$length(string) === 1) ? $author$project$Main$Character(string) : $author$project$Main$Ignore;
-			}
-		}());
+var $author$project$Main$toKeyDownMsg = function (event) {
+	_v0$3:
+	while (true) {
+		switch (event.$) {
+			case 6:
+				switch (event.a) {
+					case ';':
+						return $author$project$Main$Clear;
+					case 'e':
+						return $author$project$Main$Exit;
+					default:
+						break _v0$3;
+				}
+			case 8:
+				return $author$project$Main$Ignore;
+			default:
+				break _v0$3;
+		}
+	}
+	var e = event;
+	return $author$project$Main$KeyDown(e);
 };
-var $author$project$Main$keydownHandler = A2(
-	$elm$json$Json$Decode$map,
-	$author$project$Main$toKeyDownMsg,
-	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $author$project$Main$keydownHandler = A2($elm$json$Json$Decode$map, $author$project$Main$toKeyDownMsg, $author$project$Main$eventDecoder);
 var $elm$browser$Browser$Events$Document = 0;
 var $elm$browser$Browser$Events$MySub = F3(
 	function (a, b, c) {
@@ -5706,6 +5766,10 @@ var $author$project$Main$exit = _Platform_outgoingPort(
 	function ($) {
 		return $elm$json$Json$Encode$null;
 	});
+var $elm$core$String$cons = _String_cons;
+var $elm$core$String$fromChar = function (_char) {
+	return A2($elm$core$String$cons, _char, '');
+};
 var $elm$core$Bitwise$and = _Bitwise_and;
 var $elm$core$Bitwise$shiftRightZfBy = _Bitwise_shiftRightZfBy;
 var $elm$core$Array$bitMask = 4294967295 >>> (32 - $elm$core$Array$shiftStep);
@@ -5785,7 +5849,7 @@ var $author$project$Main$maybeLookupHistory = F2(
 			var history = _v1.b;
 			return _Utils_update(
 				model,
-				{n: command, o: history});
+				{k: command, o: history});
 		}
 	});
 var $elm$core$Array$length = function (_v0) {
@@ -5863,10 +5927,6 @@ var $author$project$Command$git = F2(
 						]))
 				]));
 	});
-var $elm$core$String$cons = _String_cons;
-var $elm$core$String$fromChar = function (_char) {
-	return A2($elm$core$String$cons, _char, '');
-};
 var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
 var $elm$core$String$repeatHelp = F3(
 	function (n, chunk, result) {
@@ -6281,68 +6341,87 @@ var $author$project$Main$updateOnCommand = F2(
 				$elm$core$List$isEmpty(display) ? '' : '\n\n'),
 			$author$project$Main$prompt);
 		return {
-			n: '',
+			k: '',
 			B: _Utils_ap(display, promptWithOffset),
 			o: A2($author$project$History$update, command, model.o)
 		};
 	});
 var $author$project$Main$updateOnKeydown = F3(
 	function (msg, model, command) {
-		if (!msg.$) {
-			switch (msg.a.$) {
-				case 0:
-					var _char = msg.a.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								n: _Utils_ap(command, _char)
-							}),
-						$elm$core$Platform$Cmd$none);
-				case 1:
-					var _v1 = msg.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$updateOnCommand, model, command),
-						$author$project$Main$scroll(0));
-				case 2:
-					var _v2 = msg.a;
-					return _Utils_Tuple2(
-						_Utils_update(
-							model,
-							{
-								n: A2($elm$core$String$dropRight, 1, command)
-							}),
-						$elm$core$Platform$Cmd$none);
-				case 3:
-					var _v3 = msg.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$maybeLookupHistory, $author$project$History$prev, model),
-						$elm$core$Platform$Cmd$none);
-				case 4:
-					var _v4 = msg.a;
-					return _Utils_Tuple2(
-						A2($author$project$Main$maybeLookupHistory, $author$project$History$next, model),
-						$elm$core$Platform$Cmd$none);
-				default:
-					var _v5 = msg.a;
-					return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			}
-		} else {
-			return _Utils_Tuple2(
-				A2($author$project$Main$updateOnCommand, model, 'exit'),
-				$elm$core$Platform$Cmd$batch(
-					_List_fromArray(
-						[
-							$author$project$Main$exit(0),
-							$author$project$Main$scroll(0)
-						])));
+		switch (msg.$) {
+			case 1:
+				return _Utils_Tuple2(
+					A2($author$project$Main$updateOnCommand, model, 'clear'),
+					$elm$core$Platform$Cmd$none);
+			case 2:
+				return _Utils_Tuple2(
+					A2($author$project$Main$updateOnCommand, model, 'exit'),
+					$elm$core$Platform$Cmd$batch(
+						_List_fromArray(
+							[
+								$author$project$Main$exit(0),
+								$author$project$Main$scroll(0)
+							])));
+			case 3:
+				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+			default:
+				switch (msg.a.$) {
+					case 0:
+						var _char = msg.a.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									k: _Utils_ap(
+										command,
+										$elm$core$String$fromChar(_char))
+								}),
+							$elm$core$Platform$Cmd$none);
+					case 1:
+						var _v1 = msg.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{k: command + '  '}),
+							$elm$core$Platform$Cmd$none);
+					case 2:
+						var _v2 = msg.a;
+						return _Utils_Tuple2(
+							A2($author$project$Main$updateOnCommand, model, command),
+							$author$project$Main$scroll(0));
+					case 3:
+						var _v3 = msg.a;
+						return _Utils_Tuple2(
+							_Utils_update(
+								model,
+								{
+									k: A2($elm$core$String$dropRight, 1, command)
+								}),
+							$elm$core$Platform$Cmd$none);
+					case 4:
+						var _v4 = msg.a;
+						return _Utils_Tuple2(
+							A2($author$project$Main$maybeLookupHistory, $author$project$History$prev, model),
+							$elm$core$Platform$Cmd$none);
+					case 5:
+						var _v5 = msg.a;
+						return _Utils_Tuple2(
+							A2($author$project$Main$maybeLookupHistory, $author$project$History$next, model),
+							$elm$core$Platform$Cmd$none);
+					case 6:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					case 7:
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+					default:
+						var _v6 = msg.a;
+						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+				}
 		}
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		return A3($author$project$Main$updateOnKeydown, msg, model, model.n);
+		return A3($author$project$Main$updateOnKeydown, msg, model, model.k);
 	});
-var $author$project$Main$Exit = {$: 1};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$header = _VirtualDom_node('header');
@@ -6418,7 +6497,7 @@ var $author$project$Main$view = function (model) {
 			model.B,
 			_List_fromArray(
 				[
-					$elm$html$Html$text(model.n)
+					$elm$html$Html$text(model.k)
 				])));
 };
 var $author$project$Main$main = $elm$browser$Browser$element(
