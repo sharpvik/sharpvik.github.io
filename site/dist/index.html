@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Example</title>
+    <link href="css/main.css" rel="stylesheet" />
+    <link href="css/vsh.css" rel="stylesheet" />
+    <script src="js/vsh.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      document.onkeydown = e => {
+        if (!e.altKey && !e.ctrlKey) e.preventDefault()
+      }
+      const app = Elm.Main.init({
+        node: document.getElementById("app")
+      })
+      app.ports.scroll.subscribe(e =>
+        setTimeout(() => {
+          const area = document.querySelector(".vsh-textarea")
+          area.scrollTop = area.scrollHeight
+        }, 50)
+      )
+      app.ports.exit.subscribe(e => (window.location = "/about"))
+    </script>
+  </body>
+</html>
