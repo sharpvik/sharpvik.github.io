@@ -1,6 +1,8 @@
 module About.Main exposing (..)
 
 import Browser exposing (Document)
+import Common.Class as Class
+import Common.Element as Element
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -53,8 +55,12 @@ view : Model -> Document Msg
 view _ =
     { title = "👽 About Me"
     , body =
-        [ h1 [] [ text "About Page" ]
-        , a [ href <| Route.toString VshRoute ] [ text "Terminal" ]
+        [ div [ class Class.appCenter, class Class.aboutBg ]
+            [ h1 [ class Class.aboutH1 ] [ text "Hey, I'm Viktor!" ]
+            , h3 [ class Class.aboutH3 ] [ text "💻 Full Stack Web Developer" ]
+            , h3 [ class Class.aboutH3 ] [ text "🎓 University of Southampton" ]
+            ]
+        , Element.navbar
         ]
     }
 

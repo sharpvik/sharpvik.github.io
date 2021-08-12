@@ -3,6 +3,8 @@ port module Vsh.Main exposing (..)
 import Browser exposing (Document)
 import Browser.Events as Events
 import Browser.Navigation as Nav
+import Common.Class as Class
+import Common.Element as Element
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -97,29 +99,32 @@ prompt =
 
 view : Model -> Document Msg
 view model =
-    { title = "💻 ️vsh shell"
-    , body = [ vshDisplay <| model.display ++ [ text model.command ] ]
+    { title = "💻 ️VSH Shell"
+    , body =
+        [ div [ class Class.appTop, class Class.vshBg ]
+            [ vshDisplay <| model.display ++ [ text model.command ] ]
+        , Element.navbar
+        ]
     }
 
 
 vshDisplay : List (Html Msg) -> Html Msg
 vshDisplay display =
     div
-        [ class "vsh-window"
+        [ class Class.vshWindow
         ]
         [ header
-            [ class "vsh-topbar vsh-width"
-            ]
+            [ class Class.vshTopbar ]
             [ p []
                 [ text "vsh shell" ]
             , a
-                [ class "vsh-close"
+                [ class Class.vshClose
                 , href <| Route.toString AboutRoute
                 ]
                 []
             ]
         , pre
-            [ class "vsh-textarea vsh-width-fill" ]
+            [ class Class.vshTextarea ]
             (display ++ [ text "█" ])
         ]
 
