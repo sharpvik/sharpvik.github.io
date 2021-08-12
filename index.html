@@ -4,21 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Viktor = 💻 ☕ ❤️</title>
+    <title>Loading...</title>
     <link href="css/main.css" rel="stylesheet" />
-    <link href="css/vsh.css" rel="stylesheet" />
     <script src="js/vsh.js"></script>
   </head>
   <body>
-    <h1>Hey, I'm Viktor!</h1>
-    <h3>This is the command line interface to my ❤️</h3>
-    <div id="vsh"></div>
+    <div id="app"></div>
     <script>
       document.onkeydown = e => {
         if (!e.altKey && !e.ctrlKey) e.preventDefault()
       }
       const app = Elm.Main.init({
-        node: document.getElementById("vsh")
+        node: document.getElementById("app")
       })
       app.ports.scroll.subscribe(e =>
         setTimeout(() => {

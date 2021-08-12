@@ -17,9 +17,8 @@ type Route
 fromUrl : Url -> Route
 fromUrl url =
     Maybe.withDefault AboutRoute <|
-        Debug.log "route" <|
-            parse urlParser <|
-                fake url
+        parse urlParser <|
+            fake url
 
 
 toString : Route -> String

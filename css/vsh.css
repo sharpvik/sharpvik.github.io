@@ -1,16 +1,20 @@
 @import url("https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@500&display=swap");
 
+.vsh-bg {
+  background-color: #dce7ff;
+}
+
 .vsh-window {
   width: 95%;
   max-width: 682px;
-  margin: 25px auto;
+  margin: auto;
   border-radius: 8px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  -webkit-box-shadow: 0px 7px 17px -4px rgba(0, 0, 0, 0.75);
-  -moz-box-shadow: 0px 7px 17px -4px rgba(0, 0, 0, 0.75);
-  box-shadow: 0px 7px 17px -4px #006b47;
+  -webkit-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.5);
 }
 
 .vsh-topbar {

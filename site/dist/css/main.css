@@ -1,6 +1,14 @@
+@import "common.css";
+@import "about.css";
+@import "vsh.css";
+
 * {
   padding: 0;
   margin: 0;
   outline: none;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Helvetica, Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+  height: 100vh;
 }

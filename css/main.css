@@ -1,26 +1,14 @@
+@import "common.css";
+@import "about.css";
+@import "vsh.css";
+
 * {
   padding: 0;
   margin: 0;
   outline: none;
-  font-family: "Segoe UI", Helvetica, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Helvetica, Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
-  background-color: aquamarine;
-}
-
-h1,
-h2,
-h3 {
-  text-align: center;
-  margin: 15px auto;
-}
-
-h1 {
-  color: #006b47;
-}
-
-h3 {
-  color: #018f5f;
-  font-weight: 400;
+  height: 100vh;
 }
