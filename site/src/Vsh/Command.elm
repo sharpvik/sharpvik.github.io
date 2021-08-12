@@ -1,8 +1,8 @@
-module Command exposing (..)
+module Vsh.Command exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (href)
-import Vsh
+import Vsh.Text exposing (Color(..), ctext)
 
 
 type alias Command msg =
@@ -16,7 +16,7 @@ exec command display =
             List.head <| String.words command
 
         wrongCommand label string =
-            [ text <| label ++ " command: ", Vsh.ctext Vsh.Magenta string ]
+            [ text <| label ++ " command: ", ctext Magenta string ]
     in
     case maybeCommand of
         Nothing ->
@@ -94,18 +94,18 @@ top _ display =
             min m n
 
         coloredLevel color m n =
-            Vsh.ctext color <|
+            Vsh.Text.ctext color <|
                 String.join "" <|
                     List.repeat (bars n m) "|"
 
         elementary =
-            coloredLevel Vsh.Green 12
+            coloredLevel Green 12
 
         intermediate n20 =
-            coloredLevel Vsh.Yellow 5 (n20 - 12)
+            coloredLevel Yellow 5 (n20 - 12)
 
         advanced n20 =
-            coloredLevel Vsh.Magenta 3 (n20 - 17)
+            coloredLevel Magenta 3 (n20 - 17)
 
         level n =
             let
@@ -159,7 +159,7 @@ jobs _ display =
     3. Nevertheless, full-time work is possible during the term breaks.
        
 Use the """
-           , Vsh.ctext Vsh.Green "touch"
+           , Vsh.Text.ctext Green "touch"
            , text " command to get in touch."
            ]
 
@@ -191,7 +191,7 @@ help _ display =
     let
         entry command description =
             [ text "\n    "
-            , Vsh.ctext Vsh.Green <| String.padRight 8 ' ' command
+            , Vsh.Text.ctext Green <| String.padRight 8 ' ' command
             , text <| "-- " ++ description
             ]
     in

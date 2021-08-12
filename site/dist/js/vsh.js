@@ -4357,6 +4357,23 @@ function _Browser_load(url)
 }
 
 
+function _Url_percentEncode(string)
+{
+	return encodeURIComponent(string);
+}
+
+function _Url_percentDecode(string)
+{
+	try
+	{
+		return $elm$core$Maybe$Just(decodeURIComponent(string));
+	}
+	catch (e)
+	{
+		return $elm$core$Maybe$Nothing;
+	}
+}
+
 
 var _Bitwise_and = F2(function(a, b)
 {
@@ -5187,215 +5204,128 @@ var $elm$core$Task$perform = F2(
 				A2($elm$core$Task$map, toMessage, task)));
 	});
 var $elm$browser$Browser$application = _Browser_application;
-var $author$project$History$History = F2(
-	function (history, ptr) {
-		return {history: history, ptr: ptr};
+var $author$project$Main$AboutModel = F2(
+	function (a, b) {
+		return {$: 'AboutModel', a: a, b: b};
 	});
-var $author$project$History$empty = A2($author$project$History$History, $elm$core$Array$empty, 0);
-var $author$project$Vsh$Green = {$: 'Green'};
-var $elm$json$Json$Encode$string = _Json_wrap;
-var $elm$html$Html$Attributes$stringProperty = F2(
-	function (key, string) {
-		return A2(
-			_VirtualDom_property,
-			key,
-			$elm$json$Json$Encode$string(string));
-	});
-var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
-var $author$project$Vsh$colorToClass = function (c) {
-	return 'vsh-' + function () {
-		switch (c.$) {
-			case 'Yellow':
-				return 'yellow';
-			case 'Green':
-				return 'green';
-			default:
-				return 'magenta';
-		}
-	}();
+var $author$project$About$Main$NoModel = {$: 'NoModel'};
+var $author$project$About$Main$initModel = $author$project$About$Main$NoModel;
+var $author$project$Main$GotAboutMsg = function (a) {
+	return {$: 'GotAboutMsg', a: a};
 };
-var $elm$html$Html$span = _VirtualDom_node('span');
-var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
-var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
-var $author$project$Vsh$ctext = F2(
-	function (color, message) {
-		return A2(
-			$elm$html$Html$span,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class(
-					'vsh-text ' + $author$project$Vsh$colorToClass(color))
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text(message)
-				]));
-	});
-var $author$project$Vsh$Magenta = {$: 'Magenta'};
-var $author$project$Vsh$Yellow = {$: 'Yellow'};
-var $author$project$Main$prompt = _List_fromArray(
-	[
-		A2($author$project$Vsh$ctext, $author$project$Vsh$Yellow, 'guest'),
-		$elm$html$Html$text(' at '),
-		A2($author$project$Vsh$ctext, $author$project$Vsh$Magenta, 'sharpvik'),
-		$elm$html$Html$text('\n❯ ')
-	]);
-var $author$project$Command$version = F2(
-	function (_v0, display) {
-		return _Utils_ap(
-			display,
-			_List_fromArray(
-				[
-					$elm$html$Html$text('vsh v0.1.3 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
-				]));
-	});
-var $author$project$Main$greeting = _Utils_ap(
-	A2($author$project$Command$version, 'version', _List_Nil),
-	_Utils_ap(
-		_List_fromArray(
-			[
-				$elm$html$Html$text('\nEnter '),
-				A2($author$project$Vsh$ctext, $author$project$Vsh$Green, 'help'),
-				$elm$html$Html$text(' to see available commands!\n\n')
-			]),
-		$author$project$Main$prompt));
-var $author$project$Main$initModel = {command: '', display: $author$project$Main$greeting, history: $author$project$History$empty};
-var $elm$core$Platform$Cmd$batch = _Platform_batch;
-var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
-var $author$project$Main$init = F3(
-	function (_v0, _v1, _v2) {
-		return _Utils_Tuple2($author$project$Main$initModel, $elm$core$Platform$Cmd$none);
-	});
-var $elm$json$Json$Decode$bool = _Json_decodeBool;
-var $author$project$Main$Alt = function (a) {
-	return {$: 'Alt', a: a};
+var $author$project$Main$GotVshMsg = function (a) {
+	return {$: 'GotVshMsg', a: a};
 };
-var $author$project$Main$ArrowDown = {$: 'ArrowDown'};
-var $author$project$Main$ArrowUp = {$: 'ArrowUp'};
-var $author$project$Main$Backspace = {$: 'Backspace'};
-var $author$project$Main$Ctrl = function (a) {
-	return {$: 'Ctrl', a: a};
-};
-var $author$project$Main$Enter = {$: 'Enter'};
-var $author$project$Main$Symbol = function (a) {
-	return {$: 'Symbol', a: a};
-};
-var $author$project$Main$Tab = {$: 'Tab'};
-var $author$project$Main$Other = {$: 'Other'};
-var $elm$core$Basics$neq = _Utils_notEqual;
-var $author$project$Main$specialKeyEvent = F2(
-	function (event, key) {
-		if ($elm$core$String$length(key) !== 1) {
-			return $author$project$Main$Other;
-		} else {
-			var _v0 = $elm$core$String$uncons(key);
-			if (_v0.$ === 'Just') {
-				var _v1 = _v0.a;
-				var _char = _v1.a;
-				return event(_char);
-			} else {
-				return $author$project$Main$Other;
-			}
-		}
+var $author$project$Main$VshModel = F2(
+	function (a, b) {
+		return {$: 'VshModel', a: a, b: b};
 	});
-var $author$project$Main$eventConstructor = F3(
-	function (ctrl, alt, key) {
-		if (ctrl) {
-			return A2($author$project$Main$specialKeyEvent, $author$project$Main$Ctrl, key);
-		} else {
-			if (alt) {
-				return A2($author$project$Main$specialKeyEvent, $author$project$Main$Alt, key);
-			} else {
-				switch (key) {
-					case 'Tab':
-						return $author$project$Main$Tab;
-					case 'Enter':
-						return $author$project$Main$Enter;
-					case 'Backspace':
-						return $author$project$Main$Backspace;
-					case 'ArrowUp':
-						return $author$project$Main$ArrowUp;
-					case 'ArrowDown':
-						return $author$project$Main$ArrowDown;
-					default:
-						var _char = key;
-						return A2($author$project$Main$specialKeyEvent, $author$project$Main$Symbol, _char);
-				}
-			}
-		}
+var $author$project$Route$AboutRoute = {$: 'AboutRoute'};
+var $elm$core$Debug$log = _Debug_log;
+var $elm$url$Url$Parser$State = F5(
+	function (visited, unvisited, params, frag, value) {
+		return {frag: frag, params: params, unvisited: unvisited, value: value, visited: visited};
 	});
-var $elm$json$Json$Decode$field = _Json_decodeField;
-var $elm$json$Json$Decode$map3 = _Json_map3;
-var $elm$json$Json$Decode$string = _Json_decodeString;
-var $author$project$Main$eventDecoder = A4(
-	$elm$json$Json$Decode$map3,
-	$author$project$Main$eventConstructor,
-	A2($elm$json$Json$Decode$field, 'ctrlKey', $elm$json$Json$Decode$bool),
-	A2($elm$json$Json$Decode$field, 'altKey', $elm$json$Json$Decode$bool),
-	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
-var $author$project$Main$Clear = {$: 'Clear'};
-var $author$project$Main$Exit = {$: 'Exit'};
-var $author$project$Main$Ignore = {$: 'Ignore'};
-var $author$project$Main$KeyDown = function (a) {
-	return {$: 'KeyDown', a: a};
-};
-var $author$project$Main$toKeyDownMsg = function (event) {
-	_v0$3:
+var $elm$url$Url$Parser$getFirstMatch = function (states) {
+	getFirstMatch:
 	while (true) {
-		switch (event.$) {
-			case 'Ctrl':
-				switch (event.a.valueOf()) {
-					case ';':
-						return $author$project$Main$Clear;
-					case 'e':
-						return $author$project$Main$Exit;
-					default:
-						break _v0$3;
+		if (!states.b) {
+			return $elm$core$Maybe$Nothing;
+		} else {
+			var state = states.a;
+			var rest = states.b;
+			var _v1 = state.unvisited;
+			if (!_v1.b) {
+				return $elm$core$Maybe$Just(state.value);
+			} else {
+				if ((_v1.a === '') && (!_v1.b.b)) {
+					return $elm$core$Maybe$Just(state.value);
+				} else {
+					var $temp$states = rest;
+					states = $temp$states;
+					continue getFirstMatch;
 				}
-			case 'Other':
-				return $author$project$Main$Ignore;
-			default:
-				break _v0$3;
+			}
 		}
 	}
-	var e = event;
-	return $author$project$Main$KeyDown(e);
 };
-var $author$project$Main$keydownHandler = A2($elm$json$Json$Decode$map, $author$project$Main$toKeyDownMsg, $author$project$Main$eventDecoder);
-var $elm$browser$Browser$Events$Document = {$: 'Document'};
-var $elm$browser$Browser$Events$MySub = F3(
-	function (a, b, c) {
-		return {$: 'MySub', a: a, b: b, c: c};
-	});
-var $elm$browser$Browser$Events$State = F2(
-	function (subs, pids) {
-		return {pids: pids, subs: subs};
-	});
-var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
-var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
-var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
-	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
-var $elm$browser$Browser$Events$nodeToKey = function (node) {
-	if (node.$ === 'Document') {
-		return 'd_';
+var $elm$url$Url$Parser$removeFinalEmpty = function (segments) {
+	if (!segments.b) {
+		return _List_Nil;
 	} else {
-		return 'w_';
+		if ((segments.a === '') && (!segments.b.b)) {
+			return _List_Nil;
+		} else {
+			var segment = segments.a;
+			var rest = segments.b;
+			return A2(
+				$elm$core$List$cons,
+				segment,
+				$elm$url$Url$Parser$removeFinalEmpty(rest));
+		}
 	}
 };
-var $elm$browser$Browser$Events$addKey = function (sub) {
-	var node = sub.a;
-	var name = sub.b;
-	return _Utils_Tuple2(
-		_Utils_ap(
-			$elm$browser$Browser$Events$nodeToKey(node),
-			name),
-		sub);
+var $elm$url$Url$Parser$preparePath = function (path) {
+	var _v0 = A2($elm$core$String$split, '/', path);
+	if (_v0.b && (_v0.a === '')) {
+		var segments = _v0.b;
+		return $elm$url$Url$Parser$removeFinalEmpty(segments);
+	} else {
+		var segments = _v0;
+		return $elm$url$Url$Parser$removeFinalEmpty(segments);
+	}
 };
+var $elm$url$Url$Parser$addToParametersHelp = F2(
+	function (value, maybeList) {
+		if (maybeList.$ === 'Nothing') {
+			return $elm$core$Maybe$Just(
+				_List_fromArray(
+					[value]));
+		} else {
+			var list = maybeList.a;
+			return $elm$core$Maybe$Just(
+				A2($elm$core$List$cons, value, list));
+		}
+	});
+var $elm$url$Url$percentDecode = _Url_percentDecode;
+var $elm$core$Basics$compare = _Utils_compare;
+var $elm$core$Dict$get = F2(
+	function (targetKey, dict) {
+		get:
+		while (true) {
+			if (dict.$ === 'RBEmpty_elm_builtin') {
+				return $elm$core$Maybe$Nothing;
+			} else {
+				var key = dict.b;
+				var value = dict.c;
+				var left = dict.d;
+				var right = dict.e;
+				var _v1 = A2($elm$core$Basics$compare, targetKey, key);
+				switch (_v1.$) {
+					case 'LT':
+						var $temp$targetKey = targetKey,
+							$temp$dict = left;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+					case 'EQ':
+						return $elm$core$Maybe$Just(value);
+					default:
+						var $temp$targetKey = targetKey,
+							$temp$dict = right;
+						targetKey = $temp$targetKey;
+						dict = $temp$dict;
+						continue get;
+				}
+			}
+		}
+	});
 var $elm$core$Dict$Black = {$: 'Black'};
 var $elm$core$Dict$RBNode_elm_builtin = F5(
 	function (a, b, c, d, e) {
 		return {$: 'RBNode_elm_builtin', a: a, b: b, c: c, d: d, e: e};
 	});
+var $elm$core$Dict$RBEmpty_elm_builtin = {$: 'RBEmpty_elm_builtin'};
 var $elm$core$Dict$Red = {$: 'Red'};
 var $elm$core$Dict$balance = F5(
 	function (color, key, value, left, right) {
@@ -5451,7 +5381,6 @@ var $elm$core$Dict$balance = F5(
 			}
 		}
 	});
-var $elm$core$Basics$compare = _Utils_compare;
 var $elm$core$Dict$insertHelp = F3(
 	function (key, value, dict) {
 		if (dict.$ === 'RBEmpty_elm_builtin') {
@@ -5500,6 +5429,732 @@ var $elm$core$Dict$insert = F3(
 			return x;
 		}
 	});
+var $elm$core$Dict$getMin = function (dict) {
+	getMin:
+	while (true) {
+		if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+			var left = dict.d;
+			var $temp$dict = left;
+			dict = $temp$dict;
+			continue getMin;
+		} else {
+			return dict;
+		}
+	}
+};
+var $elm$core$Dict$moveRedLeft = function (dict) {
+	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
+		if ((dict.e.d.$ === 'RBNode_elm_builtin') && (dict.e.d.a.$ === 'Red')) {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v1 = dict.d;
+			var lClr = _v1.a;
+			var lK = _v1.b;
+			var lV = _v1.c;
+			var lLeft = _v1.d;
+			var lRight = _v1.e;
+			var _v2 = dict.e;
+			var rClr = _v2.a;
+			var rK = _v2.b;
+			var rV = _v2.c;
+			var rLeft = _v2.d;
+			var _v3 = rLeft.a;
+			var rlK = rLeft.b;
+			var rlV = rLeft.c;
+			var rlL = rLeft.d;
+			var rlR = rLeft.e;
+			var rRight = _v2.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				$elm$core$Dict$Red,
+				rlK,
+				rlV,
+				A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					rlL),
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, rK, rV, rlR, rRight));
+		} else {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v4 = dict.d;
+			var lClr = _v4.a;
+			var lK = _v4.b;
+			var lV = _v4.c;
+			var lLeft = _v4.d;
+			var lRight = _v4.e;
+			var _v5 = dict.e;
+			var rClr = _v5.a;
+			var rK = _v5.b;
+			var rV = _v5.c;
+			var rLeft = _v5.d;
+			var rRight = _v5.e;
+			if (clr.$ === 'Black') {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			}
+		}
+	} else {
+		return dict;
+	}
+};
+var $elm$core$Dict$moveRedRight = function (dict) {
+	if (((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) && (dict.e.$ === 'RBNode_elm_builtin')) {
+		if ((dict.d.d.$ === 'RBNode_elm_builtin') && (dict.d.d.a.$ === 'Red')) {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v1 = dict.d;
+			var lClr = _v1.a;
+			var lK = _v1.b;
+			var lV = _v1.c;
+			var _v2 = _v1.d;
+			var _v3 = _v2.a;
+			var llK = _v2.b;
+			var llV = _v2.c;
+			var llLeft = _v2.d;
+			var llRight = _v2.e;
+			var lRight = _v1.e;
+			var _v4 = dict.e;
+			var rClr = _v4.a;
+			var rK = _v4.b;
+			var rV = _v4.c;
+			var rLeft = _v4.d;
+			var rRight = _v4.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				$elm$core$Dict$Red,
+				lK,
+				lV,
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, llK, llV, llLeft, llRight),
+				A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					lRight,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight)));
+		} else {
+			var clr = dict.a;
+			var k = dict.b;
+			var v = dict.c;
+			var _v5 = dict.d;
+			var lClr = _v5.a;
+			var lK = _v5.b;
+			var lV = _v5.c;
+			var lLeft = _v5.d;
+			var lRight = _v5.e;
+			var _v6 = dict.e;
+			var rClr = _v6.a;
+			var rK = _v6.b;
+			var rV = _v6.c;
+			var rLeft = _v6.d;
+			var rRight = _v6.e;
+			if (clr.$ === 'Black') {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			} else {
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					$elm$core$Dict$Black,
+					k,
+					v,
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, lK, lV, lLeft, lRight),
+					A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, rK, rV, rLeft, rRight));
+			}
+		}
+	} else {
+		return dict;
+	}
+};
+var $elm$core$Dict$removeHelpPrepEQGT = F7(
+	function (targetKey, dict, color, key, value, left, right) {
+		if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Red')) {
+			var _v1 = left.a;
+			var lK = left.b;
+			var lV = left.c;
+			var lLeft = left.d;
+			var lRight = left.e;
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				color,
+				lK,
+				lV,
+				lLeft,
+				A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Red, key, value, lRight, right));
+		} else {
+			_v2$2:
+			while (true) {
+				if ((right.$ === 'RBNode_elm_builtin') && (right.a.$ === 'Black')) {
+					if (right.d.$ === 'RBNode_elm_builtin') {
+						if (right.d.a.$ === 'Black') {
+							var _v3 = right.a;
+							var _v4 = right.d;
+							var _v5 = _v4.a;
+							return $elm$core$Dict$moveRedRight(dict);
+						} else {
+							break _v2$2;
+						}
+					} else {
+						var _v6 = right.a;
+						var _v7 = right.d;
+						return $elm$core$Dict$moveRedRight(dict);
+					}
+				} else {
+					break _v2$2;
+				}
+			}
+			return dict;
+		}
+	});
+var $elm$core$Dict$removeMin = function (dict) {
+	if ((dict.$ === 'RBNode_elm_builtin') && (dict.d.$ === 'RBNode_elm_builtin')) {
+		var color = dict.a;
+		var key = dict.b;
+		var value = dict.c;
+		var left = dict.d;
+		var lColor = left.a;
+		var lLeft = left.d;
+		var right = dict.e;
+		if (lColor.$ === 'Black') {
+			if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+				var _v3 = lLeft.a;
+				return A5(
+					$elm$core$Dict$RBNode_elm_builtin,
+					color,
+					key,
+					value,
+					$elm$core$Dict$removeMin(left),
+					right);
+			} else {
+				var _v4 = $elm$core$Dict$moveRedLeft(dict);
+				if (_v4.$ === 'RBNode_elm_builtin') {
+					var nColor = _v4.a;
+					var nKey = _v4.b;
+					var nValue = _v4.c;
+					var nLeft = _v4.d;
+					var nRight = _v4.e;
+					return A5(
+						$elm$core$Dict$balance,
+						nColor,
+						nKey,
+						nValue,
+						$elm$core$Dict$removeMin(nLeft),
+						nRight);
+				} else {
+					return $elm$core$Dict$RBEmpty_elm_builtin;
+				}
+			}
+		} else {
+			return A5(
+				$elm$core$Dict$RBNode_elm_builtin,
+				color,
+				key,
+				value,
+				$elm$core$Dict$removeMin(left),
+				right);
+		}
+	} else {
+		return $elm$core$Dict$RBEmpty_elm_builtin;
+	}
+};
+var $elm$core$Dict$removeHelp = F2(
+	function (targetKey, dict) {
+		if (dict.$ === 'RBEmpty_elm_builtin') {
+			return $elm$core$Dict$RBEmpty_elm_builtin;
+		} else {
+			var color = dict.a;
+			var key = dict.b;
+			var value = dict.c;
+			var left = dict.d;
+			var right = dict.e;
+			if (_Utils_cmp(targetKey, key) < 0) {
+				if ((left.$ === 'RBNode_elm_builtin') && (left.a.$ === 'Black')) {
+					var _v4 = left.a;
+					var lLeft = left.d;
+					if ((lLeft.$ === 'RBNode_elm_builtin') && (lLeft.a.$ === 'Red')) {
+						var _v6 = lLeft.a;
+						return A5(
+							$elm$core$Dict$RBNode_elm_builtin,
+							color,
+							key,
+							value,
+							A2($elm$core$Dict$removeHelp, targetKey, left),
+							right);
+					} else {
+						var _v7 = $elm$core$Dict$moveRedLeft(dict);
+						if (_v7.$ === 'RBNode_elm_builtin') {
+							var nColor = _v7.a;
+							var nKey = _v7.b;
+							var nValue = _v7.c;
+							var nLeft = _v7.d;
+							var nRight = _v7.e;
+							return A5(
+								$elm$core$Dict$balance,
+								nColor,
+								nKey,
+								nValue,
+								A2($elm$core$Dict$removeHelp, targetKey, nLeft),
+								nRight);
+						} else {
+							return $elm$core$Dict$RBEmpty_elm_builtin;
+						}
+					}
+				} else {
+					return A5(
+						$elm$core$Dict$RBNode_elm_builtin,
+						color,
+						key,
+						value,
+						A2($elm$core$Dict$removeHelp, targetKey, left),
+						right);
+				}
+			} else {
+				return A2(
+					$elm$core$Dict$removeHelpEQGT,
+					targetKey,
+					A7($elm$core$Dict$removeHelpPrepEQGT, targetKey, dict, color, key, value, left, right));
+			}
+		}
+	});
+var $elm$core$Dict$removeHelpEQGT = F2(
+	function (targetKey, dict) {
+		if (dict.$ === 'RBNode_elm_builtin') {
+			var color = dict.a;
+			var key = dict.b;
+			var value = dict.c;
+			var left = dict.d;
+			var right = dict.e;
+			if (_Utils_eq(targetKey, key)) {
+				var _v1 = $elm$core$Dict$getMin(right);
+				if (_v1.$ === 'RBNode_elm_builtin') {
+					var minKey = _v1.b;
+					var minValue = _v1.c;
+					return A5(
+						$elm$core$Dict$balance,
+						color,
+						minKey,
+						minValue,
+						left,
+						$elm$core$Dict$removeMin(right));
+				} else {
+					return $elm$core$Dict$RBEmpty_elm_builtin;
+				}
+			} else {
+				return A5(
+					$elm$core$Dict$balance,
+					color,
+					key,
+					value,
+					left,
+					A2($elm$core$Dict$removeHelp, targetKey, right));
+			}
+		} else {
+			return $elm$core$Dict$RBEmpty_elm_builtin;
+		}
+	});
+var $elm$core$Dict$remove = F2(
+	function (key, dict) {
+		var _v0 = A2($elm$core$Dict$removeHelp, key, dict);
+		if ((_v0.$ === 'RBNode_elm_builtin') && (_v0.a.$ === 'Red')) {
+			var _v1 = _v0.a;
+			var k = _v0.b;
+			var v = _v0.c;
+			var l = _v0.d;
+			var r = _v0.e;
+			return A5($elm$core$Dict$RBNode_elm_builtin, $elm$core$Dict$Black, k, v, l, r);
+		} else {
+			var x = _v0;
+			return x;
+		}
+	});
+var $elm$core$Dict$update = F3(
+	function (targetKey, alter, dictionary) {
+		var _v0 = alter(
+			A2($elm$core$Dict$get, targetKey, dictionary));
+		if (_v0.$ === 'Just') {
+			var value = _v0.a;
+			return A3($elm$core$Dict$insert, targetKey, value, dictionary);
+		} else {
+			return A2($elm$core$Dict$remove, targetKey, dictionary);
+		}
+	});
+var $elm$url$Url$Parser$addParam = F2(
+	function (segment, dict) {
+		var _v0 = A2($elm$core$String$split, '=', segment);
+		if ((_v0.b && _v0.b.b) && (!_v0.b.b.b)) {
+			var rawKey = _v0.a;
+			var _v1 = _v0.b;
+			var rawValue = _v1.a;
+			var _v2 = $elm$url$Url$percentDecode(rawKey);
+			if (_v2.$ === 'Nothing') {
+				return dict;
+			} else {
+				var key = _v2.a;
+				var _v3 = $elm$url$Url$percentDecode(rawValue);
+				if (_v3.$ === 'Nothing') {
+					return dict;
+				} else {
+					var value = _v3.a;
+					return A3(
+						$elm$core$Dict$update,
+						key,
+						$elm$url$Url$Parser$addToParametersHelp(value),
+						dict);
+				}
+			}
+		} else {
+			return dict;
+		}
+	});
+var $elm$core$Dict$empty = $elm$core$Dict$RBEmpty_elm_builtin;
+var $elm$url$Url$Parser$prepareQuery = function (maybeQuery) {
+	if (maybeQuery.$ === 'Nothing') {
+		return $elm$core$Dict$empty;
+	} else {
+		var qry = maybeQuery.a;
+		return A3(
+			$elm$core$List$foldr,
+			$elm$url$Url$Parser$addParam,
+			$elm$core$Dict$empty,
+			A2($elm$core$String$split, '&', qry));
+	}
+};
+var $elm$url$Url$Parser$parse = F2(
+	function (_v0, url) {
+		var parser = _v0.a;
+		return $elm$url$Url$Parser$getFirstMatch(
+			parser(
+				A5(
+					$elm$url$Url$Parser$State,
+					_List_Nil,
+					$elm$url$Url$Parser$preparePath(url.path),
+					$elm$url$Url$Parser$prepareQuery(url.query),
+					url.fragment,
+					$elm$core$Basics$identity)));
+	});
+var $author$project$Route$VshRoute = {$: 'VshRoute'};
+var $elm$url$Url$Parser$Parser = function (a) {
+	return {$: 'Parser', a: a};
+};
+var $elm$url$Url$Parser$fragment = function (toFrag) {
+	return $elm$url$Url$Parser$Parser(
+		function (_v0) {
+			var visited = _v0.visited;
+			var unvisited = _v0.unvisited;
+			var params = _v0.params;
+			var frag = _v0.frag;
+			var value = _v0.value;
+			return _List_fromArray(
+				[
+					A5(
+					$elm$url$Url$Parser$State,
+					visited,
+					unvisited,
+					params,
+					frag,
+					value(
+						toFrag(frag)))
+				]);
+		});
+};
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$Route$urlParser = function () {
+	var foo = function (maybe) {
+		var must = A2($elm$core$Maybe$withDefault, '/about', maybe);
+		return A2($elm$core$String$startsWith, '/about', must) ? $author$project$Route$AboutRoute : (A2($elm$core$String$startsWith, '/vsh', must) ? $author$project$Route$VshRoute : $author$project$Route$AboutRoute);
+	};
+	return $elm$url$Url$Parser$fragment(foo);
+}();
+var $author$project$Route$fromUrl = function (url) {
+	return A2(
+		$elm$core$Maybe$withDefault,
+		$author$project$Route$AboutRoute,
+		A2(
+			$elm$core$Debug$log,
+			'route',
+			A2($elm$url$Url$Parser$parse, $author$project$Route$urlParser, url)));
+};
+var $elm$core$Platform$Cmd$batch = _Platform_batch;
+var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
+var $author$project$About$Main$init = _Utils_Tuple2($author$project$About$Main$initModel, $elm$core$Platform$Cmd$none);
+var $author$project$Vsh$History$History = F2(
+	function (history, ptr) {
+		return {history: history, ptr: ptr};
+	});
+var $author$project$Vsh$History$empty = A2($author$project$Vsh$History$History, $elm$core$Array$empty, 0);
+var $author$project$Vsh$Text$Green = {$: 'Green'};
+var $elm$json$Json$Encode$string = _Json_wrap;
+var $elm$html$Html$Attributes$stringProperty = F2(
+	function (key, string) {
+		return A2(
+			_VirtualDom_property,
+			key,
+			$elm$json$Json$Encode$string(string));
+	});
+var $elm$html$Html$Attributes$class = $elm$html$Html$Attributes$stringProperty('className');
+var $author$project$Vsh$Text$colorToClass = function (c) {
+	return 'vsh-' + function () {
+		switch (c.$) {
+			case 'Yellow':
+				return 'yellow';
+			case 'Green':
+				return 'green';
+			default:
+				return 'magenta';
+		}
+	}();
+};
+var $elm$html$Html$span = _VirtualDom_node('span');
+var $elm$virtual_dom$VirtualDom$text = _VirtualDom_text;
+var $elm$html$Html$text = $elm$virtual_dom$VirtualDom$text;
+var $author$project$Vsh$Text$ctext = F2(
+	function (color, message) {
+		return A2(
+			$elm$html$Html$span,
+			_List_fromArray(
+				[
+					$elm$html$Html$Attributes$class(
+					'vsh-text ' + $author$project$Vsh$Text$colorToClass(color))
+				]),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(message)
+				]));
+	});
+var $author$project$Vsh$Text$Magenta = {$: 'Magenta'};
+var $author$project$Vsh$Text$Yellow = {$: 'Yellow'};
+var $author$project$Vsh$Main$prompt = _List_fromArray(
+	[
+		A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Yellow, 'guest'),
+		$elm$html$Html$text(' at '),
+		A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Magenta, 'sharpvik'),
+		$elm$html$Html$text('\n❯ ')
+	]);
+var $author$project$Vsh$Command$version = F2(
+	function (_v0, display) {
+		return _Utils_ap(
+			display,
+			_List_fromArray(
+				[
+					$elm$html$Html$text('vsh v0.1.3 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>')
+				]));
+	});
+var $author$project$Vsh$Main$greeting = _Utils_ap(
+	A2($author$project$Vsh$Command$version, 'version', _List_Nil),
+	_Utils_ap(
+		_List_fromArray(
+			[
+				$elm$html$Html$text('\nEnter '),
+				A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Green, 'help'),
+				$elm$html$Html$text(' to see available commands!\n\n')
+			]),
+		$author$project$Vsh$Main$prompt));
+var $author$project$Vsh$Main$initModel = {command: '', display: $author$project$Vsh$Main$greeting, history: $author$project$Vsh$History$empty};
+var $author$project$Vsh$Main$init = _Utils_Tuple2($author$project$Vsh$Main$initModel, $elm$core$Platform$Cmd$none);
+var $elm$core$Platform$Cmd$map = _Platform_map;
+var $author$project$Main$toKey = function (model) {
+	if (model.$ === 'AboutModel') {
+		var key = model.a;
+		return key;
+	} else {
+		var key = model.a;
+		return key;
+	}
+};
+var $author$project$Main$mux = F2(
+	function (model, url) {
+		var route = $author$project$Route$fromUrl(url);
+		var norm = F3(
+			function (toModel, toMsg, _v1) {
+				var subModel = _v1.a;
+				var cmd = _v1.b;
+				return _Utils_Tuple2(
+					toModel(subModel),
+					A2($elm$core$Platform$Cmd$map, toMsg, cmd));
+			});
+		var key = $author$project$Main$toKey(model);
+		if (route.$ === 'AboutRoute') {
+			return A3(
+				norm,
+				$author$project$Main$AboutModel(key),
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$init);
+		} else {
+			return A3(
+				norm,
+				$author$project$Main$VshModel(key),
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$init);
+		}
+	});
+var $author$project$Main$init = F3(
+	function (_v0, url, key) {
+		return A2(
+			$author$project$Main$mux,
+			A2($author$project$Main$AboutModel, key, $author$project$About$Main$initModel),
+			url);
+	});
+var $elm$core$Platform$Sub$map = _Platform_map;
+var $elm$core$Platform$Sub$batch = _Platform_batch;
+var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
+var $author$project$About$Main$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $elm$json$Json$Decode$bool = _Json_decodeBool;
+var $author$project$Vsh$Main$Alt = function (a) {
+	return {$: 'Alt', a: a};
+};
+var $author$project$Vsh$Main$ArrowDown = {$: 'ArrowDown'};
+var $author$project$Vsh$Main$ArrowUp = {$: 'ArrowUp'};
+var $author$project$Vsh$Main$Backspace = {$: 'Backspace'};
+var $author$project$Vsh$Main$Ctrl = function (a) {
+	return {$: 'Ctrl', a: a};
+};
+var $author$project$Vsh$Main$Enter = {$: 'Enter'};
+var $author$project$Vsh$Main$Symbol = function (a) {
+	return {$: 'Symbol', a: a};
+};
+var $author$project$Vsh$Main$Tab = {$: 'Tab'};
+var $author$project$Vsh$Main$Other = {$: 'Other'};
+var $elm$core$Basics$neq = _Utils_notEqual;
+var $author$project$Vsh$Main$specialKeyEvent = F2(
+	function (event, key) {
+		if ($elm$core$String$length(key) !== 1) {
+			return $author$project$Vsh$Main$Other;
+		} else {
+			var _v0 = $elm$core$String$uncons(key);
+			if (_v0.$ === 'Just') {
+				var _v1 = _v0.a;
+				var _char = _v1.a;
+				return event(_char);
+			} else {
+				return $author$project$Vsh$Main$Other;
+			}
+		}
+	});
+var $author$project$Vsh$Main$eventConstructor = F3(
+	function (ctrl, alt, key) {
+		if (ctrl) {
+			return A2($author$project$Vsh$Main$specialKeyEvent, $author$project$Vsh$Main$Ctrl, key);
+		} else {
+			if (alt) {
+				return A2($author$project$Vsh$Main$specialKeyEvent, $author$project$Vsh$Main$Alt, key);
+			} else {
+				switch (key) {
+					case 'Tab':
+						return $author$project$Vsh$Main$Tab;
+					case 'Enter':
+						return $author$project$Vsh$Main$Enter;
+					case 'Backspace':
+						return $author$project$Vsh$Main$Backspace;
+					case 'ArrowUp':
+						return $author$project$Vsh$Main$ArrowUp;
+					case 'ArrowDown':
+						return $author$project$Vsh$Main$ArrowDown;
+					default:
+						var _char = key;
+						return A2($author$project$Vsh$Main$specialKeyEvent, $author$project$Vsh$Main$Symbol, _char);
+				}
+			}
+		}
+	});
+var $elm$json$Json$Decode$field = _Json_decodeField;
+var $elm$json$Json$Decode$map3 = _Json_map3;
+var $elm$json$Json$Decode$string = _Json_decodeString;
+var $author$project$Vsh$Main$eventDecoder = A4(
+	$elm$json$Json$Decode$map3,
+	$author$project$Vsh$Main$eventConstructor,
+	A2($elm$json$Json$Decode$field, 'ctrlKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'altKey', $elm$json$Json$Decode$bool),
+	A2($elm$json$Json$Decode$field, 'key', $elm$json$Json$Decode$string));
+var $author$project$Vsh$Main$Clear = {$: 'Clear'};
+var $author$project$Vsh$Main$Exit = {$: 'Exit'};
+var $author$project$Vsh$Main$Ignore = {$: 'Ignore'};
+var $author$project$Vsh$Main$KeyDown = function (a) {
+	return {$: 'KeyDown', a: a};
+};
+var $author$project$Vsh$Main$toKeyDownMsg = function (event) {
+	_v0$3:
+	while (true) {
+		switch (event.$) {
+			case 'Ctrl':
+				switch (event.a.valueOf()) {
+					case ';':
+						return $author$project$Vsh$Main$Clear;
+					case 'e':
+						return $author$project$Vsh$Main$Exit;
+					default:
+						break _v0$3;
+				}
+			case 'Other':
+				return $author$project$Vsh$Main$Ignore;
+			default:
+				break _v0$3;
+		}
+	}
+	var e = event;
+	return $author$project$Vsh$Main$KeyDown(e);
+};
+var $author$project$Vsh$Main$keydownHandler = A2($elm$json$Json$Decode$map, $author$project$Vsh$Main$toKeyDownMsg, $author$project$Vsh$Main$eventDecoder);
+var $elm$browser$Browser$Events$Document = {$: 'Document'};
+var $elm$browser$Browser$Events$MySub = F3(
+	function (a, b, c) {
+		return {$: 'MySub', a: a, b: b, c: c};
+	});
+var $elm$browser$Browser$Events$State = F2(
+	function (subs, pids) {
+		return {pids: pids, subs: subs};
+	});
+var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
+	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
+var $elm$browser$Browser$Events$nodeToKey = function (node) {
+	if (node.$ === 'Document') {
+		return 'd_';
+	} else {
+		return 'w_';
+	}
+};
+var $elm$browser$Browser$Events$addKey = function (sub) {
+	var node = sub.a;
+	var name = sub.b;
+	return _Utils_Tuple2(
+		_Utils_ap(
+			$elm$browser$Browser$Events$nodeToKey(node),
+			name),
+		sub);
+};
 var $elm$core$Dict$fromList = function (assocs) {
 	return A3(
 		$elm$core$List$foldl,
@@ -5763,9 +6418,74 @@ var $elm$browser$Browser$Events$on = F3(
 			A3($elm$browser$Browser$Events$MySub, node, name, decoder));
 	});
 var $elm$browser$Browser$Events$onKeyDown = A2($elm$browser$Browser$Events$on, $elm$browser$Browser$Events$Document, 'keydown');
-var $author$project$Main$subscriptions = function (_v0) {
-	return $elm$browser$Browser$Events$onKeyDown($author$project$Main$keydownHandler);
+var $author$project$Vsh$Main$subscriptions = function (_v0) {
+	return $elm$browser$Browser$Events$onKeyDown($author$project$Vsh$Main$keydownHandler);
 };
+var $author$project$Main$subscriptions = function (model) {
+	if (model.$ === 'AboutModel') {
+		var mo = model.b;
+		return A2(
+			$elm$core$Platform$Sub$map,
+			$author$project$Main$GotAboutMsg,
+			$author$project$About$Main$subscriptions(mo));
+	} else {
+		var mo = model.b;
+		return A2(
+			$elm$core$Platform$Sub$map,
+			$author$project$Main$GotVshMsg,
+			$author$project$Vsh$Main$subscriptions(mo));
+	}
+};
+var $elm$browser$Browser$Navigation$load = _Browser_load;
+var $elm$browser$Browser$Navigation$pushUrl = _Browser_pushUrl;
+var $elm$url$Url$addPort = F2(
+	function (maybePort, starter) {
+		if (maybePort.$ === 'Nothing') {
+			return starter;
+		} else {
+			var port_ = maybePort.a;
+			return starter + (':' + $elm$core$String$fromInt(port_));
+		}
+	});
+var $elm$url$Url$addPrefixed = F3(
+	function (prefix, maybeSegment, starter) {
+		if (maybeSegment.$ === 'Nothing') {
+			return starter;
+		} else {
+			var segment = maybeSegment.a;
+			return _Utils_ap(
+				starter,
+				_Utils_ap(prefix, segment));
+		}
+	});
+var $elm$url$Url$toString = function (url) {
+	var http = function () {
+		var _v0 = url.protocol;
+		if (_v0.$ === 'Http') {
+			return 'http://';
+		} else {
+			return 'https://';
+		}
+	}();
+	return A3(
+		$elm$url$Url$addPrefixed,
+		'#',
+		url.fragment,
+		A3(
+			$elm$url$Url$addPrefixed,
+			'?',
+			url.query,
+			_Utils_ap(
+				A2(
+					$elm$url$Url$addPort,
+					url.port_,
+					_Utils_ap(http, url.host)),
+				url.path)));
+};
+var $author$project$About$Main$update = F2(
+	function (_v0, model) {
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
+	});
 var $elm$core$Basics$negate = function (n) {
 	return -n;
 };
@@ -5774,7 +6494,7 @@ var $elm$core$String$dropRight = F2(
 		return (n < 1) ? string : A3($elm$core$String$slice, 0, -n, string);
 	});
 var $elm$json$Json$Encode$null = _Json_encodeNull;
-var $author$project$Main$exit = _Platform_outgoingPort(
+var $author$project$Vsh$Main$exit = _Platform_outgoingPort(
 	'exit',
 	function ($) {
 		return $elm$json$Json$Encode$null;
@@ -5829,16 +6549,7 @@ var $elm$core$Array$isEmpty = function (_v0) {
 	var len = _v0.a;
 	return !len;
 };
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
-	});
-var $author$project$History$lookup = F2(
+var $author$project$Vsh$History$lookup = F2(
 	function (getptr, history) {
 		var ptr = getptr(history);
 		return $elm$core$Array$isEmpty(history.history) ? $elm$core$Maybe$Nothing : $elm$core$Maybe$Just(
@@ -5851,9 +6562,9 @@ var $author$project$History$lookup = F2(
 					history,
 					{ptr: ptr})));
 	});
-var $author$project$Main$maybeLookupHistory = F2(
+var $author$project$Vsh$Main$maybeLookupHistory = F2(
 	function (getptr, model) {
-		var _v0 = A2($author$project$History$lookup, getptr, model.history);
+		var _v0 = A2($author$project$Vsh$History$lookup, getptr, model.history);
 		if (_v0.$ === 'Nothing') {
 			return model;
 		} else {
@@ -5869,20 +6580,20 @@ var $elm$core$Array$length = function (_v0) {
 	var len = _v0.a;
 	return len;
 };
-var $author$project$History$next = function (history) {
+var $author$project$Vsh$History$next = function (history) {
 	return (_Utils_cmp(
 		$elm$core$Array$length(history.history),
 		history.ptr + 1) > 0) ? (history.ptr + 1) : 0;
 };
-var $author$project$History$prev = function (history) {
+var $author$project$Vsh$History$prev = function (history) {
 	return (!history.ptr) ? ($elm$core$Array$length(history.history) - 1) : (history.ptr - 1);
 };
-var $author$project$Main$scroll = _Platform_outgoingPort(
+var $author$project$Vsh$Main$scroll = _Platform_outgoingPort(
 	'scroll',
 	function ($) {
 		return $elm$json$Json$Encode$null;
 	});
-var $author$project$Command$clear = F2(
+var $author$project$Vsh$Command$clear = F2(
 	function (_v0, _v1) {
 		return _List_Nil;
 	});
@@ -5893,7 +6604,7 @@ var $elm$html$Html$Attributes$href = function (url) {
 		'href',
 		_VirtualDom_noJavaScriptUri(url));
 };
-var $author$project$Command$cv = F2(
+var $author$project$Vsh$Command$cv = F2(
 	function (_v0, display) {
 		return _Utils_ap(
 			display,
@@ -5912,7 +6623,7 @@ var $author$project$Command$cv = F2(
 						]))
 				]));
 	});
-var $author$project$Command$exit = F2(
+var $author$project$Vsh$Command$exit = F2(
 	function (_v0, display) {
 		return _Utils_ap(
 			display,
@@ -5921,7 +6632,7 @@ var $author$project$Command$exit = F2(
 					$elm$html$Html$text('Shutting down...')
 				]));
 	});
-var $author$project$Command$git = F2(
+var $author$project$Vsh$Command$git = F2(
 	function (_v0, display) {
 		return _Utils_ap(
 			display,
@@ -5962,7 +6673,7 @@ var $elm$core$String$padRight = F3(
 				n - $elm$core$String$length(string),
 				$elm$core$String$fromChar(_char)));
 	});
-var $author$project$Command$help = F2(
+var $author$project$Vsh$Command$help = F2(
 	function (_v0, display) {
 		var entry = F2(
 			function (command, description) {
@@ -5970,8 +6681,8 @@ var $author$project$Command$help = F2(
 					[
 						$elm$html$Html$text('\n    '),
 						A2(
-						$author$project$Vsh$ctext,
-						$author$project$Vsh$Green,
+						$author$project$Vsh$Text$ctext,
+						$author$project$Vsh$Text$Green,
 						A3(
 							$elm$core$String$padRight,
 							8,
@@ -6007,14 +6718,14 @@ var $author$project$Command$help = F2(
 													A2(entry, 'clear', 'clear screen'),
 													A2(entry, 'exit', 'exit vsh session'))))))))))));
 	});
-var $author$project$Command$jobs = F2(
+var $author$project$Vsh$Command$jobs = F2(
 	function (_v0, display) {
 		return _Utils_ap(
 			display,
 			_List_fromArray(
 				[
 					$elm$html$Html$text('Before you offer me a job, I\'d like to tell you a few things:\n\n    1. I specialise in cloud services and web development, but I\'m open to\n       interesting offers!\n    2. I am a uni student; during my term time, I can only work 20 hr./week.\n    3. Nevertheless, full-time work is possible during the term breaks.\n       \nUse the '),
-					A2($author$project$Vsh$ctext, $author$project$Vsh$Green, 'touch'),
+					A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Green, 'touch'),
 					$elm$html$Html$text(' command to get in touch.')
 				]));
 	});
@@ -6043,7 +6754,7 @@ var $elm$core$List$repeat = F2(
 	function (n, value) {
 		return A3($elm$core$List$repeatHelp, _List_Nil, n, value);
 	});
-var $author$project$Command$top = F2(
+var $author$project$Vsh$Command$top = F2(
 	function (_v0, display) {
 		var bars = F2(
 			function (m, n) {
@@ -6052,7 +6763,7 @@ var $author$project$Command$top = F2(
 		var coloredLevel = F3(
 			function (color, m, n) {
 				return A2(
-					$author$project$Vsh$ctext,
+					$author$project$Vsh$Text$ctext,
 					color,
 					A2(
 						$elm$core$String$join,
@@ -6062,12 +6773,12 @@ var $author$project$Command$top = F2(
 							A2(bars, n, m),
 							'|')));
 			});
-		var elementary = A2(coloredLevel, $author$project$Vsh$Green, 12);
+		var elementary = A2(coloredLevel, $author$project$Vsh$Text$Green, 12);
 		var intermediate = function (n20) {
-			return A3(coloredLevel, $author$project$Vsh$Yellow, 5, n20 - 12);
+			return A3(coloredLevel, $author$project$Vsh$Text$Yellow, 5, n20 - 12);
 		};
 		var advanced = function (n20) {
-			return A3(coloredLevel, $author$project$Vsh$Magenta, 3, n20 - 17);
+			return A3(coloredLevel, $author$project$Vsh$Text$Magenta, 3, n20 - 17);
 		};
 		var level = function (n) {
 			var n20 = A2($elm$core$Basics$min, n, 20);
@@ -6121,7 +6832,7 @@ var $author$project$Command$top = F2(
 										A2(skill, 'Haskell', 12),
 										A2(skill, 'Elm', 9)))))))));
 	});
-var $author$project$Command$touch = F2(
+var $author$project$Vsh$Command$touch = F2(
 	function (_v0, display) {
 		var linkWithTheSameText = function (url) {
 			return A2(
@@ -6180,7 +6891,7 @@ var $author$project$Command$touch = F2(
 							'linkedin',
 							linkWithTheSameText('https://www.linkedin.com/in/sharpvik'))))));
 	});
-var $author$project$Command$whoami = F2(
+var $author$project$Vsh$Command$whoami = F2(
 	function (_v0, display) {
 		return _Utils_ap(
 			display,
@@ -6189,28 +6900,28 @@ var $author$project$Command$whoami = F2(
 					$elm$html$Html$text('Hey, my name is Viktor! \nI study Computer Science in the University of Southampton.\n\nAt work, I currently specialise in high-throughput microservices. I build them\nwith Go and Python. However, I also enjoy playing around with Haskell, Elm,\nVue.js, and Rust.\n\nIn my spare time, I dabble in compiler design and implementation. I love\ncreating new programming languages! Given a chance, I\'d like to do some\nprofessional research into deterministic garbage collection within pure\nfunctional languages.')
 				]));
 	});
-var $author$project$Command$eval = function (command) {
+var $author$project$Vsh$Command$eval = function (command) {
 	switch (command) {
 		case 'whoami':
-			return $elm$core$Maybe$Just($author$project$Command$whoami);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$whoami);
 		case 'top':
-			return $elm$core$Maybe$Just($author$project$Command$top);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$top);
 		case 'cv':
-			return $elm$core$Maybe$Just($author$project$Command$cv);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$cv);
 		case 'jobs':
-			return $elm$core$Maybe$Just($author$project$Command$jobs);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$jobs);
 		case 'touch':
-			return $elm$core$Maybe$Just($author$project$Command$touch);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$touch);
 		case 'help':
-			return $elm$core$Maybe$Just($author$project$Command$help);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$help);
 		case 'version':
-			return $elm$core$Maybe$Just($author$project$Command$version);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$version);
 		case 'git':
-			return $elm$core$Maybe$Just($author$project$Command$git);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$git);
 		case 'clear':
-			return $elm$core$Maybe$Just($author$project$Command$clear);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$clear);
 		case 'exit':
-			return $elm$core$Maybe$Just($author$project$Command$exit);
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$exit);
 		default:
 			return $elm$core$Maybe$Nothing;
 	}
@@ -6225,14 +6936,14 @@ var $elm$core$List$head = function (list) {
 	}
 };
 var $elm$core$String$words = _String_words;
-var $author$project$Command$exec = F2(
+var $author$project$Vsh$Command$exec = F2(
 	function (command, display) {
 		var wrongCommand = F2(
 			function (label, string) {
 				return _List_fromArray(
 					[
 						$elm$html$Html$text(label + ' command: '),
-						A2($author$project$Vsh$ctext, $author$project$Vsh$Magenta, string)
+						A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Magenta, string)
 					]);
 			});
 		var maybeCommand = $elm$core$List$head(
@@ -6243,7 +6954,7 @@ var $author$project$Command$exec = F2(
 				A2(wrongCommand, 'Weird', command));
 		} else {
 			var cmd = maybeCommand.a;
-			var _v1 = $author$project$Command$eval(cmd);
+			var _v1 = $author$project$Vsh$Command$eval(cmd);
 			if (_v1.$ === 'Nothing') {
 				return _Utils_ap(
 					display,
@@ -6340,7 +7051,7 @@ var $elm$core$Array$push = F2(
 			A2($elm$core$Elm$JsArray$push, a, tail),
 			array);
 	});
-var $author$project$History$update = F2(
+var $author$project$Vsh$History$update = F2(
 	function (command, history) {
 		return _Utils_update(
 			history,
@@ -6349,10 +7060,10 @@ var $author$project$History$update = F2(
 				ptr: $elm$core$Array$length(history.history) + 1
 			});
 	});
-var $author$project$Main$updateOnCommand = F2(
+var $author$project$Vsh$Main$updateOnCommand = F2(
 	function (model, command) {
 		var display = A2(
-			$author$project$Command$exec,
+			$author$project$Vsh$Command$exec,
 			command,
 			_Utils_ap(
 				model.display,
@@ -6364,32 +7075,27 @@ var $author$project$Main$updateOnCommand = F2(
 			$elm$core$List$cons,
 			$elm$html$Html$text(
 				$elm$core$List$isEmpty(display) ? '' : '\n\n'),
-			$author$project$Main$prompt);
+			$author$project$Vsh$Main$prompt);
 		return {
 			command: '',
 			display: _Utils_ap(display, promptWithOffset),
-			history: A2($author$project$History$update, command, model.history)
+			history: A2($author$project$Vsh$History$update, command, model.history)
 		};
 	});
-var $author$project$Main$updateOnKeydown = F3(
+var $author$project$Vsh$Main$updateOnKeydown = F3(
 	function (msg, model, command) {
 		switch (msg.$) {
 			case 'Clear':
 				return _Utils_Tuple2(
-					A2($author$project$Main$updateOnCommand, model, 'clear'),
+					A2($author$project$Vsh$Main$updateOnCommand, model, 'clear'),
 					$elm$core$Platform$Cmd$none);
 			case 'Exit':
 				return _Utils_Tuple2(
-					A2($author$project$Main$updateOnCommand, model, 'exit'),
-					$elm$core$Platform$Cmd$batch(
-						_List_fromArray(
-							[
-								$author$project$Main$exit(_Utils_Tuple0),
-								$author$project$Main$scroll(_Utils_Tuple0)
-							])));
+					A2($author$project$Vsh$Main$updateOnCommand, model, 'exit'),
+					$author$project$Vsh$Main$exit(_Utils_Tuple0));
 			case 'Ignore':
 				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			case 'KeyDown':
+			default:
 				switch (msg.a.$) {
 					case 'Symbol':
 						var _char = msg.a.a;
@@ -6412,8 +7118,8 @@ var $author$project$Main$updateOnKeydown = F3(
 					case 'Enter':
 						var _v2 = msg.a;
 						return _Utils_Tuple2(
-							A2($author$project$Main$updateOnCommand, model, command),
-							$author$project$Main$scroll(_Utils_Tuple0));
+							A2($author$project$Vsh$Main$updateOnCommand, model, command),
+							$author$project$Vsh$Main$scroll(_Utils_Tuple0));
 					case 'Backspace':
 						var _v3 = msg.a;
 						return _Utils_Tuple2(
@@ -6426,12 +7132,12 @@ var $author$project$Main$updateOnKeydown = F3(
 					case 'ArrowUp':
 						var _v4 = msg.a;
 						return _Utils_Tuple2(
-							A2($author$project$Main$maybeLookupHistory, $author$project$History$prev, model),
+							A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$prev, model),
 							$elm$core$Platform$Cmd$none);
 					case 'ArrowDown':
 						var _v5 = msg.a;
 						return _Utils_Tuple2(
-							A2($author$project$Main$maybeLookupHistory, $author$project$History$next, model),
+							A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$next, model),
 							$elm$core$Platform$Cmd$none);
 					case 'Ctrl':
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -6441,16 +7147,113 @@ var $author$project$Main$updateOnKeydown = F3(
 						var _v6 = msg.a;
 						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 				}
-			case 'LinkClicked':
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			default:
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 		}
+	});
+var $author$project$Vsh$Main$update = F2(
+	function (msg, model) {
+		return A3($author$project$Vsh$Main$updateOnKeydown, msg, model, model.command);
 	});
 var $author$project$Main$update = F2(
 	function (msg, model) {
-		return A3($author$project$Main$updateOnKeydown, msg, model, model.command);
+		var norm = F3(
+			function (toModel, toMsg, _v4) {
+				var subModel = _v4.a;
+				var cmd = _v4.b;
+				return _Utils_Tuple2(
+					toModel(subModel),
+					A2($elm$core$Platform$Cmd$map, toMsg, cmd));
+			});
+		var key = $author$project$Main$toKey(model);
+		var _v0 = _Utils_Tuple2(msg, model);
+		_v0$4:
+		while (true) {
+			switch (_v0.a.$) {
+				case 'GotVshMsg':
+					if (_v0.b.$ === 'VshModel') {
+						var ms = _v0.a.a;
+						var _v1 = _v0.b;
+						var mo = _v1.b;
+						return A3(
+							norm,
+							$author$project$Main$VshModel(key),
+							$author$project$Main$GotVshMsg,
+							A2($author$project$Vsh$Main$update, ms, mo));
+					} else {
+						break _v0$4;
+					}
+				case 'GotAboutMsg':
+					if (_v0.b.$ === 'AboutModel') {
+						var ms = _v0.a.a;
+						var _v2 = _v0.b;
+						var mo = _v2.b;
+						return A3(
+							norm,
+							$author$project$Main$AboutModel(key),
+							$author$project$Main$GotAboutMsg,
+							A2($author$project$About$Main$update, ms, mo));
+					} else {
+						break _v0$4;
+					}
+				case 'LinkChanged':
+					var url = _v0.a.a;
+					return A2($author$project$Main$mux, model, url);
+				default:
+					var urlRequest = _v0.a.a;
+					if (urlRequest.$ === 'Internal') {
+						var url = urlRequest.a;
+						return _Utils_Tuple2(
+							model,
+							A2(
+								$elm$browser$Browser$Navigation$pushUrl,
+								key,
+								$elm$url$Url$toString(url)));
+					} else {
+						var href = urlRequest.a;
+						return _Utils_Tuple2(
+							model,
+							$elm$browser$Browser$Navigation$load(href));
+					}
+			}
+		}
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
+var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
+var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $author$project$Route$toString = function (route) {
+	var p = $elm$core$Basics$append('/#/');
+	if (route.$ === 'AboutRoute') {
+		return p('about');
+	} else {
+		return p('vsh');
+	}
+};
+var $author$project$About$Main$view = function (_v0) {
+	return {
+		body: _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$h1,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('About Page')
+					])),
+				A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href(
+						$author$project$Route$toString($author$project$Route$VshRoute))
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Terminal')
+					]))
+			]),
+		title: 'About Me'
+	};
+};
 var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$header = _VirtualDom_node('header');
@@ -6473,7 +7276,7 @@ var $elm$html$Html$Events$onClick = function (msg) {
 };
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $author$project$Main$vshDisplay = function (display) {
+var $author$project$Vsh$Main$vshDisplay = function (display) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
@@ -6502,7 +7305,7 @@ var $author$project$Main$vshDisplay = function (display) {
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('vsh-close'),
-								$elm$html$Html$Events$onClick($author$project$Main$Exit)
+								$elm$html$Html$Events$onClick($author$project$Vsh$Main$Exit)
 							]),
 						_List_Nil)
 					])),
@@ -6520,11 +7323,11 @@ var $author$project$Main$vshDisplay = function (display) {
 						])))
 			]));
 };
-var $author$project$Main$view = function (model) {
+var $author$project$Vsh$Main$view = function (model) {
 	return {
 		body: _List_fromArray(
 			[
-				$author$project$Main$vshDisplay(
+				$author$project$Vsh$Main$vshDisplay(
 				_Utils_ap(
 					model.display,
 					_List_fromArray(
@@ -6534,6 +7337,33 @@ var $author$project$Main$view = function (model) {
 			]),
 		title: 'Viktor = 💻 ☕ ❤️'
 	};
+};
+var $author$project$Main$view = function (model) {
+	var norm = F2(
+		function (toMsg, _v1) {
+			var title = _v1.title;
+			var body = _v1.body;
+			return {
+				body: A2(
+					$elm$core$List$map,
+					$elm$html$Html$map(toMsg),
+					body),
+				title: title
+			};
+		});
+	if (model.$ === 'AboutModel') {
+		var mo = model.b;
+		return A2(
+			norm,
+			$author$project$Main$GotAboutMsg,
+			$author$project$About$Main$view(mo));
+	} else {
+		var mo = model.b;
+		return A2(
+			norm,
+			$author$project$Main$GotVshMsg,
+			$author$project$Vsh$Main$view(mo));
+	}
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
 	{init: $author$project$Main$init, onUrlChange: $author$project$Main$LinkChanged, onUrlRequest: $author$project$Main$LinkClicked, subscriptions: $author$project$Main$subscriptions, update: $author$project$Main$update, view: $author$project$Main$view});

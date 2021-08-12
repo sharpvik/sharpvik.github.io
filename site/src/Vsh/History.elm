@@ -1,4 +1,4 @@
-module History exposing (..)
+module Vsh.History exposing (..)
 
 import Array exposing (Array)
 
