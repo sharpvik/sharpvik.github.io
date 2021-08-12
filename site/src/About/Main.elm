@@ -51,7 +51,7 @@ initModel =
 
 view : Model -> Document Msg
 view _ =
-    { title = "About Me"
+    { title = "👽 About Me"
     , body =
         [ h1 [] [ text "About Page" ]
         , a [ href <| Route.toString VshRoute ] [ text "Terminal" ]

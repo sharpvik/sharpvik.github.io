@@ -7,7 +7,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as Decode
-import Url exposing (Url)
+import Route exposing (Route(..))
 import Vsh.Command
 import Vsh.History exposing (History)
 import Vsh.Text exposing (Color(..), ctext)
@@ -97,7 +97,7 @@ prompt =
 
 view : Model -> Document Msg
 view model =
-    { title = "Viktor = 💻 ☕ ❤️"
+    { title = "💻 ️vsh shell"
     , body = [ vshDisplay <| model.display ++ [ text model.command ] ]
     }
 
@@ -112,9 +112,9 @@ vshDisplay display =
             ]
             [ p []
                 [ text "vsh shell" ]
-            , button
+            , a
                 [ class "vsh-close"
-                , onClick Exit
+                , href <| Route.toString AboutRoute
                 ]
                 []
             ]
@@ -158,18 +158,11 @@ updateOnKeydown msg model command =
             ( updateOnCommand model "clear", Cmd.none )
 
         Exit ->
-            ( updateOnCommand model "exit", exit () )
+            ( model
+            , Nav.load <| Route.toString AboutRoute
+            )
 
-        Ignore ->
-            ( model, Cmd.none )
-
-        KeyDown (Ctrl _) ->
-            ( model, Cmd.none )
-
-        KeyDown (Alt _) ->
-            ( model, Cmd.none )
-
-        KeyDown Other ->
+        _ ->
             ( model, Cmd.none )
 
 
@@ -294,6 +287,3 @@ toKeyDownMsg event =
 
 
 port scroll : () -> Cmd msg
-
-
-port exit : () -> Cmd msg
