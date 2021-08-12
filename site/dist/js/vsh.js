@@ -5221,6 +5221,25 @@ var $author$project$Main$VshModel = F2(
 		return {$: 'VshModel', a: a, b: b};
 	});
 var $author$project$Route$AboutRoute = {$: 'AboutRoute'};
+var $elm$core$Maybe$withDefault = F2(
+	function (_default, maybe) {
+		if (maybe.$ === 'Just') {
+			var value = maybe.a;
+			return value;
+		} else {
+			return _default;
+		}
+	});
+var $author$project$Route$fake = function (path) {
+	return {
+		fragment: $elm$core$Maybe$Nothing,
+		host: 'example.com',
+		path: A2($elm$core$Maybe$withDefault, '/about', path.fragment),
+		port_: $elm$core$Maybe$Nothing,
+		protocol: $elm$url$Url$Http,
+		query: $elm$core$Maybe$Nothing
+	};
+};
 var $elm$core$Debug$log = _Debug_log;
 var $elm$url$Url$Parser$State = F5(
 	function (visited, unvisited, params, frag, value) {
@@ -5860,7 +5879,67 @@ var $author$project$Route$VshRoute = {$: 'VshRoute'};
 var $elm$url$Url$Parser$Parser = function (a) {
 	return {$: 'Parser', a: a};
 };
-var $elm$url$Url$Parser$fragment = function (toFrag) {
+var $elm$url$Url$Parser$mapState = F2(
+	function (func, _v0) {
+		var visited = _v0.visited;
+		var unvisited = _v0.unvisited;
+		var params = _v0.params;
+		var frag = _v0.frag;
+		var value = _v0.value;
+		return A5(
+			$elm$url$Url$Parser$State,
+			visited,
+			unvisited,
+			params,
+			frag,
+			func(value));
+	});
+var $elm$url$Url$Parser$map = F2(
+	function (subValue, _v0) {
+		var parseArg = _v0.a;
+		return $elm$url$Url$Parser$Parser(
+			function (_v1) {
+				var visited = _v1.visited;
+				var unvisited = _v1.unvisited;
+				var params = _v1.params;
+				var frag = _v1.frag;
+				var value = _v1.value;
+				return A2(
+					$elm$core$List$map,
+					$elm$url$Url$Parser$mapState(value),
+					parseArg(
+						A5($elm$url$Url$Parser$State, visited, unvisited, params, frag, subValue)));
+			});
+	});
+var $elm$core$List$append = F2(
+	function (xs, ys) {
+		if (!ys.b) {
+			return xs;
+		} else {
+			return A3($elm$core$List$foldr, $elm$core$List$cons, ys, xs);
+		}
+	});
+var $elm$core$List$concat = function (lists) {
+	return A3($elm$core$List$foldr, $elm$core$List$append, _List_Nil, lists);
+};
+var $elm$core$List$concatMap = F2(
+	function (f, list) {
+		return $elm$core$List$concat(
+			A2($elm$core$List$map, f, list));
+	});
+var $elm$url$Url$Parser$oneOf = function (parsers) {
+	return $elm$url$Url$Parser$Parser(
+		function (state) {
+			return A2(
+				$elm$core$List$concatMap,
+				function (_v0) {
+					var parser = _v0.a;
+					return parser(state);
+				},
+				parsers);
+		});
+};
+var $elm$url$Url$Parser$s = function (str) {
 	return $elm$url$Url$Parser$Parser(
 		function (_v0) {
 			var visited = _v0.visited;
@@ -5868,35 +5947,42 @@ var $elm$url$Url$Parser$fragment = function (toFrag) {
 			var params = _v0.params;
 			var frag = _v0.frag;
 			var value = _v0.value;
-			return _List_fromArray(
-				[
-					A5(
-					$elm$url$Url$Parser$State,
-					visited,
-					unvisited,
-					params,
-					frag,
-					value(
-						toFrag(frag)))
-				]);
+			if (!unvisited.b) {
+				return _List_Nil;
+			} else {
+				var next = unvisited.a;
+				var rest = unvisited.b;
+				return _Utils_eq(next, str) ? _List_fromArray(
+					[
+						A5(
+						$elm$url$Url$Parser$State,
+						A2($elm$core$List$cons, next, visited),
+						rest,
+						params,
+						frag,
+						value)
+					]) : _List_Nil;
+			}
 		});
 };
-var $elm$core$Maybe$withDefault = F2(
-	function (_default, maybe) {
-		if (maybe.$ === 'Just') {
-			var value = maybe.a;
-			return value;
-		} else {
-			return _default;
-		}
+var $elm$url$Url$Parser$top = $elm$url$Url$Parser$Parser(
+	function (state) {
+		return _List_fromArray(
+			[state]);
 	});
-var $author$project$Route$urlParser = function () {
-	var foo = function (maybe) {
-		var must = A2($elm$core$Maybe$withDefault, '/about', maybe);
-		return A2($elm$core$String$startsWith, '/about', must) ? $author$project$Route$AboutRoute : (A2($elm$core$String$startsWith, '/vsh', must) ? $author$project$Route$VshRoute : $author$project$Route$AboutRoute);
-	};
-	return $elm$url$Url$Parser$fragment(foo);
-}();
+var $author$project$Route$urlParser = $elm$url$Url$Parser$oneOf(
+	_List_fromArray(
+		[
+			A2($elm$url$Url$Parser$map, $author$project$Route$AboutRoute, $elm$url$Url$Parser$top),
+			A2(
+			$elm$url$Url$Parser$map,
+			$author$project$Route$AboutRoute,
+			$elm$url$Url$Parser$s('about')),
+			A2(
+			$elm$url$Url$Parser$map,
+			$author$project$Route$VshRoute,
+			$elm$url$Url$Parser$s('vsh'))
+		]));
 var $author$project$Route$fromUrl = function (url) {
 	return A2(
 		$elm$core$Maybe$withDefault,
@@ -5904,7 +5990,10 @@ var $author$project$Route$fromUrl = function (url) {
 		A2(
 			$elm$core$Debug$log,
 			'route',
-			A2($elm$url$Url$Parser$parse, $author$project$Route$urlParser, url)));
+			A2(
+				$elm$url$Url$Parser$parse,
+				$author$project$Route$urlParser,
+				$author$project$Route$fake(url))));
 };
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
@@ -6493,12 +6582,6 @@ var $elm$core$String$dropRight = F2(
 	function (n, string) {
 		return (n < 1) ? string : A3($elm$core$String$slice, 0, -n, string);
 	});
-var $elm$json$Json$Encode$null = _Json_encodeNull;
-var $author$project$Vsh$Main$exit = _Platform_outgoingPort(
-	'exit',
-	function ($) {
-		return $elm$json$Json$Encode$null;
-	});
 var $elm$core$String$cons = _String_cons;
 var $elm$core$String$fromChar = function (_char) {
 	return A2($elm$core$String$cons, _char, '');
@@ -6588,11 +6671,49 @@ var $author$project$Vsh$History$next = function (history) {
 var $author$project$Vsh$History$prev = function (history) {
 	return (!history.ptr) ? ($elm$core$Array$length(history.history) - 1) : (history.ptr - 1);
 };
+var $elm$json$Json$Encode$null = _Json_encodeNull;
 var $author$project$Vsh$Main$scroll = _Platform_outgoingPort(
 	'scroll',
 	function ($) {
 		return $elm$json$Json$Encode$null;
 	});
+var $elm$url$Url$Builder$toQueryPair = function (_v0) {
+	var key = _v0.a;
+	var value = _v0.b;
+	return key + ('=' + value);
+};
+var $elm$url$Url$Builder$toQuery = function (parameters) {
+	if (!parameters.b) {
+		return '';
+	} else {
+		return '?' + A2(
+			$elm$core$String$join,
+			'&',
+			A2($elm$core$List$map, $elm$url$Url$Builder$toQueryPair, parameters));
+	}
+};
+var $elm$url$Url$Builder$absolute = F2(
+	function (pathSegments, parameters) {
+		return '/' + (A2($elm$core$String$join, '/', pathSegments) + $elm$url$Url$Builder$toQuery(parameters));
+	});
+var $author$project$Route$toString = function (route) {
+	var p = $elm$core$Basics$append('/#');
+	if (route.$ === 'AboutRoute') {
+		return p(
+			A2(
+				$elm$url$Url$Builder$absolute,
+				_List_fromArray(
+					['about']),
+				_List_Nil));
+	} else {
+		return p(
+			A2(
+				$elm$url$Url$Builder$absolute,
+				_List_fromArray(
+					['vsh']),
+				_List_Nil));
+	}
+};
 var $author$project$Vsh$Command$clear = F2(
 	function (_v0, _v1) {
 		return _List_Nil;
@@ -7084,70 +7205,70 @@ var $author$project$Vsh$Main$updateOnCommand = F2(
 	});
 var $author$project$Vsh$Main$updateOnKeydown = F3(
 	function (msg, model, command) {
-		switch (msg.$) {
-			case 'Clear':
-				return _Utils_Tuple2(
-					A2($author$project$Vsh$Main$updateOnCommand, model, 'clear'),
-					$elm$core$Platform$Cmd$none);
-			case 'Exit':
-				return _Utils_Tuple2(
-					A2($author$project$Vsh$Main$updateOnCommand, model, 'exit'),
-					$author$project$Vsh$Main$exit(_Utils_Tuple0));
-			case 'Ignore':
-				return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-			default:
-				switch (msg.a.$) {
-					case 'Symbol':
-						var _char = msg.a.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									command: _Utils_ap(
-										command,
-										$elm$core$String$fromChar(_char))
-								}),
-							$elm$core$Platform$Cmd$none);
-					case 'Tab':
-						var _v1 = msg.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{command: command + '  '}),
-							$elm$core$Platform$Cmd$none);
-					case 'Enter':
-						var _v2 = msg.a;
-						return _Utils_Tuple2(
-							A2($author$project$Vsh$Main$updateOnCommand, model, command),
-							$author$project$Vsh$Main$scroll(_Utils_Tuple0));
-					case 'Backspace':
-						var _v3 = msg.a;
-						return _Utils_Tuple2(
-							_Utils_update(
-								model,
-								{
-									command: A2($elm$core$String$dropRight, 1, command)
-								}),
-							$elm$core$Platform$Cmd$none);
-					case 'ArrowUp':
-						var _v4 = msg.a;
-						return _Utils_Tuple2(
-							A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$prev, model),
-							$elm$core$Platform$Cmd$none);
-					case 'ArrowDown':
-						var _v5 = msg.a;
-						return _Utils_Tuple2(
-							A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$next, model),
-							$elm$core$Platform$Cmd$none);
-					case 'Ctrl':
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-					case 'Alt':
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-					default:
-						var _v6 = msg.a;
-						return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
-				}
+		_v0$8:
+		while (true) {
+			switch (msg.$) {
+				case 'KeyDown':
+					switch (msg.a.$) {
+						case 'Symbol':
+							var _char = msg.a.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										command: _Utils_ap(
+											command,
+											$elm$core$String$fromChar(_char))
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 'Tab':
+							var _v1 = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{command: command + '  '}),
+								$elm$core$Platform$Cmd$none);
+						case 'Enter':
+							var _v2 = msg.a;
+							return _Utils_Tuple2(
+								A2($author$project$Vsh$Main$updateOnCommand, model, command),
+								$author$project$Vsh$Main$scroll(_Utils_Tuple0));
+						case 'Backspace':
+							var _v3 = msg.a;
+							return _Utils_Tuple2(
+								_Utils_update(
+									model,
+									{
+										command: A2($elm$core$String$dropRight, 1, command)
+									}),
+								$elm$core$Platform$Cmd$none);
+						case 'ArrowUp':
+							var _v4 = msg.a;
+							return _Utils_Tuple2(
+								A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$prev, model),
+								$elm$core$Platform$Cmd$none);
+						case 'ArrowDown':
+							var _v5 = msg.a;
+							return _Utils_Tuple2(
+								A2($author$project$Vsh$Main$maybeLookupHistory, $author$project$Vsh$History$next, model),
+								$elm$core$Platform$Cmd$none);
+						default:
+							break _v0$8;
+					}
+				case 'Clear':
+					return _Utils_Tuple2(
+						A2($author$project$Vsh$Main$updateOnCommand, model, 'clear'),
+						$elm$core$Platform$Cmd$none);
+				case 'Exit':
+					return _Utils_Tuple2(
+						model,
+						$elm$browser$Browser$Navigation$load(
+							$author$project$Route$toString($author$project$Route$AboutRoute)));
+				default:
+					break _v0$8;
+			}
 		}
+		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
 var $author$project$Vsh$Main$update = F2(
 	function (msg, model) {
@@ -7220,14 +7341,6 @@ var $author$project$Main$update = F2(
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $author$project$Route$toString = function (route) {
-	var p = $elm$core$Basics$append('/#/');
-	if (route.$ === 'AboutRoute') {
-		return p('about');
-	} else {
-		return p('vsh');
-	}
-};
 var $author$project$About$Main$view = function (_v0) {
 	return {
 		body: _List_fromArray(
@@ -7251,29 +7364,11 @@ var $author$project$About$Main$view = function (_v0) {
 						$elm$html$Html$text('Terminal')
 					]))
 			]),
-		title: 'About Me'
+		title: '👽 About Me'
 	};
 };
-var $elm$html$Html$button = _VirtualDom_node('button');
 var $elm$html$Html$div = _VirtualDom_node('div');
 var $elm$html$Html$header = _VirtualDom_node('header');
-var $elm$virtual_dom$VirtualDom$Normal = function (a) {
-	return {$: 'Normal', a: a};
-};
-var $elm$virtual_dom$VirtualDom$on = _VirtualDom_on;
-var $elm$html$Html$Events$on = F2(
-	function (event, decoder) {
-		return A2(
-			$elm$virtual_dom$VirtualDom$on,
-			event,
-			$elm$virtual_dom$VirtualDom$Normal(decoder));
-	});
-var $elm$html$Html$Events$onClick = function (msg) {
-	return A2(
-		$elm$html$Html$Events$on,
-		'click',
-		$elm$json$Json$Decode$succeed(msg));
-};
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $author$project$Vsh$Main$vshDisplay = function (display) {
@@ -7301,11 +7396,12 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 								$elm$html$Html$text('vsh shell')
 							])),
 						A2(
-						$elm$html$Html$button,
+						$elm$html$Html$a,
 						_List_fromArray(
 							[
 								$elm$html$Html$Attributes$class('vsh-close'),
-								$elm$html$Html$Events$onClick($author$project$Vsh$Main$Exit)
+								$elm$html$Html$Attributes$href(
+								$author$project$Route$toString($author$project$Route$AboutRoute))
 							]),
 						_List_Nil)
 					])),
@@ -7335,7 +7431,7 @@ var $author$project$Vsh$Main$view = function (model) {
 							$elm$html$Html$text(model.command)
 						])))
 			]),
-		title: 'Viktor = 💻 ☕ ❤️'
+		title: '💻 ️vsh shell'
 	};
 };
 var $author$project$Main$view = function (model) {
