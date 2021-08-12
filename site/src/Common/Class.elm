@@ -1,5 +1,7 @@
 module Common.Class exposing (..)
 
+-- APP
+
 
 appCenter =
     "app-center"
@@ -7,6 +9,18 @@ appCenter =
 
 appTop =
     "app-top"
+
+
+
+-- BUTTON
+
+
+button =
+    "button"
+
+
+
+-- NAVBAR
 
 
 navbar =
@@ -21,6 +35,10 @@ navbarIconActive =
     "navbar-icon-active"
 
 
+
+-- ABOUT
+
+
 aboutBg =
     "about-bg"
 
@@ -31,6 +49,14 @@ aboutH1 =
 
 aboutH3 =
     "about-h3"
+
+
+aboutButton =
+    "about-button"
+
+
+
+-- VSH
 
 
 vshBg =

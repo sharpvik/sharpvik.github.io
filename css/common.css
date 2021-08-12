@@ -24,6 +24,7 @@
 .navbar-icon {
   display: inline-block;
   line-height: 60px;
+  height: 60px;
   width: 60px;
   text-align: center;
   font-size: 32px;
@@ -39,8 +40,17 @@
 }
 .navbar-icon-active::after {
   content: "";
+  height: 5px;
+  border-radius: 5px 5px 0 0;
   display: block;
-  position: abolute;
+  position: absolute;
+  width: 10px;
   bottom: 0;
-  background-color: blue;
+  left: 25px;
+  background-color: #ccc;
+  transition: background 0.3s;
+}
+.navbar-icon-active:hover::after {
+  background: transparent;
+  transition: background 0.3s;
 }

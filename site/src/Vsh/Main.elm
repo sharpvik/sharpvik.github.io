@@ -103,7 +103,7 @@ view model =
     , body =
         [ div [ class Class.appTop, class Class.vshBg ]
             [ vshDisplay <| model.display ++ [ text model.command ] ]
-        , Element.navbar
+        , Element.navbar 1
         ]
     }
 

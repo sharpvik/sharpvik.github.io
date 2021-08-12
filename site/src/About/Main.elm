@@ -60,7 +60,7 @@ view _ =
             , h3 [ class Class.aboutH3 ] [ text "💻 Full Stack Web Developer" ]
             , h3 [ class Class.aboutH3 ] [ text "🎓 University of Southampton" ]
             ]
-        , Element.navbar
+        , Element.navbar 0
         ]
     }
 

@@ -7322,39 +7322,46 @@ var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$nav = _VirtualDom_node('nav');
 var $author$project$Common$Class$navbar = 'navbar';
 var $author$project$Common$Class$navbarIcon = 'navbar-icon';
-var $author$project$Common$Element$navbar = A2(
-	$elm$html$Html$nav,
-	_List_fromArray(
+var $author$project$Common$Class$navbarIconActive = 'navbar-icon-active';
+var $elm$core$Tuple$second = function (_v0) {
+	var y = _v0.b;
+	return y;
+};
+var $author$project$Common$Element$navbar = function (active) {
+	var sections = _List_fromArray(
 		[
-			$elm$html$Html$Attributes$class($author$project$Common$Class$navbar)
-		]),
-	_List_fromArray(
-		[
-			A2(
-			$elm$html$Html$a,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIcon),
-					$elm$html$Html$Attributes$href(
-					$author$project$Route$toString(0))
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text('👽')
-				])),
-			A2(
-			$elm$html$Html$a,
-			_List_fromArray(
-				[
-					$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIcon),
-					$elm$html$Html$Attributes$href(
-					$author$project$Route$toString(1))
-				]),
-			_List_fromArray(
-				[
-					$elm$html$Html$text('💻')
-				]))
-		]));
+			_Utils_Tuple2(0, '👽'),
+			_Utils_Tuple2(1, '💻')
+		]);
+	var mark = F2(
+		function (id, s) {
+			return A2(
+				$elm$html$Html$a,
+				_Utils_ap(
+					_Utils_eq(id, active) ? _List_fromArray(
+						[
+							$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIconActive)
+						]) : _List_Nil,
+					_List_fromArray(
+						[
+							$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIcon),
+							$elm$html$Html$Attributes$href(
+							$author$project$Route$toString(s.a))
+						])),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(s.b)
+					]));
+		});
+	var result = A2($elm$core$List$indexedMap, mark, sections);
+	return A2(
+		$elm$html$Html$nav,
+		_List_fromArray(
+			[
+				$elm$html$Html$Attributes$class($author$project$Common$Class$navbar)
+			]),
+		result);
+};
 var $author$project$About$Main$view = function (_v0) {
 	return {
 		ak: _List_fromArray(
@@ -7399,7 +7406,7 @@ var $author$project$About$Main$view = function (_v0) {
 								$elm$html$Html$text('🎓 University of Southampton')
 							]))
 					])),
-				$author$project$Common$Element$navbar
+				$author$project$Common$Element$navbar(0)
 			]),
 		aD: '👽 About Me'
 	};
@@ -7482,7 +7489,7 @@ var $author$project$Vsh$Main$view = function (model) {
 									$elm$html$Html$text(model.k)
 								])))
 					])),
-				$author$project$Common$Element$navbar
+				$author$project$Common$Element$navbar(1)
 			]),
 		aD: '💻 ️VSH Shell'
 	};
