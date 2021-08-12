@@ -1,4 +1,4 @@
-module Vsh exposing (..)
+module Vsh.Text exposing (..)
 
 import Html exposing (..)
 import Html.Attributes exposing (..)
