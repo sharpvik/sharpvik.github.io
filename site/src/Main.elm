@@ -3,6 +3,7 @@ module Main exposing (..)
 import About.Main as About
 import Browser exposing (Document, UrlRequest(..))
 import Browser.Navigation as Nav
+import Contact.Main as Contact
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -41,6 +42,7 @@ type alias Flags =
 
 type Model
     = AboutModel Nav.Key About.Model
+    | ContactModel Nav.Key Contact.Model
     | VshModel Nav.Key Vsh.Model
 
 
@@ -48,6 +50,9 @@ toKey : Model -> Nav.Key
 toKey model =
     case model of
         AboutModel key _ ->
+            key
+
+        ContactModel key _ ->
             key
 
         VshModel key _ ->
@@ -60,6 +65,7 @@ toKey model =
 
 type Msg
     = GotAboutMsg About.Msg
+    | GotContactMsg Contact.Msg
     | GotVshMsg Vsh.Msg
     | LinkClicked UrlRequest
     | LinkChanged Url
@@ -95,6 +101,9 @@ mux model url =
         AboutRoute ->
             norm (AboutModel key) GotAboutMsg About.init
 
+        ContactRoute ->
+            norm (ContactModel key) GotContactMsg Contact.init
+
         VshRoute ->
             norm (VshModel key) GotVshMsg Vsh.init
 
@@ -115,6 +124,9 @@ view model =
     case model of
         AboutModel _ mo ->
             norm GotAboutMsg <| About.view mo
+
+        ContactModel _ mo ->
+            norm GotContactMsg <| Contact.view mo
 
         VshModel _ mo ->
             norm GotVshMsg <| Vsh.view mo
@@ -173,6 +185,9 @@ subscriptions model =
     case model of
         AboutModel _ mo ->
             Sub.map GotAboutMsg <| About.subscriptions mo
+
+        ContactModel _ mo ->
+            Sub.map GotContactMsg <| Contact.subscriptions mo
 
         VshModel _ mo ->
             Sub.map GotVshMsg <| Vsh.subscriptions mo

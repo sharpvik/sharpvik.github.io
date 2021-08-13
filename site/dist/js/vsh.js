@@ -5210,8 +5210,15 @@ var $author$project$Main$AboutModel = F2(
 	});
 var $author$project$About$Main$NoModel = {$: 'NoModel'};
 var $author$project$About$Main$initModel = $author$project$About$Main$NoModel;
+var $author$project$Main$ContactModel = F2(
+	function (a, b) {
+		return {$: 'ContactModel', a: a, b: b};
+	});
 var $author$project$Main$GotAboutMsg = function (a) {
 	return {$: 'GotAboutMsg', a: a};
+};
+var $author$project$Main$GotContactMsg = function (a) {
+	return {$: 'GotContactMsg', a: a};
 };
 var $author$project$Main$GotVshMsg = function (a) {
 	return {$: 'GotVshMsg', a: a};
@@ -5874,7 +5881,6 @@ var $elm$url$Url$Parser$parse = F2(
 					url.fragment,
 					$elm$core$Basics$identity)));
 	});
-var $author$project$Route$VshRoute = {$: 'VshRoute'};
 var $elm$url$Url$Parser$Parser = function (a) {
 	return {$: 'Parser', a: a};
 };
@@ -5938,6 +5944,20 @@ var $elm$url$Url$Parser$oneOf = function (parsers) {
 				parsers);
 		});
 };
+var $author$project$Route$repr = function (route) {
+	switch (route.$) {
+		case 'AboutRoute':
+			return 'about';
+		case 'ContactRoute':
+			return 'contact';
+		default:
+			return 'vsh';
+	}
+};
+var $author$project$Route$ContactRoute = {$: 'ContactRoute'};
+var $author$project$Route$VshRoute = {$: 'VshRoute'};
+var $author$project$Route$routes = _List_fromArray(
+	[$author$project$Route$AboutRoute, $author$project$Route$ContactRoute, $author$project$Route$VshRoute]);
 var $elm$url$Url$Parser$s = function (str) {
 	return $elm$url$Url$Parser$Parser(
 		function (_v0) {
@@ -5969,19 +5989,20 @@ var $elm$url$Url$Parser$top = $elm$url$Url$Parser$Parser(
 		return _List_fromArray(
 			[state]);
 	});
-var $author$project$Route$urlParser = $elm$url$Url$Parser$oneOf(
-	_List_fromArray(
-		[
+var $author$project$Route$urlParser = function () {
+	var mapper = function (route) {
+		return A2(
+			$elm$url$Url$Parser$map,
+			route,
+			$elm$url$Url$Parser$s(
+				$author$project$Route$repr(route)));
+	};
+	return $elm$url$Url$Parser$oneOf(
+		A2(
+			$elm$core$List$cons,
 			A2($elm$url$Url$Parser$map, $author$project$Route$AboutRoute, $elm$url$Url$Parser$top),
-			A2(
-			$elm$url$Url$Parser$map,
-			$author$project$Route$AboutRoute,
-			$elm$url$Url$Parser$s('about')),
-			A2(
-			$elm$url$Url$Parser$map,
-			$author$project$Route$VshRoute,
-			$elm$url$Url$Parser$s('vsh'))
-		]));
+			A2($elm$core$List$map, mapper, $author$project$Route$routes)));
+}();
 var $author$project$Route$fromUrl = function (url) {
 	return A2(
 		$elm$core$Maybe$withDefault,
@@ -5994,6 +6015,9 @@ var $author$project$Route$fromUrl = function (url) {
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$About$Main$init = _Utils_Tuple2($author$project$About$Main$initModel, $elm$core$Platform$Cmd$none);
+var $author$project$Contact$Main$NoModel = {$: 'NoModel'};
+var $author$project$Contact$Main$initModel = $author$project$Contact$Main$NoModel;
+var $author$project$Contact$Main$init = _Utils_Tuple2($author$project$Contact$Main$initModel, $elm$core$Platform$Cmd$none);
 var $author$project$Vsh$History$History = F2(
 	function (history, ptr) {
 		return {history: history, ptr: ptr};
@@ -6071,12 +6095,16 @@ var $author$project$Vsh$Main$initModel = {command: '', display: $author$project$
 var $author$project$Vsh$Main$init = _Utils_Tuple2($author$project$Vsh$Main$initModel, $elm$core$Platform$Cmd$none);
 var $elm$core$Platform$Cmd$map = _Platform_map;
 var $author$project$Main$toKey = function (model) {
-	if (model.$ === 'AboutModel') {
-		var key = model.a;
-		return key;
-	} else {
-		var key = model.a;
-		return key;
+	switch (model.$) {
+		case 'AboutModel':
+			var key = model.a;
+			return key;
+		case 'ContactModel':
+			var key = model.a;
+			return key;
+		default:
+			var key = model.a;
+			return key;
 	}
 };
 var $author$project$Main$mux = F2(
@@ -6091,18 +6119,25 @@ var $author$project$Main$mux = F2(
 					A2($elm$core$Platform$Cmd$map, toMsg, cmd));
 			});
 		var key = $author$project$Main$toKey(model);
-		if (route.$ === 'AboutRoute') {
-			return A3(
-				norm,
-				$author$project$Main$AboutModel(key),
-				$author$project$Main$GotAboutMsg,
-				$author$project$About$Main$init);
-		} else {
-			return A3(
-				norm,
-				$author$project$Main$VshModel(key),
-				$author$project$Main$GotVshMsg,
-				$author$project$Vsh$Main$init);
+		switch (route.$) {
+			case 'AboutRoute':
+				return A3(
+					norm,
+					$author$project$Main$AboutModel(key),
+					$author$project$Main$GotAboutMsg,
+					$author$project$About$Main$init);
+			case 'ContactRoute':
+				return A3(
+					norm,
+					$author$project$Main$ContactModel(key),
+					$author$project$Main$GotContactMsg,
+					$author$project$Contact$Main$init);
+			default:
+				return A3(
+					norm,
+					$author$project$Main$VshModel(key),
+					$author$project$Main$GotVshMsg,
+					$author$project$Vsh$Main$init);
 		}
 	});
 var $author$project$Main$init = F3(
@@ -6116,6 +6151,9 @@ var $elm$core$Platform$Sub$map = _Platform_map;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$About$Main$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Contact$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
@@ -6508,18 +6546,25 @@ var $author$project$Vsh$Main$subscriptions = function (_v0) {
 	return $elm$browser$Browser$Events$onKeyDown($author$project$Vsh$Main$keydownHandler);
 };
 var $author$project$Main$subscriptions = function (model) {
-	if (model.$ === 'AboutModel') {
-		var mo = model.b;
-		return A2(
-			$elm$core$Platform$Sub$map,
-			$author$project$Main$GotAboutMsg,
-			$author$project$About$Main$subscriptions(mo));
-	} else {
-		var mo = model.b;
-		return A2(
-			$elm$core$Platform$Sub$map,
-			$author$project$Main$GotVshMsg,
-			$author$project$Vsh$Main$subscriptions(mo));
+	switch (model.$) {
+		case 'AboutModel':
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$subscriptions(mo));
+		case 'ContactModel':
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotContactMsg,
+				$author$project$Contact$Main$subscriptions(mo));
+		default:
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$subscriptions(mo));
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -6694,22 +6739,13 @@ var $elm$url$Url$Builder$absolute = F2(
 		return '/' + (A2($elm$core$String$join, '/', pathSegments) + $elm$url$Url$Builder$toQuery(parameters));
 	});
 var $author$project$Route$toString = function (route) {
-	var p = $elm$core$Basics$append('/#');
-	if (route.$ === 'AboutRoute') {
-		return p(
-			A2(
-				$elm$url$Url$Builder$absolute,
-				_List_fromArray(
-					['about']),
-				_List_Nil));
-	} else {
-		return p(
-			A2(
-				$elm$url$Url$Builder$absolute,
-				_List_fromArray(
-					['vsh']),
-				_List_Nil));
-	}
+	return '/#' + A2(
+		$elm$url$Url$Builder$absolute,
+		_List_fromArray(
+			[
+				$author$project$Route$repr(route)
+			]),
+		_List_Nil);
 };
 var $author$project$Vsh$Command$clear = F2(
 	function (_v0, _v1) {
@@ -7343,7 +7379,7 @@ var $author$project$Main$update = F2(
 				case 'LinkChanged':
 					var url = _v0.a.a;
 					return A2($author$project$Main$mux, model, url);
-				default:
+				case 'LinkClicked':
 					var urlRequest = _v0.a.a;
 					if (urlRequest.$ === 'Internal') {
 						var url = urlRequest.a;
@@ -7359,6 +7395,8 @@ var $author$project$Main$update = F2(
 							model,
 							$elm$browser$Browser$Navigation$load(href));
 					}
+				default:
+					break _v0$4;
 			}
 		}
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -7403,6 +7441,7 @@ var $author$project$Common$Element$navbar = function (active) {
 	var sections = _List_fromArray(
 		[
 			_Utils_Tuple2($author$project$Route$AboutRoute, '👽'),
+			_Utils_Tuple2($author$project$Route$ContactRoute, '☎️'),
 			_Utils_Tuple2($author$project$Route$VshRoute, '💻')
 		]);
 	var mark = F2(
@@ -7500,6 +7539,21 @@ var $author$project$About$Main$view = function (_v0) {
 					'HIRE ME!')
 				])));
 };
+var $author$project$Contact$Main$view = function (_v0) {
+	var entitled = $elm$browser$Browser$Document('☎️ Contact Me');
+	return entitled(
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$h1,
+				_List_Nil,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Contact Page')
+					])),
+				$author$project$Common$Element$navbar(1)
+			]));
+};
 var $author$project$Common$Class$appTop = 'app-top';
 var $author$project$Vsh$Class$bg = 'vsh-bg';
 var $author$project$Vsh$Class$close = 'vsh-close';
@@ -7578,7 +7632,7 @@ var $author$project$Vsh$Main$view = function (model) {
 									$elm$html$Html$text(model.command)
 								])))
 					])),
-				$author$project$Common$Element$navbar(1)
+				$author$project$Common$Element$navbar(2)
 			]),
 		title: '💻 ️VSH Shell'
 	};
@@ -7596,18 +7650,25 @@ var $author$project$Main$view = function (model) {
 				title: title
 			};
 		});
-	if (model.$ === 'AboutModel') {
-		var mo = model.b;
-		return A2(
-			norm,
-			$author$project$Main$GotAboutMsg,
-			$author$project$About$Main$view(mo));
-	} else {
-		var mo = model.b;
-		return A2(
-			norm,
-			$author$project$Main$GotVshMsg,
-			$author$project$Vsh$Main$view(mo));
+	switch (model.$) {
+		case 'AboutModel':
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$view(mo));
+		case 'ContactModel':
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotContactMsg,
+				$author$project$Contact$Main$view(mo));
+		default:
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$view(mo));
 	}
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
