@@ -9,9 +9,32 @@ type alias UrlParser a =
     Parser (Route -> a) a
 
 
-type Route
+type Route {- On new Route, update `repr` and `routes`. -}
     = AboutRoute
+    | ContactRoute
     | VshRoute
+
+
+repr : Route -> String
+repr route =
+    case route of
+        AboutRoute ->
+            "about"
+
+        ContactRoute ->
+            "contact"
+
+        VshRoute ->
+            "vsh"
+
+
+routes : List Route
+routes =
+    [ AboutRoute, ContactRoute, VshRoute ]
+
+
+
+-- EXPOSED
 
 
 fromUrl : Url -> Route
@@ -23,25 +46,22 @@ fromUrl url =
 
 toString : Route -> String
 toString route =
-    let
-        p =
-            (++) "/#"
-    in
-    case route of
-        AboutRoute ->
-            absolute [ "about" ] [] |> p
+    "/#" ++ absolute [ repr route ] []
 
-        VshRoute ->
-            absolute [ "vsh" ] [] |> p
+
+
+-- LOCAL
 
 
 urlParser : UrlParser a
 urlParser =
-    oneOf
-        [ map AboutRoute top
-        , map AboutRoute <| s "about"
-        , map VshRoute <| s "vsh"
-        ]
+    let
+        mapper route =
+            map route <| s <| repr route
+    in
+    oneOf <|
+        map AboutRoute top
+            :: List.map mapper routes
 
 
 fake : Url -> Url

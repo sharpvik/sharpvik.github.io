@@ -11,6 +11,7 @@ navbar active =
     let
         sections =
             [ ( AboutRoute, "👽" )
+            , ( ContactRoute, "☎️" )
             , ( VshRoute, "💻" )
             ]
 
