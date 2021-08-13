@@ -5956,8 +5956,20 @@ var $author$project$Route$repr = function (route) {
 };
 var $author$project$Route$ContactRoute = {$: 'ContactRoute'};
 var $author$project$Route$VshRoute = {$: 'VshRoute'};
-var $author$project$Route$routes = _List_fromArray(
-	[$author$project$Route$AboutRoute, $author$project$Route$ContactRoute, $author$project$Route$VshRoute]);
+var $author$project$Route$routes = function () {
+	var check = function (route) {
+		switch (route.$) {
+			case 'AboutRoute':
+				return _Utils_Tuple0;
+			case 'ContactRoute':
+				return _Utils_Tuple0;
+			default:
+				return _Utils_Tuple0;
+		}
+	};
+	return _List_fromArray(
+		[$author$project$Route$AboutRoute, $author$project$Route$ContactRoute, $author$project$Route$VshRoute]);
+}();
 var $elm$url$Url$Parser$s = function (str) {
 	return $elm$url$Url$Parser$Parser(
 		function (_v0) {
@@ -7403,32 +7415,6 @@ var $author$project$Main$update = F2(
 	});
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
-var $elm$browser$Browser$Document = F2(
-	function (title, body) {
-		return {body: body, title: title};
-	});
-var $author$project$Common$Class$appCenter = 'app-center';
-var $author$project$About$Class$bg = 'about-bg';
-var $author$project$About$Class$button = 'about-button';
-var $author$project$Common$Class$button = 'button';
-var $author$project$Common$Element$button_ = F3(
-	function (elem, attrs, txt) {
-		return A2(
-			elem,
-			A2(
-				$elm$core$List$cons,
-				$elm$html$Html$Attributes$class($author$project$Common$Class$button),
-				attrs),
-			_List_fromArray(
-				[
-					$elm$html$Html$text(txt)
-				]));
-	});
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$About$Class$h1 = 'about-h1';
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $author$project$About$Class$h3 = 'about-h3';
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$nav = _VirtualDom_node('nav');
 var $author$project$Common$Class$navbar = 'navbar';
 var $author$project$Common$Class$navbarIcon = 'navbar-icon';
@@ -7473,6 +7459,42 @@ var $author$project$Common$Element$navbar = function (active) {
 			]),
 		result);
 };
+var $author$project$Main$toActiveIndex = function (model) {
+	switch (model.$) {
+		case 'AboutModel':
+			return 0;
+		case 'ContactModel':
+			return 1;
+		default:
+			return 2;
+	}
+};
+var $elm$browser$Browser$Document = F2(
+	function (title, body) {
+		return {body: body, title: title};
+	});
+var $author$project$Common$Class$appCenter = 'app-center';
+var $author$project$About$Class$bg = 'about-bg';
+var $author$project$About$Class$button = 'about-button';
+var $author$project$Common$Class$button = 'button';
+var $author$project$Common$Element$button_ = F3(
+	function (elem, attrs, txt) {
+		return A2(
+			elem,
+			A2(
+				$elm$core$List$cons,
+				$elm$html$Html$Attributes$class($author$project$Common$Class$button),
+				attrs),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(txt)
+				]));
+	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$About$Class$h1 = 'about-h1';
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $author$project$About$Class$h3 = 'about-h3';
+var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $author$project$About$Main$view = function (_v0) {
 	var general = $elm$core$Basics$append(
 		_List_fromArray(
@@ -7519,8 +7541,7 @@ var $author$project$About$Main$view = function (_v0) {
 						$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
 						$elm$html$Html$Attributes$class($author$project$About$Class$bg)
 					]),
-				general(items)),
-				$author$project$Common$Element$navbar(0)
+				general(items))
 			]);
 	};
 	return entitled(
@@ -7550,8 +7571,7 @@ var $author$project$Contact$Main$view = function (_v0) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text('Contact Page')
-					])),
-				$author$project$Common$Element$navbar(1)
+					]))
 			]));
 };
 var $author$project$Common$Class$appTop = 'app-top';
@@ -7631,8 +7651,7 @@ var $author$project$Vsh$Main$view = function (model) {
 								[
 									$elm$html$Html$text(model.command)
 								])))
-					])),
-				$author$project$Common$Element$navbar(2)
+					]))
 			]),
 		title: '💻 ️VSH Shell'
 	};
@@ -7644,9 +7663,13 @@ var $author$project$Main$view = function (model) {
 			var body = _v1.body;
 			return {
 				body: A2(
-					$elm$core$List$map,
-					$elm$html$Html$map(toMsg),
-					body),
+					$elm$core$List$cons,
+					$author$project$Common$Element$navbar(
+						$author$project$Main$toActiveIndex(model)),
+					A2(
+						$elm$core$List$map,
+						$elm$html$Html$map(toMsg),
+						body)),
 				title: title
 			};
 		});

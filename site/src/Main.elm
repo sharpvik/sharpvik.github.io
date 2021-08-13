@@ -3,6 +3,7 @@ module Main exposing (..)
 import About.Main as About
 import Browser exposing (Document, UrlRequest(..))
 import Browser.Navigation as Nav
+import Common.Element as Element
 import Contact.Main as Contact
 import Html exposing (..)
 import Html.Attributes exposing (..)
@@ -57,6 +58,19 @@ toKey model =
 
         VshModel key _ ->
             key
+
+
+toActiveIndex : Model -> Int
+toActiveIndex model =
+    case model of
+        AboutModel _ _ ->
+            0
+
+        ContactModel _ _ ->
+            1
+
+        VshModel _ _ ->
+            2
 
 
 
@@ -118,7 +132,9 @@ view model =
         norm : (msg -> a) -> Document msg -> Document a
         norm toMsg { title, body } =
             { title = title
-            , body = List.map (Html.map toMsg) body
+            , body =
+                Element.navbar (toActiveIndex model)
+                    :: List.map (Html.map toMsg) body
             }
     in
     case model of

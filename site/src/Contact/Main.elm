@@ -58,7 +58,6 @@ view _ =
     in
     entitled <|
         [ h1 [] [ text "Contact Page" ]
-        , Element.navbar 1
         ]
 
 
