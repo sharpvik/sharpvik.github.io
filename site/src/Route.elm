@@ -84,8 +84,8 @@ urlParser =
 
 fake : Url -> Url
 fake path =
-    { protocol = Http
-    , host = "example.com"
+    { protocol = Https
+    , host = "sharpvik.github.com"
     , port_ = Nothing
     , path = Maybe.withDefault "/about" path.fragment
     , query = Nothing
