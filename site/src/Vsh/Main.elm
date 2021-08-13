@@ -80,7 +80,8 @@ greeting =
     Vsh.Command.version "version" []
         ++ [ text "\nEnter "
            , ctext Green "help"
-           , text " to see available commands!\n\n"
+           , text " to see available commands!\n"
+           , ctext Yellow "VSH does not support mobile devices.\n\n"
            ]
         ++ prompt
 

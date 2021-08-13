@@ -6000,6 +6000,7 @@ var $author$project$Vsh$History$History = F2(
 	});
 var $author$project$Vsh$History$empty = A2($author$project$Vsh$History$History, $elm$core$Array$empty, 0);
 var $author$project$Vsh$Text$Green = {$: 'Green'};
+var $author$project$Vsh$Text$Yellow = {$: 'Yellow'};
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6039,7 +6040,6 @@ var $author$project$Vsh$Text$ctext = F2(
 				]));
 	});
 var $author$project$Vsh$Text$Magenta = {$: 'Magenta'};
-var $author$project$Vsh$Text$Yellow = {$: 'Yellow'};
 var $author$project$Vsh$Main$prompt = _List_fromArray(
 	[
 		A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Yellow, 'guest'),
@@ -6063,7 +6063,8 @@ var $author$project$Vsh$Main$greeting = _Utils_ap(
 			[
 				$elm$html$Html$text('\nEnter '),
 				A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Green, 'help'),
-				$elm$html$Html$text(' to see available commands!\n\n')
+				$elm$html$Html$text(' to see available commands!\n'),
+				A2($author$project$Vsh$Text$ctext, $author$project$Vsh$Text$Yellow, 'VSH does not support mobile devices.\n\n')
 			]),
 		$author$project$Vsh$Main$prompt));
 var $author$project$Vsh$Main$initModel = {command: '', display: $author$project$Vsh$Main$greeting, history: $author$project$Vsh$History$empty};
@@ -6714,6 +6715,52 @@ var $author$project$Vsh$Command$clear = F2(
 	function (_v0, _v1) {
 		return _List_Nil;
 	});
+var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
+var $elm$core$String$repeatHelp = F3(
+	function (n, chunk, result) {
+		return (n <= 0) ? result : A3(
+			$elm$core$String$repeatHelp,
+			n >> 1,
+			_Utils_ap(chunk, chunk),
+			(!(n & 1)) ? result : _Utils_ap(result, chunk));
+	});
+var $elm$core$String$repeat = F2(
+	function (n, chunk) {
+		return A3($elm$core$String$repeatHelp, n, chunk, '');
+	});
+var $elm$core$String$padRight = F3(
+	function (n, _char, string) {
+		return _Utils_ap(
+			string,
+			A2(
+				$elm$core$String$repeat,
+				n - $elm$core$String$length(string),
+				$elm$core$String$fromChar(_char)));
+	});
+var $author$project$Vsh$Command$cut = F2(
+	function (_v0, display) {
+		var entry = F2(
+			function (command, description) {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('\n    '),
+						A2(
+						$author$project$Vsh$Text$ctext,
+						$author$project$Vsh$Text$Green,
+						A3(
+							$elm$core$String$padRight,
+							8,
+							_Utils_chr(' '),
+							command)),
+						$elm$html$Html$text('-- ' + description)
+					]);
+			});
+		return _Utils_ap(
+			display,
+			_Utils_ap(
+				A2(entry, 'CTRL+e', 'quit vsh'),
+				A2(entry, 'CTRL+;', 'clear screen')));
+	});
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
 	return A2(
@@ -6768,28 +6815,6 @@ var $author$project$Vsh$Command$git = F2(
 						]))
 				]));
 	});
-var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
-var $elm$core$String$repeatHelp = F3(
-	function (n, chunk, result) {
-		return (n <= 0) ? result : A3(
-			$elm$core$String$repeatHelp,
-			n >> 1,
-			_Utils_ap(chunk, chunk),
-			(!(n & 1)) ? result : _Utils_ap(result, chunk));
-	});
-var $elm$core$String$repeat = F2(
-	function (n, chunk) {
-		return A3($elm$core$String$repeatHelp, n, chunk, '');
-	});
-var $elm$core$String$padRight = F3(
-	function (n, _char, string) {
-		return _Utils_ap(
-			string,
-			A2(
-				$elm$core$String$repeat,
-				n - $elm$core$String$length(string),
-				$elm$core$String$fromChar(_char)));
-	});
 var $author$project$Vsh$Command$help = F2(
 	function (_v0, display) {
 		var entry = F2(
@@ -6813,7 +6838,7 @@ var $author$project$Vsh$Command$help = F2(
 			_Utils_ap(
 				_List_fromArray(
 					[
-						$elm$html$Html$text('vsh is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history (unless it\'s empty).\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
+						$elm$html$Html$text('VSH is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history (unless it\'s empty).\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
 					]),
 				_Utils_ap(
 					A2(entry, 'whoami', 'a bit about myself'),
@@ -6830,10 +6855,12 @@ var $author$project$Vsh$Command$help = F2(
 										_Utils_ap(
 											A2(entry, 'version', 'display vsh version'),
 											_Utils_ap(
-												A2(entry, 'git', 'explore vsh source code'),
+												A2(entry, 'cut', 'keyboard shortcuts cheatsheet'),
 												_Utils_ap(
-													A2(entry, 'clear', 'clear screen'),
-													A2(entry, 'exit', 'exit vsh session'))))))))))));
+													A2(entry, 'git', 'explore vsh source code'),
+													_Utils_ap(
+														A2(entry, 'clear', 'clear screen'),
+														A2(entry, 'exit', 'exit vsh session')))))))))))));
 	});
 var $author$project$Vsh$Command$jobs = F2(
 	function (_v0, display) {
@@ -7033,6 +7060,8 @@ var $author$project$Vsh$Command$eval = function (command) {
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$help);
 		case 'version':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$version);
+		case 'cut':
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$cut);
 		case 'git':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$git);
 		case 'clear':
