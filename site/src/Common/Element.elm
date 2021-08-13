@@ -34,6 +34,13 @@ navbar active =
     nav [ class Class.navbar ] result
 
 
-button_ : List (Attribute msg) -> String -> Html msg
-button_ attrs txt =
-    button (class Class.button :: attrs) [ text txt ]
+button_ :
+    (List (Attribute msg)
+     -> List (Html msg)
+     -> Html msg
+    )
+    -> List (Attribute msg)
+    -> String
+    -> Html msg
+button_ elem attrs txt =
+    elem (class Class.button :: attrs) [ text txt ]

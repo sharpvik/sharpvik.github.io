@@ -53,16 +53,29 @@ initModel =
 
 view : Model -> Document Msg
 view _ =
-    { title = "👽 About Me"
-    , body =
-        [ div [ class Class.appCenter, class Class.aboutBg ]
-            [ h1 [ class Class.aboutH1 ] [ text "Hey, I'm Viktor!" ]
-            , h3 [ class Class.aboutH3 ] [ text "💻 Full Stack Web Developer" ]
-            , h3 [ class Class.aboutH3 ] [ text "🎓 University of Southampton" ]
+    let
+        entitled =
+            Document "👽 About Me"
+
+        app items =
+            [ div [ class Class.appCenter, class Class.aboutBg ] <|
+                general items
+            , Element.navbar 0
             ]
-        , Element.navbar 0
-        ]
-    }
+
+        general =
+            (++)
+                [ h1 [ class Class.aboutH1 ] [ text "Hey, I'm Viktor!" ]
+                , h3 [ class Class.aboutH3 ] [ text "💻 Full Stack Web Developer" ]
+                , h3 [ class Class.aboutH3 ] [ text "🎓 University of Southampton" ]
+                ]
+    in
+    entitled <|
+        app
+            [ Element.button_ a
+                [ class Class.aboutButton, href <| Route.toString VshRoute ]
+                "HIRE ME!"
+            ]
 
 
 
