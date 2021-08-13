@@ -1,5 +1,6 @@
 module About.Main exposing (..)
 
+import About.Class
 import Browser exposing (Document)
 import Common.Class as Class
 import Common.Element as Element
@@ -58,22 +59,22 @@ view _ =
             Document "👽 About Me"
 
         app items =
-            [ div [ class Class.appCenter, class Class.aboutBg ] <|
+            [ div [ class Class.appCenter, class About.Class.bg ] <|
                 general items
             , Element.navbar 0
             ]
 
         general =
             (++)
-                [ h1 [ class Class.aboutH1 ] [ text "Hey, I'm Viktor!" ]
-                , h3 [ class Class.aboutH3 ] [ text "💻 Full Stack Web Developer" ]
-                , h3 [ class Class.aboutH3 ] [ text "🎓 University of Southampton" ]
+                [ h1 [ class About.Class.h1 ] [ text "Hey, I'm Viktor!" ]
+                , h3 [ class About.Class.h3 ] [ text "💻 Full Stack Web Developer" ]
+                , h3 [ class About.Class.h3 ] [ text "🎓 University of Southampton" ]
                 ]
     in
     entitled <|
         app
             [ Element.button_ a
-                [ class Class.aboutButton, href <| Route.toString VshRoute ]
+                [ class About.Class.button, href <| Route.toString VshRoute ]
                 "HIRE ME!"
             ]
 
