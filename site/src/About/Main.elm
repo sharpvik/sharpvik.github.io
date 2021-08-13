@@ -61,7 +61,6 @@ view _ =
         app items =
             [ div [ class Class.appCenter, class About.Class.bg ] <|
                 general items
-            , Element.navbar 0
             ]
 
         general =

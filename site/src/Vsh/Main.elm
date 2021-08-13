@@ -105,7 +105,6 @@ view model =
     , body =
         [ div [ class Class.appTop, class Vsh.Class.bg ]
             [ vshDisplay <| model.display ++ [ text model.command ] ]
-        , Element.navbar 2
         ]
     }
 

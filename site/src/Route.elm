@@ -9,7 +9,7 @@ type alias UrlParser a =
     Parser (Route -> a) a
 
 
-type Route {- On new Route, update `repr` and `routes`. -}
+type Route
     = AboutRoute
     | ContactRoute
     | VshRoute
@@ -30,7 +30,25 @@ repr route =
 
 routes : List Route
 routes =
-    [ AboutRoute, ContactRoute, VshRoute ]
+    let
+        {- This check will prevent you from forgetting to update routes
+           upon new Route creation.
+        -}
+        check route =
+            case route of
+                AboutRoute ->
+                    ()
+
+                ContactRoute ->
+                    ()
+
+                VshRoute ->
+                    ()
+    in
+    [ AboutRoute
+    , ContactRoute
+    , VshRoute
+    ]
 
 
 
