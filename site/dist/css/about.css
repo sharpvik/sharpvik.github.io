@@ -1,15 +1,29 @@
 .about-bg {
-  background-color: aquamarine;
+  background-color: #e9ffe8;
 }
+
 .about-h1 {
   text-align: center;
   font-size: 60px;
   line-height: 1.5em;
-  color: #005337;
+  color: #006b47;
 }
+
 .about-h3 {
   text-align: center;
   font-weight: 400;
   line-height: 2rem;
-  color: #018156;
+  color: #006b47;
+}
+
+.about-button {
+  background-color: #79db75;
+  color: #006b47;
+  transition: all 0.3s;
+}
+.about-button:hover {
+  -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
+  transition: all 0.3s;
 }
