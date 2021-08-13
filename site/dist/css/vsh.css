@@ -2,6 +2,7 @@
 
 .vsh-bg {
   background-color: #dce7ff;
+  transition: background 0.5s;
 }
 
 .vsh-window {

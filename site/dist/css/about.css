@@ -1,5 +1,6 @@
 .about-bg {
   background-color: #e9ffe8;
+  transition: background 0.5s;
 }
 
 .about-h1 {
