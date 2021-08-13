@@ -55,6 +55,9 @@ eval command =
         "version" ->
             Just version
 
+        "cut" ->
+            Just cut
+
         "git" ->
             Just git
 
@@ -196,7 +199,7 @@ help _ display =
             ]
     in
     display
-        ++ [ text """vsh is a terminal emulator that helps you learn about me.
+        ++ [ text """VSH is a terminal emulator that helps you learn about me.
 Use up and down arrow keys to browse command history (unless it's empty).
 And most importantly -- have fun!
 
@@ -209,6 +212,7 @@ Available commands:
         ++ entry "touch" "ways to get in touch\n"
         ++ entry "help" "display this message again"
         ++ entry "version" "display vsh version"
+        ++ entry "cut" "keyboard shortcuts cheatsheet"
         ++ entry "git" "explore vsh source code"
         ++ entry "clear" "clear screen"
         ++ entry "exit" "exit vsh session"
@@ -218,6 +222,20 @@ version : Command msg
 version _ display =
     display
         ++ [ text "vsh v0.1.3 by Viktor A. Rozenko Voitenko <sharp.vik@gmail.com>" ]
+
+
+cut : Command msg
+cut _ display =
+    let
+        entry command description =
+            [ text "\n    "
+            , Vsh.Text.ctext Green <| String.padRight 8 ' ' command
+            , text <| "-- " ++ description
+            ]
+    in
+    display
+        ++ entry "CTRL+e" "quit vsh"
+        ++ entry "CTRL+;" "clear screen"
 
 
 git : Command msg
