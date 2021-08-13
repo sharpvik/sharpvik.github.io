@@ -7340,11 +7340,9 @@ var $elm$browser$Browser$Document = F2(
 	function (title, body) {
 		return {body: body, title: title};
 	});
-var $author$project$Common$Class$aboutBg = 'about-bg';
-var $author$project$Common$Class$aboutButton = 'about-button';
-var $author$project$Common$Class$aboutH1 = 'about-h1';
-var $author$project$Common$Class$aboutH3 = 'about-h3';
 var $author$project$Common$Class$appCenter = 'app-center';
+var $author$project$About$Class$bg = 'about-bg';
+var $author$project$About$Class$button = 'about-button';
 var $author$project$Common$Class$button = 'button';
 var $author$project$Common$Element$button_ = F3(
 	function (elem, attrs, txt) {
@@ -7360,7 +7358,9 @@ var $author$project$Common$Element$button_ = F3(
 				]));
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$About$Class$h1 = 'about-h1';
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $author$project$About$Class$h3 = 'about-h3';
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$nav = _VirtualDom_node('nav');
 var $author$project$Common$Class$navbar = 'navbar';
@@ -7413,7 +7413,7 @@ var $author$project$About$Main$view = function (_v0) {
 				$elm$html$Html$h1,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH1)
+						$elm$html$Html$Attributes$class($author$project$About$Class$h1)
 					]),
 				_List_fromArray(
 					[
@@ -7423,7 +7423,7 @@ var $author$project$About$Main$view = function (_v0) {
 				$elm$html$Html$h3,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH3)
+						$elm$html$Html$Attributes$class($author$project$About$Class$h3)
 					]),
 				_List_fromArray(
 					[
@@ -7433,7 +7433,7 @@ var $author$project$About$Main$view = function (_v0) {
 				$elm$html$Html$h3,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH3)
+						$elm$html$Html$Attributes$class($author$project$About$Class$h3)
 					]),
 				_List_fromArray(
 					[
@@ -7449,7 +7449,7 @@ var $author$project$About$Main$view = function (_v0) {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
-						$elm$html$Html$Attributes$class($author$project$Common$Class$aboutBg)
+						$elm$html$Html$Attributes$class($author$project$About$Class$bg)
 					]),
 				general(items)),
 				$author$project$Common$Element$navbar(0)
@@ -7464,7 +7464,7 @@ var $author$project$About$Main$view = function (_v0) {
 					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class($author$project$Common$Class$aboutButton),
+							$elm$html$Html$Attributes$class($author$project$About$Class$button),
 							$elm$html$Html$Attributes$href(
 							$author$project$Route$toString($author$project$Route$VshRoute))
 						]),
@@ -7472,20 +7472,20 @@ var $author$project$About$Main$view = function (_v0) {
 				])));
 };
 var $author$project$Common$Class$appTop = 'app-top';
-var $author$project$Common$Class$vshBg = 'vsh-bg';
+var $author$project$Vsh$Class$bg = 'vsh-bg';
+var $author$project$Vsh$Class$close = 'vsh-close';
 var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $author$project$Common$Class$vshClose = 'vsh-close';
-var $author$project$Common$Class$vshTextarea = 'vsh-textarea';
-var $author$project$Common$Class$vshTopbar = 'vsh-topbar';
-var $author$project$Common$Class$vshWindow = 'vsh-window';
+var $author$project$Vsh$Class$textarea = 'vsh-textarea';
+var $author$project$Vsh$Class$topbar = 'vsh-topbar';
+var $author$project$Vsh$Class$window = 'vsh-window';
 var $author$project$Vsh$Main$vshDisplay = function (display) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class($author$project$Common$Class$vshWindow)
+				$elm$html$Html$Attributes$class($author$project$Vsh$Class$window)
 			]),
 		_List_fromArray(
 			[
@@ -7493,7 +7493,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 				$elm$html$Html$header,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshTopbar)
+						$elm$html$Html$Attributes$class($author$project$Vsh$Class$topbar)
 					]),
 				_List_fromArray(
 					[
@@ -7508,7 +7508,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 						$elm$html$Html$a,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class($author$project$Common$Class$vshClose),
+								$elm$html$Html$Attributes$class($author$project$Vsh$Class$close),
 								$elm$html$Html$Attributes$href(
 								$author$project$Route$toString($author$project$Route$AboutRoute))
 							]),
@@ -7518,7 +7518,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 				$elm$html$Html$pre,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshTextarea)
+						$elm$html$Html$Attributes$class($author$project$Vsh$Class$textarea)
 					]),
 				_Utils_ap(
 					display,
@@ -7537,7 +7537,7 @@ var $author$project$Vsh$Main$view = function (model) {
 				_List_fromArray(
 					[
 						$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshBg)
+						$elm$html$Html$Attributes$class($author$project$Vsh$Class$bg)
 					]),
 				_List_fromArray(
 					[

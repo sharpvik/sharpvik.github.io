@@ -10,6 +10,7 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as Decode
 import Route exposing (Route(..))
+import Vsh.Class
 import Vsh.Command
 import Vsh.History exposing (History)
 import Vsh.Text exposing (Color(..), ctext)
@@ -101,7 +102,7 @@ view : Model -> Document Msg
 view model =
     { title = "💻 ️VSH Shell"
     , body =
-        [ div [ class Class.appTop, class Class.vshBg ]
+        [ div [ class Class.appTop, class Vsh.Class.bg ]
             [ vshDisplay <| model.display ++ [ text model.command ] ]
         , Element.navbar 1
         ]
@@ -111,20 +112,20 @@ view model =
 vshDisplay : List (Html Msg) -> Html Msg
 vshDisplay display =
     div
-        [ class Class.vshWindow
+        [ class Vsh.Class.window
         ]
         [ header
-            [ class Class.vshTopbar ]
+            [ class Vsh.Class.topbar ]
             [ p []
                 [ text "vsh shell" ]
             , a
-                [ class Class.vshClose
+                [ class Vsh.Class.close
                 , href <| Route.toString AboutRoute
                 ]
                 []
             ]
         , pre
-            [ class Class.vshTextarea ]
+            [ class Vsh.Class.textarea ]
             (display ++ [ text "█" ])
         ]
 
