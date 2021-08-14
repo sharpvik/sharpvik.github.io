@@ -4,7 +4,6 @@ import Browser exposing (Document)
 import Browser.Events as Events
 import Browser.Navigation as Nav
 import Common.Class as Class
-import Common.Element as Element
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)

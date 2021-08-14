@@ -6,7 +6,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
-import Skills.Asset as Asset
 import Skills.Class
 
 
