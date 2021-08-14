@@ -1,9 +1,11 @@
 module About.Main exposing (..)
 
+import About.Asset as Asset
 import About.Class
 import Browser exposing (Document)
 import Common.Class as Class
 import Common.Element as Element
+import Common.Link as Link
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -59,21 +61,23 @@ view _ =
             Document "👽 About Me"
 
         app items =
-            [ div [ class Class.appCenter, class About.Class.bg ] <|
+            [ div (class Class.appCenter :: About.Class.bg) <|
                 general items
             ]
 
         general =
             (++)
-                [ h1 [ class About.Class.h1 ] [ text "Hey, I'm Viktor!" ]
-                , h3 [ class About.Class.h3 ] [ text "💻 Full Stack Web Developer" ]
-                , h3 [ class About.Class.h3 ] [ text "🎓 University of Southampton" ]
+                [ h1 About.Class.h1 [ text "Hey, I'm Viktor!" ]
+                , h3 About.Class.h3 [ text "💻 Full Stack Web Developer" ]
+                , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
                 ]
     in
     entitled <|
         app
-            [ Element.button_ a
-                [ class About.Class.button, href <| Route.toString VshRoute ]
+            [ a [ href "https://github.com/sharpvik", About.Class.github ]
+                [ img [ src Asset.github ] [] ]
+            , Element.button_ a
+                (Link.linkedin :: About.Class.button)
                 "HIRE ME!"
             ]
 

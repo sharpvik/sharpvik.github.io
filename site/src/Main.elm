@@ -4,11 +4,11 @@ import About.Main as About
 import Browser exposing (Document, UrlRequest(..))
 import Browser.Navigation as Nav
 import Common.Element as Element
-import Contact.Main as Contact
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
+import Skills.Main as Contact
 import Url exposing (Url)
 import Vsh.Main as Vsh
 
@@ -115,7 +115,7 @@ mux model url =
         AboutRoute ->
             norm (AboutModel key) GotAboutMsg About.init
 
-        ContactRoute ->
+        SkillsRoute ->
             norm (ContactModel key) GotContactMsg Contact.init
 
         VshRoute ->
