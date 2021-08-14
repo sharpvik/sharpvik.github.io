@@ -11,8 +11,8 @@ navbar active =
     let
         sections =
             [ ( AboutRoute, "👽" )
-            , ( ContactRoute, "☎️" )
-            , ( VshRoute, "💻" )
+            , ( SkillsRoute, "💡" )
+            , ( VshRoute, "⌨️" )
             ]
 
         mark id s =

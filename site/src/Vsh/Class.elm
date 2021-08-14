@@ -1,8 +1,11 @@
 module Vsh.Class exposing (..)
 
+import Common.Class as Class
+import Html.Attributes exposing (class)
+
 
 bg =
-    "vsh-bg"
+    [ class Class.bg, class "vsh-bg" ]
 
 
 window =

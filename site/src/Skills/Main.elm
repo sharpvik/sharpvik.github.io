@@ -1,11 +1,13 @@
-module Contact.Main exposing (..)
+module Skills.Main exposing (..)
 
 import Browser exposing (Document)
-import Common.Element as Element
+import Common.Class as Class
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
+import Skills.Asset as Asset
+import Skills.Class
 
 
 
@@ -52,13 +54,21 @@ initModel =
 
 view : Model -> Document Msg
 view _ =
+    {- <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -}
     let
         entitled =
-            Document "☎️ Contact Me"
+            Document "💡 My Skills"
+
+        app items =
+            [ div (class Class.appCenter :: Skills.Class.bg)
+                items
+            ]
     in
     entitled <|
-        [ h1 [] [ text "Contact Page" ]
-        ]
+        app
+            [ h1 Skills.Class.h1 [ text "My Top Skills" ]
+            , h3 Skills.Class.h3 [ text "... and some funky projects" ]
+            ]
 
 
 

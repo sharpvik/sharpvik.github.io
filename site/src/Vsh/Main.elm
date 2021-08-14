@@ -103,7 +103,7 @@ view : Model -> Document Msg
 view model =
     { title = "💻 ️VSH Shell"
     , body =
-        [ div [ class Class.appTop, class Vsh.Class.bg ]
+        [ div (class Class.appTop :: Vsh.Class.bg)
             [ vshDisplay <| model.display ++ [ text model.command ] ]
         ]
     }

@@ -11,7 +11,7 @@ type alias UrlParser a =
 
 type Route
     = AboutRoute
-    | ContactRoute
+    | SkillsRoute
     | VshRoute
 
 
@@ -21,7 +21,7 @@ repr route =
         AboutRoute ->
             "about"
 
-        ContactRoute ->
+        SkillsRoute ->
             "contact"
 
         VshRoute ->
@@ -39,14 +39,14 @@ routes =
                 AboutRoute ->
                     ()
 
-                ContactRoute ->
+                SkillsRoute ->
                     ()
 
                 VshRoute ->
                     ()
     in
     [ AboutRoute
-    , ContactRoute
+    , SkillsRoute
     , VshRoute
     ]
 

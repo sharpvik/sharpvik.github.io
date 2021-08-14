@@ -5240,10 +5240,10 @@ var $elm$core$Maybe$withDefault = F2(
 var $author$project$Route$fake = function (path) {
 	return {
 		fragment: $elm$core$Maybe$Nothing,
-		host: 'example.com',
+		host: 'sharpvik.github.com',
 		path: A2($elm$core$Maybe$withDefault, '/about', path.fragment),
 		port_: $elm$core$Maybe$Nothing,
-		protocol: $elm$url$Url$Http,
+		protocol: $elm$url$Url$Https,
 		query: $elm$core$Maybe$Nothing
 	};
 };
@@ -5948,27 +5948,27 @@ var $author$project$Route$repr = function (route) {
 	switch (route.$) {
 		case 'AboutRoute':
 			return 'about';
-		case 'ContactRoute':
+		case 'SkillsRoute':
 			return 'contact';
 		default:
 			return 'vsh';
 	}
 };
-var $author$project$Route$ContactRoute = {$: 'ContactRoute'};
+var $author$project$Route$SkillsRoute = {$: 'SkillsRoute'};
 var $author$project$Route$VshRoute = {$: 'VshRoute'};
 var $author$project$Route$routes = function () {
 	var check = function (route) {
 		switch (route.$) {
 			case 'AboutRoute':
 				return _Utils_Tuple0;
-			case 'ContactRoute':
+			case 'SkillsRoute':
 				return _Utils_Tuple0;
 			default:
 				return _Utils_Tuple0;
 		}
 	};
 	return _List_fromArray(
-		[$author$project$Route$AboutRoute, $author$project$Route$ContactRoute, $author$project$Route$VshRoute]);
+		[$author$project$Route$AboutRoute, $author$project$Route$SkillsRoute, $author$project$Route$VshRoute]);
 }();
 var $elm$url$Url$Parser$s = function (str) {
 	return $elm$url$Url$Parser$Parser(
@@ -6027,9 +6027,9 @@ var $author$project$Route$fromUrl = function (url) {
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$About$Main$init = _Utils_Tuple2($author$project$About$Main$initModel, $elm$core$Platform$Cmd$none);
-var $author$project$Contact$Main$NoModel = {$: 'NoModel'};
-var $author$project$Contact$Main$initModel = $author$project$Contact$Main$NoModel;
-var $author$project$Contact$Main$init = _Utils_Tuple2($author$project$Contact$Main$initModel, $elm$core$Platform$Cmd$none);
+var $author$project$Skills$Main$NoModel = {$: 'NoModel'};
+var $author$project$Skills$Main$initModel = $author$project$Skills$Main$NoModel;
+var $author$project$Skills$Main$init = _Utils_Tuple2($author$project$Skills$Main$initModel, $elm$core$Platform$Cmd$none);
 var $author$project$Vsh$History$History = F2(
 	function (history, ptr) {
 		return {history: history, ptr: ptr};
@@ -6138,12 +6138,12 @@ var $author$project$Main$mux = F2(
 					$author$project$Main$AboutModel(key),
 					$author$project$Main$GotAboutMsg,
 					$author$project$About$Main$init);
-			case 'ContactRoute':
+			case 'SkillsRoute':
 				return A3(
 					norm,
 					$author$project$Main$ContactModel(key),
 					$author$project$Main$GotContactMsg,
-					$author$project$Contact$Main$init);
+					$author$project$Skills$Main$init);
 			default:
 				return A3(
 					norm,
@@ -6165,7 +6165,7 @@ var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$About$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
-var $author$project$Contact$Main$subscriptions = function (_v0) {
+var $author$project$Skills$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
@@ -6570,7 +6570,7 @@ var $author$project$Main$subscriptions = function (model) {
 			return A2(
 				$elm$core$Platform$Sub$map,
 				$author$project$Main$GotContactMsg,
-				$author$project$Contact$Main$subscriptions(mo));
+				$author$project$Skills$Main$subscriptions(mo));
 		default:
 			var mo = model.b;
 			return A2(
@@ -7427,8 +7427,8 @@ var $author$project$Common$Element$navbar = function (active) {
 	var sections = _List_fromArray(
 		[
 			_Utils_Tuple2($author$project$Route$AboutRoute, '👽'),
-			_Utils_Tuple2($author$project$Route$ContactRoute, '☎️'),
-			_Utils_Tuple2($author$project$Route$VshRoute, '💻')
+			_Utils_Tuple2($author$project$Route$SkillsRoute, '💡'),
+			_Utils_Tuple2($author$project$Route$VshRoute, '⌨️')
 		]);
 	var mark = F2(
 		function (id, s) {
@@ -7474,9 +7474,18 @@ var $elm$browser$Browser$Document = F2(
 		return {body: body, title: title};
 	});
 var $author$project$Common$Class$appCenter = 'app-center';
-var $author$project$About$Class$bg = 'about-bg';
-var $author$project$About$Class$button = 'about-button';
+var $author$project$Common$Class$bg = 'bg';
+var $author$project$About$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('about-bg')
+	]);
 var $author$project$Common$Class$button = 'button';
+var $author$project$About$Class$button = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$button),
+		$elm$html$Html$Attributes$class('about-button')
+	]);
 var $author$project$Common$Element$button_ = F3(
 	function (elem, attrs, txt) {
 		return A2(
@@ -7491,40 +7500,69 @@ var $author$project$Common$Element$button_ = F3(
 				]));
 	});
 var $elm$html$Html$div = _VirtualDom_node('div');
-var $author$project$About$Class$h1 = 'about-h1';
+var $author$project$About$Asset$asset = function (path) {
+	return A2(
+		$elm$url$Url$Builder$absolute,
+		A2($elm$core$List$cons, 'assets', path),
+		_List_Nil);
+};
+var $author$project$About$Asset$github = $author$project$About$Asset$asset(
+	_List_fromArray(
+		['github.svg']));
+var $author$project$About$Class$github = $elm$html$Html$Attributes$class('about-github');
+var $author$project$Common$Class$h1 = 'h1';
+var $author$project$About$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('about-h1')
+	]);
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $author$project$About$Class$h3 = 'about-h3';
+var $author$project$Common$Class$h3 = 'h3';
+var $author$project$About$Class$h3 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h3),
+		$elm$html$Html$Attributes$class('about-h3')
+	]);
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $elm$url$Url$Builder$crossOrigin = F3(
+	function (prePath, pathSegments, parameters) {
+		return prePath + ('/' + (A2($elm$core$String$join, '/', pathSegments) + $elm$url$Url$Builder$toQuery(parameters)));
+	});
+var $author$project$Common$Link$linkedin = $elm$html$Html$Attributes$href(
+	A3(
+		$elm$url$Url$Builder$crossOrigin,
+		'https://linkedin.com',
+		_List_fromArray(
+			['in', 'sharpvik']),
+		_List_Nil));
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
 var $author$project$About$Main$view = function (_v0) {
 	var general = $elm$core$Basics$append(
 		_List_fromArray(
 			[
 				A2(
 				$elm$html$Html$h1,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$About$Class$h1)
-					]),
+				$author$project$About$Class$h1,
 				_List_fromArray(
 					[
 						$elm$html$Html$text('Hey, I\'m Viktor!')
 					])),
 				A2(
 				$elm$html$Html$h3,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$About$Class$h3)
-					]),
+				$author$project$About$Class$h3,
 				_List_fromArray(
 					[
 						$elm$html$Html$text('💻 Full Stack Web Developer')
 					])),
 				A2(
 				$elm$html$Html$h3,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$About$Class$h3)
-					]),
+				$author$project$About$Class$h3,
 				_List_fromArray(
 					[
 						$elm$html$Html$text('🎓 University of Southampton')
@@ -7536,11 +7574,10 @@ var $author$project$About$Main$view = function (_v0) {
 			[
 				A2(
 				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
-						$elm$html$Html$Attributes$class($author$project$About$Class$bg)
-					]),
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
+					$author$project$About$Class$bg),
 				general(items))
 			]);
 	};
@@ -7548,34 +7585,85 @@ var $author$project$About$Main$view = function (_v0) {
 		app(
 			_List_fromArray(
 				[
-					A3(
-					$author$project$Common$Element$button_,
+					A2(
 					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class($author$project$About$Class$button),
-							$elm$html$Html$Attributes$href(
-							$author$project$Route$toString($author$project$Route$VshRoute))
+							$elm$html$Html$Attributes$href('https://github.com/sharpvik'),
+							$author$project$About$Class$github
 						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src($author$project$About$Asset$github)
+								]),
+							_List_Nil)
+						])),
+					A3(
+					$author$project$Common$Element$button_,
+					$elm$html$Html$a,
+					A2($elm$core$List$cons, $author$project$Common$Link$linkedin, $author$project$About$Class$button),
 					'HIRE ME!')
 				])));
 };
-var $author$project$Contact$Main$view = function (_v0) {
-	var entitled = $elm$browser$Browser$Document('☎️ Contact Me');
-	return entitled(
-		_List_fromArray(
+var $author$project$Skills$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('skills-bg')
+	]);
+var $author$project$Skills$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('skills-h1')
+	]);
+var $author$project$Skills$Class$h3 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h3),
+		$elm$html$Html$Attributes$class('skills-h3')
+	]);
+var $author$project$Skills$Main$view = function (_v0) {
+	var entitled = $elm$browser$Browser$Document('💡 My Skills');
+	var app = function (items) {
+		return _List_fromArray(
 			[
 				A2(
-				$elm$html$Html$h1,
-				_List_Nil,
-				_List_fromArray(
-					[
-						$elm$html$Html$text('Contact Page')
-					]))
-			]));
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
+					$author$project$Skills$Class$bg),
+				items)
+			]);
+	};
+	return entitled(
+		app(
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$h1,
+					$author$project$Skills$Class$h1,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('My Top Skills')
+						])),
+					A2(
+					$elm$html$Html$h3,
+					$author$project$Skills$Class$h3,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('... and some funky projects')
+						]))
+				])));
 };
 var $author$project$Common$Class$appTop = 'app-top';
-var $author$project$Vsh$Class$bg = 'vsh-bg';
+var $author$project$Vsh$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('vsh-bg')
+	]);
 var $author$project$Vsh$Class$close = 'vsh-close';
 var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$p = _VirtualDom_node('p');
@@ -7637,11 +7725,10 @@ var $author$project$Vsh$Main$view = function (model) {
 			[
 				A2(
 				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
-						$elm$html$Html$Attributes$class($author$project$Vsh$Class$bg)
-					]),
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
+					$author$project$Vsh$Class$bg),
 				_List_fromArray(
 					[
 						$author$project$Vsh$Main$vshDisplay(
@@ -7685,7 +7772,7 @@ var $author$project$Main$view = function (model) {
 			return A2(
 				norm,
 				$author$project$Main$GotContactMsg,
-				$author$project$Contact$Main$view(mo));
+				$author$project$Skills$Main$view(mo));
 		default:
 			var mo = model.b;
 			return A2(

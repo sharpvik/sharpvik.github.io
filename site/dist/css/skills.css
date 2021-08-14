@@ -1,0 +1,23 @@
+.skills-bg {
+  background-color: #fff4c4;
+}
+
+.skills-h1 {
+  color: #ff7700;
+}
+
+.skills-h3 {
+  color: #ff851b;
+}
+
+.skills-social-media-icons {
+  display: flex;
+  justify-content: space-evenly;
+  margin: 25px 0;
+}
+.skills-social-media-icons a {
+  width: 15%;
+}
+.skills-social-media-icons a img {
+  width: 100%;
+}

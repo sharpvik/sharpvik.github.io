@@ -1,17 +1,24 @@
 module About.Class exposing (..)
 
+import Common.Class as Class
+import Html.Attributes exposing (class)
+
 
 bg =
-    "about-bg"
+    [ class Class.bg, class "about-bg" ]
 
 
 h1 =
-    "about-h1"
+    [ class Class.h1, class "about-h1" ]
 
 
 h3 =
-    "about-h3"
+    [ class Class.h3, class "about-h3" ]
 
 
 button =
-    "about-button"
+    [ class Class.button, class "about-button" ]
+
+
+github =
+    class "about-github"
