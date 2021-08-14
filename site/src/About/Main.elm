@@ -61,9 +61,7 @@ view _ =
             Document "👽 About Me"
 
         app items =
-            [ div (class Class.appCenter :: About.Class.bg) <|
-                general items
-            ]
+            [ div (class Class.appCenter :: About.Class.bg) <| general items ]
 
         general =
             (++)
@@ -74,10 +72,18 @@ view _ =
     in
     entitled <|
         app
-            [ a [ href "https://github.com/sharpvik", About.Class.github ]
+            [ a
+                [ href "https://github.com/sharpvik"
+                , target "_blank"
+                , About.Class.github
+                ]
                 [ img [ src Asset.github ] [] ]
             , Element.button_ a
-                (Link.linkedin :: About.Class.button)
+                ([ Link.linkedin
+                 , target "_blank"
+                 ]
+                    ++ About.Class.button
+                )
                 "HIRE ME!"
             ]
 
