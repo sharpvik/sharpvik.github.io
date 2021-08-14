@@ -7542,6 +7542,7 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $author$project$About$Main$view = function (_v0) {
 	var general = $elm$core$Basics$append(
 		_List_fromArray(
@@ -7590,6 +7591,7 @@ var $author$project$About$Main$view = function (_v0) {
 					_List_fromArray(
 						[
 							$elm$html$Html$Attributes$href('https://github.com/sharpvik'),
+							$elm$html$Html$Attributes$target('_blank'),
 							$author$project$About$Class$github
 						]),
 					_List_fromArray(
@@ -7605,7 +7607,13 @@ var $author$project$About$Main$view = function (_v0) {
 					A3(
 					$author$project$Common$Element$button_,
 					$elm$html$Html$a,
-					A2($elm$core$List$cons, $author$project$Common$Link$linkedin, $author$project$About$Class$button),
+					_Utils_ap(
+						_List_fromArray(
+							[
+								$author$project$Common$Link$linkedin,
+								$elm$html$Html$Attributes$target('_blank')
+							]),
+						$author$project$About$Class$button),
 					'HIRE ME!')
 				])));
 };
