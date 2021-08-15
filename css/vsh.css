@@ -4,11 +4,16 @@
   background-color: #dce7ff;
 }
 
+.vsh-h1 {
+  color: #2a2f3a;
+  margin-bottom: 15px;
+}
+
 .vsh-window {
   width: 95%;
   max-width: 682px;
   margin: auto;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
   display: flex;
   flex-direction: column;

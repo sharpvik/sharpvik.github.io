@@ -4,6 +4,11 @@
   background-color: #dce7ff;
 }
 
+.vsh-h1 {
+  color: #2a2f3a;
+  margin-bottom: 15px;
+}
+
 .vsh-window {
   width: 95%;
   max-width: 682px;

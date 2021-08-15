@@ -103,7 +103,9 @@ view model =
     { title = "💻 ️VSH Shell"
     , body =
         [ div (class Class.appTop :: Vsh.Class.bg)
-            [ vshDisplay <| model.display ++ [ text model.command ] ]
+            [ h1 Vsh.Class.h1 [ text "Hack Me 🤓" ]
+            , vshDisplay <| model.display ++ [ text model.command ]
+            ]
         ]
     }
 
