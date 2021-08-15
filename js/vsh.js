@@ -784,11 +784,11 @@ function _Debug_crash_UNUSED(identifier, fact1, fact2, fact3, fact4)
 
 function _Debug_regionToString(region)
 {
-	if (region.L.C === region.Q.C)
+	if (region.L.C === region.R.C)
 	{
 		return 'on line ' + region.L.C;
 	}
-	return 'on lines ' + region.L.C + ' through ' + region.Q.C;
+	return 'on lines ' + region.L.C + ' through ' + region.R.C;
 }
 
 
@@ -1857,9 +1857,9 @@ var _Platform_worker = F4(function(impl, flagDecoder, debugMetadata, args)
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.as,
+		impl.at,
 		impl.aE,
-		impl.aC,
+		impl.aD,
 		function() { return function() {} }
 	);
 });
@@ -3928,9 +3928,9 @@ var _Browser_element = _Debugger_element || F4(function(impl, flagDecoder, debug
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.as,
+		impl.at,
 		impl.aE,
-		impl.aC,
+		impl.aD,
 		function(sendToApp, initialModel) {
 			var view = impl.aF;
 			/**/
@@ -3964,9 +3964,9 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 	return _Platform_initialize(
 		flagDecoder,
 		args,
-		impl.as,
+		impl.at,
 		impl.aE,
-		impl.aC,
+		impl.aD,
 		function(sendToApp, initialModel) {
 			var divertHrefToApp = impl.K && impl.K(sendToApp)
 			var view = impl.aF;
@@ -3977,12 +3977,12 @@ var _Browser_document = _Debugger_document || F4(function(impl, flagDecoder, deb
 			{
 				_VirtualDom_divertHrefToApp = divertHrefToApp;
 				var doc = view(model);
-				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.ak);
+				var nextNode = _VirtualDom_node('body')(_List_Nil)(doc.O);
 				var patches = _VirtualDom_diff(currNode, nextNode);
 				bodyNode = _VirtualDom_applyPatches(bodyNode, currNode, patches, sendToApp);
 				currNode = nextNode;
 				_VirtualDom_divertHrefToApp = 0;
-				(title !== doc.aD) && (_VirtualDom_doc.title = title = doc.aD);
+				(title !== doc.af) && (_VirtualDom_doc.title = title = doc.af);
 			});
 		}
 	);
@@ -4038,8 +4038,8 @@ function _Browser_makeAnimator(model, draw)
 
 function _Browser_application(impl)
 {
-	var onUrlChange = impl.au;
-	var onUrlRequest = impl.av;
+	var onUrlChange = impl.av;
+	var onUrlRequest = impl.aw;
 	var key = function() { key.a(onUrlChange(_Browser_getUrl())); };
 
 	return _Browser_document({
@@ -4059,9 +4059,9 @@ function _Browser_application(impl)
 					var next = $elm$url$Url$fromString(href).a;
 					sendToApp(onUrlRequest(
 						(next
-							&& curr.az === next.az
-							&& curr.aq === next.aq
-							&& curr.ay.a === next.ay.a
+							&& curr.aA === next.aA
+							&& curr.ar === next.ar
+							&& curr.az.a === next.az.a
 						)
 							? $elm$browser$Browser$Internal(next)
 							: $elm$browser$Browser$External(href)
@@ -4069,13 +4069,13 @@ function _Browser_application(impl)
 				}
 			});
 		},
-		as: function(flags)
+		at: function(flags)
 		{
-			return A3(impl.as, flags, _Browser_getUrl(), key);
+			return A3(impl.at, flags, _Browser_getUrl(), key);
 		},
 		aF: impl.aF,
 		aE: impl.aE,
-		aC: impl.aC
+		aD: impl.aD
 	});
 }
 
@@ -4141,17 +4141,17 @@ var _Browser_decodeEvent = F2(function(decoder, event)
 function _Browser_visibilityInfo()
 {
 	return (typeof _VirtualDom_doc.hidden !== 'undefined')
-		? { ap: 'hidden', al: 'visibilitychange' }
+		? { aq: 'hidden', am: 'visibilitychange' }
 		:
 	(typeof _VirtualDom_doc.mozHidden !== 'undefined')
-		? { ap: 'mozHidden', al: 'mozvisibilitychange' }
+		? { aq: 'mozHidden', am: 'mozvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.msHidden !== 'undefined')
-		? { ap: 'msHidden', al: 'msvisibilitychange' }
+		? { aq: 'msHidden', am: 'msvisibilitychange' }
 		:
 	(typeof _VirtualDom_doc.webkitHidden !== 'undefined')
-		? { ap: 'webkitHidden', al: 'webkitvisibilitychange' }
-		: { ap: 'hidden', al: 'visibilitychange' };
+		? { aq: 'webkitHidden', am: 'webkitvisibilitychange' }
+		: { aq: 'hidden', am: 'visibilitychange' };
 }
 
 
@@ -4232,12 +4232,12 @@ var _Browser_call = F2(function(functionName, id)
 function _Browser_getViewport()
 {
 	return {
-		ab: _Browser_getScene(),
-		ae: {
-			ag: _Browser_window.pageXOffset,
-			ah: _Browser_window.pageYOffset,
-			af: _Browser_doc.documentElement.clientWidth,
-			T: _Browser_doc.documentElement.clientHeight
+		ac: _Browser_getScene(),
+		ag: {
+			ai: _Browser_window.pageXOffset,
+			aj: _Browser_window.pageYOffset,
+			ah: _Browser_doc.documentElement.clientWidth,
+			U: _Browser_doc.documentElement.clientHeight
 		}
 	};
 }
@@ -4247,8 +4247,8 @@ function _Browser_getScene()
 	var body = _Browser_doc.body;
 	var elem = _Browser_doc.documentElement;
 	return {
-		af: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
-		T: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
+		ah: Math.max(body.scrollWidth, body.offsetWidth, elem.scrollWidth, elem.offsetWidth, elem.clientWidth),
+		U: Math.max(body.scrollHeight, body.offsetHeight, elem.scrollHeight, elem.offsetHeight, elem.clientHeight)
 	};
 }
 
@@ -4271,15 +4271,15 @@ function _Browser_getViewportOf(id)
 	return _Browser_withNode(id, function(node)
 	{
 		return {
-			ab: {
-				af: node.scrollWidth,
-				T: node.scrollHeight
+			ac: {
+				ah: node.scrollWidth,
+				U: node.scrollHeight
 			},
-			ae: {
-				ag: node.scrollLeft,
-				ah: node.scrollTop,
-				af: node.clientWidth,
-				T: node.clientHeight
+			ag: {
+				ai: node.scrollLeft,
+				aj: node.scrollTop,
+				ah: node.clientWidth,
+				U: node.clientHeight
 			}
 		};
 	});
@@ -4309,18 +4309,18 @@ function _Browser_getElement(id)
 		var x = _Browser_window.pageXOffset;
 		var y = _Browser_window.pageYOffset;
 		return {
-			ab: _Browser_getScene(),
-			ae: {
-				ag: x,
-				ah: y,
-				af: _Browser_doc.documentElement.clientWidth,
-				T: _Browser_doc.documentElement.clientHeight
+			ac: _Browser_getScene(),
+			ag: {
+				ai: x,
+				aj: y,
+				ah: _Browser_doc.documentElement.clientWidth,
+				U: _Browser_doc.documentElement.clientHeight
 			},
-			an: {
-				ag: x + rect.left,
-				ah: y + rect.top,
-				af: rect.width,
-				T: rect.height
+			ao: {
+				ai: x + rect.left,
+				aj: y + rect.top,
+				ah: rect.width,
+				U: rect.height
 			}
 		};
 	});
@@ -4410,10 +4410,10 @@ var _Bitwise_shiftRightZfBy = F2(function(offset, a)
 	return a >>> offset;
 });
 var $author$project$Main$LinkChanged = function (a) {
-	return {$: 3, a: a};
+	return {$: 4, a: a};
 };
 var $author$project$Main$LinkClicked = function (a) {
-	return {$: 2, a: a};
+	return {$: 3, a: a};
 };
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
@@ -4919,7 +4919,7 @@ var $elm$url$Url$Http = 0;
 var $elm$url$Url$Https = 1;
 var $elm$url$Url$Url = F6(
 	function (protocol, host, port_, path, query, fragment) {
-		return {S: fragment, aq: host, ax: path, ay: port_, az: protocol, aA: query};
+		return {T: fragment, ar: host, ay: path, az: port_, aA: protocol, aB: query};
 	});
 var $elm$core$String$contains = _String_contains;
 var $elm$core$String$length = _String_length;
@@ -5204,15 +5204,22 @@ var $author$project$Main$AboutModel = F2(
 	});
 var $author$project$About$Main$NoModel = 0;
 var $author$project$About$Main$initModel = 0;
+var $author$project$Main$ContactModel = F2(
+	function (a, b) {
+		return {$: 1, a: a, b: b};
+	});
 var $author$project$Main$GotAboutMsg = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$GotVshMsg = function (a) {
+var $author$project$Main$GotContactMsg = function (a) {
 	return {$: 1, a: a};
+};
+var $author$project$Main$GotVshMsg = function (a) {
+	return {$: 2, a: a};
 };
 var $author$project$Main$VshModel = F2(
 	function (a, b) {
-		return {$: 1, a: a, b: b};
+		return {$: 2, a: a, b: b};
 	});
 var $author$project$Route$AboutRoute = 0;
 var $elm$core$Maybe$withDefault = F2(
@@ -5226,12 +5233,12 @@ var $elm$core$Maybe$withDefault = F2(
 	});
 var $author$project$Route$fake = function (path) {
 	return {
-		S: $elm$core$Maybe$Nothing,
-		aq: 'example.com',
-		ax: A2($elm$core$Maybe$withDefault, '/about', path.S),
-		ay: $elm$core$Maybe$Nothing,
-		az: 0,
-		aA: $elm$core$Maybe$Nothing
+		T: $elm$core$Maybe$Nothing,
+		ar: 'sharpvik.github.com',
+		ay: A2($elm$core$Maybe$withDefault, '/about', path.T),
+		az: $elm$core$Maybe$Nothing,
+		aA: 1,
+		aB: $elm$core$Maybe$Nothing
 	};
 };
 var $elm$url$Url$Parser$State = F5(
@@ -5863,12 +5870,11 @@ var $elm$url$Url$Parser$parse = F2(
 				A5(
 					$elm$url$Url$Parser$State,
 					_List_Nil,
-					$elm$url$Url$Parser$preparePath(url.ax),
-					$elm$url$Url$Parser$prepareQuery(url.aA),
-					url.S,
+					$elm$url$Url$Parser$preparePath(url.ay),
+					$elm$url$Url$Parser$prepareQuery(url.aB),
+					url.T,
 					$elm$core$Basics$identity)));
 	});
-var $author$project$Route$VshRoute = 1;
 var $elm$url$Url$Parser$Parser = $elm$core$Basics$identity;
 var $elm$url$Url$Parser$mapState = F2(
 	function (func, _v0) {
@@ -5928,6 +5934,32 @@ var $elm$url$Url$Parser$oneOf = function (parsers) {
 			parsers);
 	};
 };
+var $author$project$Route$repr = function (route) {
+	switch (route) {
+		case 0:
+			return 'about';
+		case 1:
+			return 'contact';
+		default:
+			return 'vsh';
+	}
+};
+var $author$project$Route$SkillsRoute = 1;
+var $author$project$Route$VshRoute = 2;
+var $author$project$Route$routes = function () {
+	var check = function (route) {
+		switch (route) {
+			case 0:
+				return 0;
+			case 1:
+				return 0;
+			default:
+				return 0;
+		}
+	};
+	return _List_fromArray(
+		[0, 1, 2]);
+}();
 var $elm$url$Url$Parser$s = function (str) {
 	return function (_v0) {
 		var visited = _v0.w;
@@ -5957,19 +5989,20 @@ var $elm$url$Url$Parser$top = function (state) {
 	return _List_fromArray(
 		[state]);
 };
-var $author$project$Route$urlParser = $elm$url$Url$Parser$oneOf(
-	_List_fromArray(
-		[
+var $author$project$Route$urlParser = function () {
+	var mapper = function (route) {
+		return A2(
+			$elm$url$Url$Parser$map,
+			route,
+			$elm$url$Url$Parser$s(
+				$author$project$Route$repr(route)));
+	};
+	return $elm$url$Url$Parser$oneOf(
+		A2(
+			$elm$core$List$cons,
 			A2($elm$url$Url$Parser$map, 0, $elm$url$Url$Parser$top),
-			A2(
-			$elm$url$Url$Parser$map,
-			0,
-			$elm$url$Url$Parser$s('about')),
-			A2(
-			$elm$url$Url$Parser$map,
-			1,
-			$elm$url$Url$Parser$s('vsh'))
-		]));
+			A2($elm$core$List$map, mapper, $author$project$Route$routes)));
+}();
 var $author$project$Route$fromUrl = function (url) {
 	return A2(
 		$elm$core$Maybe$withDefault,
@@ -5982,12 +6015,16 @@ var $author$project$Route$fromUrl = function (url) {
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$About$Main$init = _Utils_Tuple2($author$project$About$Main$initModel, $elm$core$Platform$Cmd$none);
+var $author$project$Skills$Main$NoModel = 0;
+var $author$project$Skills$Main$initModel = 0;
+var $author$project$Skills$Main$init = _Utils_Tuple2($author$project$Skills$Main$initModel, $elm$core$Platform$Cmd$none);
 var $author$project$Vsh$History$History = F2(
 	function (history, ptr) {
 		return {o: history, u: ptr};
 	});
 var $author$project$Vsh$History$empty = A2($author$project$Vsh$History$History, $elm$core$Array$empty, 0);
 var $author$project$Vsh$Text$Green = 1;
+var $author$project$Vsh$Text$Yellow = 0;
 var $elm$json$Json$Encode$string = _Json_wrap;
 var $elm$html$Html$Attributes$stringProperty = F2(
 	function (key, string) {
@@ -6027,7 +6064,6 @@ var $author$project$Vsh$Text$ctext = F2(
 				]));
 	});
 var $author$project$Vsh$Text$Magenta = 2;
-var $author$project$Vsh$Text$Yellow = 0;
 var $author$project$Vsh$Main$prompt = _List_fromArray(
 	[
 		A2($author$project$Vsh$Text$ctext, 0, 'guest'),
@@ -6051,19 +6087,24 @@ var $author$project$Vsh$Main$greeting = _Utils_ap(
 			[
 				$elm$html$Html$text('\nEnter '),
 				A2($author$project$Vsh$Text$ctext, 1, 'help'),
-				$elm$html$Html$text(' to see available commands!\n\n')
+				$elm$html$Html$text(' to see available commands!\n'),
+				A2($author$project$Vsh$Text$ctext, 0, 'VSH does not support mobile devices.\n\n')
 			]),
 		$author$project$Vsh$Main$prompt));
 var $author$project$Vsh$Main$initModel = {k: '', B: $author$project$Vsh$Main$greeting, o: $author$project$Vsh$History$empty};
 var $author$project$Vsh$Main$init = _Utils_Tuple2($author$project$Vsh$Main$initModel, $elm$core$Platform$Cmd$none);
 var $elm$core$Platform$Cmd$map = _Platform_map;
 var $author$project$Main$toKey = function (model) {
-	if (!model.$) {
-		var key = model.a;
-		return key;
-	} else {
-		var key = model.a;
-		return key;
+	switch (model.$) {
+		case 0:
+			var key = model.a;
+			return key;
+		case 1:
+			var key = model.a;
+			return key;
+		default:
+			var key = model.a;
+			return key;
 	}
 };
 var $author$project$Main$mux = F2(
@@ -6078,18 +6119,25 @@ var $author$project$Main$mux = F2(
 					A2($elm$core$Platform$Cmd$map, toMsg, cmd));
 			});
 		var key = $author$project$Main$toKey(model);
-		if (!route) {
-			return A3(
-				norm,
-				$author$project$Main$AboutModel(key),
-				$author$project$Main$GotAboutMsg,
-				$author$project$About$Main$init);
-		} else {
-			return A3(
-				norm,
-				$author$project$Main$VshModel(key),
-				$author$project$Main$GotVshMsg,
-				$author$project$Vsh$Main$init);
+		switch (route) {
+			case 0:
+				return A3(
+					norm,
+					$author$project$Main$AboutModel(key),
+					$author$project$Main$GotAboutMsg,
+					$author$project$About$Main$init);
+			case 1:
+				return A3(
+					norm,
+					$author$project$Main$ContactModel(key),
+					$author$project$Main$GotContactMsg,
+					$author$project$Skills$Main$init);
+			default:
+				return A3(
+					norm,
+					$author$project$Main$VshModel(key),
+					$author$project$Main$GotVshMsg,
+					$author$project$Vsh$Main$init);
 		}
 	});
 var $author$project$Main$init = F3(
@@ -6103,6 +6151,9 @@ var $elm$core$Platform$Sub$map = _Platform_map;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$About$Main$subscriptions = function (_v0) {
+	return $elm$core$Platform$Sub$none;
+};
+var $author$project$Skills$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
@@ -6208,7 +6259,7 @@ var $elm$browser$Browser$Events$MySub = F3(
 	});
 var $elm$browser$Browser$Events$State = F2(
 	function (subs, pids) {
-		return {X: pids, ac: subs};
+		return {Y: pids, ad: subs};
 	});
 var $elm$browser$Browser$Events$init = $elm$core$Task$succeed(
 	A2($elm$browser$Browser$Events$State, _List_Nil, $elm$core$Dict$empty));
@@ -6329,7 +6380,7 @@ var $elm$core$Dict$merge = F6(
 	});
 var $elm$browser$Browser$Events$Event = F2(
 	function (key, event) {
-		return {R: event, U: key};
+		return {S: event, V: key};
 	});
 var $elm$core$Platform$sendToSelf = _Platform_sendToSelf;
 var $elm$browser$Browser$Events$spawn = F3(
@@ -6404,7 +6455,7 @@ var $elm$browser$Browser$Events$onEffects = F3(
 			stepLeft,
 			stepBoth,
 			stepRight,
-			state.X,
+			state.Y,
 			$elm$core$Dict$fromList(newSubs),
 			_Utils_Tuple3(_List_Nil, $elm$core$Dict$empty, _List_Nil));
 		var deadPids = _v0.a;
@@ -6450,8 +6501,8 @@ var $elm$core$List$filterMap = F2(
 	});
 var $elm$browser$Browser$Events$onSelfMsg = F3(
 	function (router, _v0, state) {
-		var key = _v0.U;
-		var event = _v0.R;
+		var key = _v0.V;
+		var event = _v0.S;
 		var toMessage = function (_v2) {
 			var subKey = _v2.a;
 			var _v3 = _v2.b;
@@ -6460,7 +6511,7 @@ var $elm$browser$Browser$Events$onSelfMsg = F3(
 			var decoder = _v3.c;
 			return _Utils_eq(subKey, key) ? A2(_Browser_decodeEvent, decoder, event) : $elm$core$Maybe$Nothing;
 		};
-		var messages = A2($elm$core$List$filterMap, toMessage, state.ac);
+		var messages = A2($elm$core$List$filterMap, toMessage, state.ad);
 		return A2(
 			$elm$core$Task$andThen,
 			function (_v1) {
@@ -6495,18 +6546,25 @@ var $author$project$Vsh$Main$subscriptions = function (_v0) {
 	return $elm$browser$Browser$Events$onKeyDown($author$project$Vsh$Main$keydownHandler);
 };
 var $author$project$Main$subscriptions = function (model) {
-	if (!model.$) {
-		var mo = model.b;
-		return A2(
-			$elm$core$Platform$Sub$map,
-			$author$project$Main$GotAboutMsg,
-			$author$project$About$Main$subscriptions(mo));
-	} else {
-		var mo = model.b;
-		return A2(
-			$elm$core$Platform$Sub$map,
-			$author$project$Main$GotVshMsg,
-			$author$project$Vsh$Main$subscriptions(mo));
+	switch (model.$) {
+		case 0:
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$subscriptions(mo));
+		case 1:
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotContactMsg,
+				$author$project$Skills$Main$subscriptions(mo));
+		default:
+			var mo = model.b;
+			return A2(
+				$elm$core$Platform$Sub$map,
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$subscriptions(mo));
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -6533,7 +6591,7 @@ var $elm$url$Url$addPrefixed = F3(
 	});
 var $elm$url$Url$toString = function (url) {
 	var http = function () {
-		var _v0 = url.az;
+		var _v0 = url.aA;
 		if (!_v0) {
 			return 'http://';
 		} else {
@@ -6543,17 +6601,17 @@ var $elm$url$Url$toString = function (url) {
 	return A3(
 		$elm$url$Url$addPrefixed,
 		'#',
-		url.S,
+		url.T,
 		A3(
 			$elm$url$Url$addPrefixed,
 			'?',
-			url.aA,
+			url.aB,
 			_Utils_ap(
 				A2(
 					$elm$url$Url$addPort,
-					url.ay,
-					_Utils_ap(http, url.aq)),
-				url.ax)));
+					url.az,
+					_Utils_ap(http, url.ar)),
+				url.ay)));
 };
 var $author$project$About$Main$update = F2(
 	function (_v0, model) {
@@ -6681,26 +6739,59 @@ var $elm$url$Url$Builder$absolute = F2(
 		return '/' + (A2($elm$core$String$join, '/', pathSegments) + $elm$url$Url$Builder$toQuery(parameters));
 	});
 var $author$project$Route$toString = function (route) {
-	var p = $elm$core$Basics$append('/#');
-	if (!route) {
-		return p(
-			A2(
-				$elm$url$Url$Builder$absolute,
-				_List_fromArray(
-					['about']),
-				_List_Nil));
-	} else {
-		return p(
-			A2(
-				$elm$url$Url$Builder$absolute,
-				_List_fromArray(
-					['vsh']),
-				_List_Nil));
-	}
+	return '/#' + A2(
+		$elm$url$Url$Builder$absolute,
+		_List_fromArray(
+			[
+				$author$project$Route$repr(route)
+			]),
+		_List_Nil);
 };
 var $author$project$Vsh$Command$clear = F2(
 	function (_v0, _v1) {
 		return _List_Nil;
+	});
+var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
+var $elm$core$String$repeatHelp = F3(
+	function (n, chunk, result) {
+		return (n <= 0) ? result : A3(
+			$elm$core$String$repeatHelp,
+			n >> 1,
+			_Utils_ap(chunk, chunk),
+			(!(n & 1)) ? result : _Utils_ap(result, chunk));
+	});
+var $elm$core$String$repeat = F2(
+	function (n, chunk) {
+		return A3($elm$core$String$repeatHelp, n, chunk, '');
+	});
+var $elm$core$String$padRight = F3(
+	function (n, _char, string) {
+		return _Utils_ap(
+			string,
+			A2(
+				$elm$core$String$repeat,
+				n - $elm$core$String$length(string),
+				$elm$core$String$fromChar(_char)));
+	});
+var $author$project$Vsh$Command$cut = F2(
+	function (_v0, display) {
+		var entry = F2(
+			function (command, description) {
+				return _List_fromArray(
+					[
+						$elm$html$Html$text('\n    '),
+						A2(
+						$author$project$Vsh$Text$ctext,
+						1,
+						A3($elm$core$String$padRight, 8, ' ', command)),
+						$elm$html$Html$text('-- ' + description)
+					]);
+			});
+		return _Utils_ap(
+			display,
+			_Utils_ap(
+				A2(entry, 'CTRL+e', 'quit vsh'),
+				A2(entry, 'CTRL+;', 'clear screen')));
 	});
 var $elm$html$Html$a = _VirtualDom_node('a');
 var $elm$html$Html$Attributes$href = function (url) {
@@ -6756,28 +6847,6 @@ var $author$project$Vsh$Command$git = F2(
 						]))
 				]));
 	});
-var $elm$core$Bitwise$shiftRightBy = _Bitwise_shiftRightBy;
-var $elm$core$String$repeatHelp = F3(
-	function (n, chunk, result) {
-		return (n <= 0) ? result : A3(
-			$elm$core$String$repeatHelp,
-			n >> 1,
-			_Utils_ap(chunk, chunk),
-			(!(n & 1)) ? result : _Utils_ap(result, chunk));
-	});
-var $elm$core$String$repeat = F2(
-	function (n, chunk) {
-		return A3($elm$core$String$repeatHelp, n, chunk, '');
-	});
-var $elm$core$String$padRight = F3(
-	function (n, _char, string) {
-		return _Utils_ap(
-			string,
-			A2(
-				$elm$core$String$repeat,
-				n - $elm$core$String$length(string),
-				$elm$core$String$fromChar(_char)));
-	});
 var $author$project$Vsh$Command$help = F2(
 	function (_v0, display) {
 		var entry = F2(
@@ -6797,7 +6866,7 @@ var $author$project$Vsh$Command$help = F2(
 			_Utils_ap(
 				_List_fromArray(
 					[
-						$elm$html$Html$text('vsh is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history (unless it\'s empty).\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
+						$elm$html$Html$text('VSH is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history (unless it\'s empty).\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
 					]),
 				_Utils_ap(
 					A2(entry, 'whoami', 'a bit about myself'),
@@ -6814,10 +6883,12 @@ var $author$project$Vsh$Command$help = F2(
 										_Utils_ap(
 											A2(entry, 'version', 'display vsh version'),
 											_Utils_ap(
-												A2(entry, 'git', 'explore vsh source code'),
+												A2(entry, 'cut', 'keyboard shortcuts cheatsheet'),
 												_Utils_ap(
-													A2(entry, 'clear', 'clear screen'),
-													A2(entry, 'exit', 'exit vsh session'))))))))))));
+													A2(entry, 'git', 'explore vsh source code'),
+													_Utils_ap(
+														A2(entry, 'clear', 'clear screen'),
+														A2(entry, 'exit', 'exit vsh session')))))))))))));
 	});
 var $author$project$Vsh$Command$jobs = F2(
 	function (_v0, display) {
@@ -7009,6 +7080,8 @@ var $author$project$Vsh$Command$eval = function (command) {
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$help);
 		case 'version':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$version);
+		case 'cut':
+			return $elm$core$Maybe$Just($author$project$Vsh$Command$cut);
 		case 'git':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$git);
 		case 'clear':
@@ -7261,8 +7334,8 @@ var $author$project$Main$update = F2(
 		_v0$4:
 		while (true) {
 			switch (_v0.a.$) {
-				case 1:
-					if (_v0.b.$ === 1) {
+				case 2:
+					if (_v0.b.$ === 2) {
 						var ms = _v0.a.a;
 						var _v1 = _v0.b;
 						var mo = _v1.b;
@@ -7287,10 +7360,10 @@ var $author$project$Main$update = F2(
 					} else {
 						break _v0$4;
 					}
-				case 3:
+				case 4:
 					var url = _v0.a.a;
 					return A2($author$project$Main$mux, model, url);
-				default:
+				case 3:
 					var urlRequest = _v0.a.a;
 					if (!urlRequest.$) {
 						var url = urlRequest.a;
@@ -7306,19 +7379,14 @@ var $author$project$Main$update = F2(
 							model,
 							$elm$browser$Browser$Navigation$load(href));
 					}
+				default:
+					break _v0$4;
 			}
 		}
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
 	});
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
-var $author$project$Common$Class$aboutBg = 'about-bg';
-var $author$project$Common$Class$aboutH1 = 'about-h1';
-var $author$project$Common$Class$aboutH3 = 'about-h3';
-var $author$project$Common$Class$appCenter = 'app-center';
-var $elm$html$Html$div = _VirtualDom_node('div');
-var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$nav = _VirtualDom_node('nav');
 var $author$project$Common$Class$navbar = 'navbar';
 var $author$project$Common$Class$navbarIcon = 'navbar-icon';
@@ -7331,7 +7399,8 @@ var $author$project$Common$Element$navbar = function (active) {
 	var sections = _List_fromArray(
 		[
 			_Utils_Tuple2(0, '👽'),
-			_Utils_Tuple2(1, '💻')
+			_Utils_Tuple2(1, '💡'),
+			_Utils_Tuple2(2, '⌨️')
 		]);
 	var mark = F2(
 		function (id, s) {
@@ -7362,70 +7431,412 @@ var $author$project$Common$Element$navbar = function (active) {
 			]),
 		result);
 };
+var $author$project$Main$toActiveIndex = function (model) {
+	switch (model.$) {
+		case 0:
+			return 0;
+		case 1:
+			return 1;
+		default:
+			return 2;
+	}
+};
+var $elm$browser$Browser$Document = F2(
+	function (title, body) {
+		return {O: body, af: title};
+	});
+var $author$project$Common$Class$appCenter = 'app-center';
+var $author$project$Common$Class$bg = 'bg';
+var $author$project$About$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('about-bg')
+	]);
+var $author$project$Common$Class$button = 'button';
+var $author$project$About$Class$button = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$button),
+		$elm$html$Html$Attributes$class('about-button')
+	]);
+var $author$project$Common$Element$button_ = F3(
+	function (elem, attrs, txt) {
+		return A2(
+			elem,
+			A2(
+				$elm$core$List$cons,
+				$elm$html$Html$Attributes$class($author$project$Common$Class$button),
+				attrs),
+			_List_fromArray(
+				[
+					$elm$html$Html$text(txt)
+				]));
+	});
+var $elm$html$Html$div = _VirtualDom_node('div');
+var $author$project$About$Asset$asset = function (path) {
+	return A2(
+		$elm$url$Url$Builder$absolute,
+		A2($elm$core$List$cons, 'assets', path),
+		_List_Nil);
+};
+var $author$project$About$Asset$github = $author$project$About$Asset$asset(
+	_List_fromArray(
+		['github.svg']));
+var $author$project$About$Class$github = $elm$html$Html$Attributes$class('about-github');
+var $author$project$Common$Link$github = $elm$html$Html$Attributes$href('https://github.com/sharpvik');
+var $author$project$Common$Class$h1 = 'h1';
+var $author$project$About$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('about-h1')
+	]);
+var $elm$html$Html$h1 = _VirtualDom_node('h1');
+var $author$project$Common$Class$h3 = 'h3';
+var $author$project$About$Class$h3 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h3),
+		$elm$html$Html$Attributes$class('about-h3')
+	]);
+var $elm$html$Html$h3 = _VirtualDom_node('h3');
+var $elm$html$Html$img = _VirtualDom_node('img');
+var $author$project$Common$Link$mailto = $elm$html$Html$Attributes$href('mailto:sharp.vik@gmail.com');
+var $elm$html$Html$Attributes$src = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'src',
+		_VirtualDom_noJavaScriptOrHtmlUri(url));
+};
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $author$project$About$Main$view = function (_v0) {
-	return {
-		ak: _List_fromArray(
+	var general = $elm$core$Basics$append(
+		_List_fromArray(
+			[
+				A2(
+				$elm$html$Html$h1,
+				$author$project$About$Class$h1,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('Hey, I\'m Viktor!')
+					])),
+				A2(
+				$elm$html$Html$h3,
+				$author$project$About$Class$h3,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('💻 Full Stack Web Developer')
+					])),
+				A2(
+				$elm$html$Html$h3,
+				$author$project$About$Class$h3,
+				_List_fromArray(
+					[
+						$elm$html$Html$text('🎓 University of Southampton')
+					]))
+			]));
+	var entitled = $elm$browser$Browser$Document('👽 About Me');
+	var app = function (items) {
+		return _List_fromArray(
 			[
 				A2(
 				$elm$html$Html$div,
-				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
-						$elm$html$Html$Attributes$class($author$project$Common$Class$aboutBg)
-					]),
-				_List_fromArray(
-					[
-						A2(
-						$elm$html$Html$h1,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH1)
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('Hey, I\'m Viktor!')
-							])),
-						A2(
-						$elm$html$Html$h3,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH3)
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('💻 Full Stack Web Developer')
-							])),
-						A2(
-						$elm$html$Html$h3,
-						_List_fromArray(
-							[
-								$elm$html$Html$Attributes$class($author$project$Common$Class$aboutH3)
-							]),
-						_List_fromArray(
-							[
-								$elm$html$Html$text('🎓 University of Southampton')
-							]))
-					])),
-				$author$project$Common$Element$navbar(0)
-			]),
-		aD: '👽 About Me'
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
+					$author$project$About$Class$bg),
+				general(items))
+			]);
 	};
+	return entitled(
+		app(
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$a,
+					_List_fromArray(
+						[
+							$author$project$Common$Link$github,
+							$elm$html$Html$Attributes$target('_blank'),
+							$author$project$About$Class$github
+						]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$img,
+							_List_fromArray(
+								[
+									$elm$html$Html$Attributes$src($author$project$About$Asset$github)
+								]),
+							_List_Nil)
+						])),
+					A3(
+					$author$project$Common$Element$button_,
+					$elm$html$Html$a,
+					_Utils_ap(
+						_List_fromArray(
+							[
+								$author$project$Common$Link$mailto,
+								$elm$html$Html$Attributes$target('_blank')
+							]),
+						$author$project$About$Class$button),
+					'SAY HI!')
+				])));
 };
+var $author$project$Common$Link$ansible = $elm$html$Html$Attributes$href('https://www.ansible.com/');
 var $author$project$Common$Class$appTop = 'app-top';
-var $author$project$Common$Class$vshBg = 'vsh-bg';
-var $elm$html$Html$header = _VirtualDom_node('header');
+var $author$project$Skills$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('skills-bg')
+	]);
+var $author$project$Skills$Class$card = $elm$html$Html$Attributes$class('skills-card');
+var $author$project$Common$Link$docker = $elm$html$Html$Attributes$href('https://www.docker.com');
+var $author$project$Common$Link$elm = $elm$html$Html$Attributes$href('https://elm-lang.org');
+var $author$project$Common$Link$go = $elm$html$Html$Attributes$href('https://golang.org');
+var $author$project$Skills$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('skills-h1')
+	]);
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
 var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Skills$Class$pill = $elm$html$Html$Attributes$class('skills-pill');
+var $author$project$Common$Link$python = $elm$html$Html$Attributes$href('https://www.python.org/about');
+var $author$project$Skills$Class$row = $elm$html$Html$Attributes$class('skills-row');
+var $author$project$Common$Link$vuejs = $elm$html$Html$Attributes$href('https://vuejs.org');
+var $author$project$Skills$Main$view = function (_v0) {
+	var entitled = $elm$browser$Browser$Document('💡 My Skills');
+	var app = function (items) {
+		return _List_fromArray(
+			[
+				A2(
+				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
+					$author$project$Skills$Class$bg),
+				items)
+			]);
+	};
+	return entitled(
+		app(
+			_List_fromArray(
+				[
+					A2(
+					$elm$html$Html$h1,
+					$author$project$Skills$Class$h1,
+					_List_fromArray(
+						[
+							$elm$html$Html$text('What I Do')
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[$author$project$Skills$Class$row]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Back End')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('RESTful Microservices')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Go')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Python')
+												]))
+										]))
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('DevOps ')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('CI/CD, Server Management')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$docker, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Docker')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$ansible, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Ansible')
+												]))
+										]))
+								]))
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[$author$project$Skills$Class$row]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Front End')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Web Apps')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$elm, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Elm')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$vuejs, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Vue.js')
+												]))
+										]))
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Tutoring')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Zero-to-hero in programming')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Go')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Python')
+												]))
+										]))
+								]))
+						]))
+				])));
+};
+var $author$project$Vsh$Class$bg = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$elm$html$Html$Attributes$class('vsh-bg')
+	]);
+var $author$project$Vsh$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('vsh-h1')
+	]);
+var $author$project$Vsh$Class$close = 'vsh-close';
+var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $author$project$Common$Class$vshClose = 'vsh-close';
-var $author$project$Common$Class$vshTextarea = 'vsh-textarea';
-var $author$project$Common$Class$vshTopbar = 'vsh-topbar';
-var $author$project$Common$Class$vshWindow = 'vsh-window';
+var $author$project$Vsh$Class$textarea = 'vsh-textarea';
+var $author$project$Vsh$Class$topbar = 'vsh-topbar';
+var $author$project$Vsh$Class$window = 'vsh-window';
 var $author$project$Vsh$Main$vshDisplay = function (display) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
 			[
-				$elm$html$Html$Attributes$class($author$project$Common$Class$vshWindow)
+				$elm$html$Html$Attributes$class($author$project$Vsh$Class$window)
 			]),
 		_List_fromArray(
 			[
@@ -7433,7 +7844,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 				$elm$html$Html$header,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshTopbar)
+						$elm$html$Html$Attributes$class($author$project$Vsh$Class$topbar)
 					]),
 				_List_fromArray(
 					[
@@ -7448,7 +7859,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 						$elm$html$Html$a,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class($author$project$Common$Class$vshClose),
+								$elm$html$Html$Attributes$class($author$project$Vsh$Class$close),
 								$elm$html$Html$Attributes$href(
 								$author$project$Route$toString(0))
 							]),
@@ -7458,7 +7869,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 				$elm$html$Html$pre,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshTextarea)
+						$elm$html$Html$Attributes$class($author$project$Vsh$Class$textarea)
 					]),
 				_Utils_ap(
 					display,
@@ -7470,17 +7881,23 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 };
 var $author$project$Vsh$Main$view = function (model) {
 	return {
-		ak: _List_fromArray(
+		O: _List_fromArray(
 			[
 				A2(
 				$elm$html$Html$div,
+				A2(
+					$elm$core$List$cons,
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
+					$author$project$Vsh$Class$bg),
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
-						$elm$html$Html$Attributes$class($author$project$Common$Class$vshBg)
-					]),
-				_List_fromArray(
-					[
+						A2(
+						$elm$html$Html$h1,
+						$author$project$Vsh$Class$h1,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Hack Me 🤓')
+							])),
 						$author$project$Vsh$Main$vshDisplay(
 						_Utils_ap(
 							model.B,
@@ -7488,40 +7905,50 @@ var $author$project$Vsh$Main$view = function (model) {
 								[
 									$elm$html$Html$text(model.k)
 								])))
-					])),
-				$author$project$Common$Element$navbar(1)
+					]))
 			]),
-		aD: '💻 ️VSH Shell'
+		af: '💻 ️VSH Shell'
 	};
 };
 var $author$project$Main$view = function (model) {
 	var norm = F2(
 		function (toMsg, _v1) {
-			var title = _v1.aD;
-			var body = _v1.ak;
+			var title = _v1.af;
+			var body = _v1.O;
 			return {
-				ak: A2(
-					$elm$core$List$map,
-					$elm$html$Html$map(toMsg),
-					body),
-				aD: title
+				O: A2(
+					$elm$core$List$cons,
+					$author$project$Common$Element$navbar(
+						$author$project$Main$toActiveIndex(model)),
+					A2(
+						$elm$core$List$map,
+						$elm$html$Html$map(toMsg),
+						body)),
+				af: title
 			};
 		});
-	if (!model.$) {
-		var mo = model.b;
-		return A2(
-			norm,
-			$author$project$Main$GotAboutMsg,
-			$author$project$About$Main$view(mo));
-	} else {
-		var mo = model.b;
-		return A2(
-			norm,
-			$author$project$Main$GotVshMsg,
-			$author$project$Vsh$Main$view(mo));
+	switch (model.$) {
+		case 0:
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$view(mo));
+		case 1:
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotContactMsg,
+				$author$project$Skills$Main$view(mo));
+		default:
+			var mo = model.b;
+			return A2(
+				norm,
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$view(mo));
 	}
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
-	{as: $author$project$Main$init, au: $author$project$Main$LinkChanged, av: $author$project$Main$LinkClicked, aC: $author$project$Main$subscriptions, aE: $author$project$Main$update, aF: $author$project$Main$view});
+	{at: $author$project$Main$init, av: $author$project$Main$LinkChanged, aw: $author$project$Main$LinkClicked, aD: $author$project$Main$subscriptions, aE: $author$project$Main$update, aF: $author$project$Main$view});
 _Platform_export({'Main':{'init':$author$project$Main$main(
 	$elm$json$Json$Decode$succeed(0))(0)}});}(this));

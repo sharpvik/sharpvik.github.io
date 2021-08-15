@@ -7609,6 +7609,7 @@ var $author$project$About$Main$view = function (_v0) {
 				])));
 };
 var $author$project$Common$Link$ansible = $elm$html$Html$Attributes$href('https://www.ansible.com/');
+var $author$project$Common$Class$appTop = 'app-top';
 var $author$project$Skills$Class$bg = _List_fromArray(
 	[
 		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
@@ -7638,7 +7639,7 @@ var $author$project$Skills$Main$view = function (_v0) {
 				$elm$html$Html$div,
 				A2(
 					$elm$core$List$cons,
-					$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
+					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
 					$author$project$Skills$Class$bg),
 				items)
 			]);
@@ -7842,11 +7843,15 @@ var $author$project$Skills$Main$view = function (_v0) {
 						]))
 				])));
 };
-var $author$project$Common$Class$appTop = 'app-top';
 var $author$project$Vsh$Class$bg = _List_fromArray(
 	[
 		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
 		$elm$html$Html$Attributes$class('vsh-bg')
+	]);
+var $author$project$Vsh$Class$h1 = _List_fromArray(
+	[
+		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$elm$html$Html$Attributes$class('vsh-h1')
 	]);
 var $author$project$Vsh$Class$close = 'vsh-close';
 var $elm$html$Html$header = _VirtualDom_node('header');
@@ -7914,6 +7919,13 @@ var $author$project$Vsh$Main$view = function (model) {
 					$author$project$Vsh$Class$bg),
 				_List_fromArray(
 					[
+						A2(
+						$elm$html$Html$h1,
+						$author$project$Vsh$Class$h1,
+						_List_fromArray(
+							[
+								$elm$html$Html$text('Hack Me 🤓')
+							])),
 						$author$project$Vsh$Main$vshDisplay(
 						_Utils_ap(
 							model.display,

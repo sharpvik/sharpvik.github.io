@@ -59,15 +59,13 @@ view _ =
             Document "💡 My Skills"
 
         app items =
-            [ div (class Class.appCenter :: Skills.Class.bg)
+            [ div (class Class.appTop :: Skills.Class.bg)
                 items
             ]
     in
     entitled <|
         app
             [ h1 Skills.Class.h1 [ text "What I Do" ]
-
-            {- , h3 Skills.Class.h3 [ text "... and some funky projects" ] -}
             , div [ Skills.Class.row ]
                 [ div [ Skills.Class.card ]
                     [ h2 [] [ text "Back End" ]

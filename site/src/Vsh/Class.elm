@@ -5,6 +5,11 @@ import Html exposing (Attribute)
 import Html.Attributes exposing (class)
 
 
+h1 : List (Attribute msg)
+h1 =
+    [ class Class.h1, class "vsh-h1" ]
+
+
 bg : List (Attribute msg)
 bg =
     [ class Class.bg, class "vsh-bg" ]
