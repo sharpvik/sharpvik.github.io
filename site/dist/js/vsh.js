@@ -7510,6 +7510,7 @@ var $author$project$About$Asset$github = $author$project$About$Asset$asset(
 	_List_fromArray(
 		['github.svg']));
 var $author$project$About$Class$github = $elm$html$Html$Attributes$class('about-github');
+var $author$project$Common$Link$github = $elm$html$Html$Attributes$href('https://github.com/sharpvik');
 var $author$project$Common$Class$h1 = 'h1';
 var $author$project$About$Class$h1 = _List_fromArray(
 	[
@@ -7525,17 +7526,7 @@ var $author$project$About$Class$h3 = _List_fromArray(
 	]);
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$img = _VirtualDom_node('img');
-var $elm$url$Url$Builder$crossOrigin = F3(
-	function (prePath, pathSegments, parameters) {
-		return prePath + ('/' + (A2($elm$core$String$join, '/', pathSegments) + $elm$url$Url$Builder$toQuery(parameters)));
-	});
-var $author$project$Common$Link$linkedin = $elm$html$Html$Attributes$href(
-	A3(
-		$elm$url$Url$Builder$crossOrigin,
-		'https://linkedin.com',
-		_List_fromArray(
-			['in', 'sharpvik']),
-		_List_Nil));
+var $author$project$Common$Link$mailto = $elm$html$Html$Attributes$href('mailto:sharp.vik@gmail.com');
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
@@ -7590,7 +7581,7 @@ var $author$project$About$Main$view = function (_v0) {
 					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$href('https://github.com/sharpvik'),
+							$author$project$Common$Link$github,
 							$elm$html$Html$Attributes$target('_blank'),
 							$author$project$About$Class$github
 						]),
@@ -7610,28 +7601,34 @@ var $author$project$About$Main$view = function (_v0) {
 					_Utils_ap(
 						_List_fromArray(
 							[
-								$author$project$Common$Link$linkedin,
+								$author$project$Common$Link$mailto,
 								$elm$html$Html$Attributes$target('_blank')
 							]),
 						$author$project$About$Class$button),
-					'HIRE ME!')
+					'SAY HI!')
 				])));
 };
+var $author$project$Common$Link$ansible = $elm$html$Html$Attributes$href('https://www.ansible.com/');
 var $author$project$Skills$Class$bg = _List_fromArray(
 	[
 		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
 		$elm$html$Html$Attributes$class('skills-bg')
 	]);
+var $author$project$Skills$Class$card = $elm$html$Html$Attributes$class('skills-card');
+var $author$project$Common$Link$docker = $elm$html$Html$Attributes$href('https://www.docker.com');
+var $author$project$Common$Link$elm = $elm$html$Html$Attributes$href('https://elm-lang.org');
+var $author$project$Common$Link$go = $elm$html$Html$Attributes$href('https://golang.org');
 var $author$project$Skills$Class$h1 = _List_fromArray(
 	[
 		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
 		$elm$html$Html$Attributes$class('skills-h1')
 	]);
-var $author$project$Skills$Class$h3 = _List_fromArray(
-	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$h3),
-		$elm$html$Html$Attributes$class('skills-h3')
-	]);
+var $elm$html$Html$h2 = _VirtualDom_node('h2');
+var $elm$html$Html$p = _VirtualDom_node('p');
+var $author$project$Skills$Class$pill = $elm$html$Html$Attributes$class('skills-pill');
+var $author$project$Common$Link$python = $elm$html$Html$Attributes$href('https://www.python.org/about');
+var $author$project$Skills$Class$row = $elm$html$Html$Attributes$class('skills-row');
+var $author$project$Common$Link$vuejs = $elm$html$Html$Attributes$href('https://vuejs.org');
 var $author$project$Skills$Main$view = function (_v0) {
 	var entitled = $elm$browser$Browser$Document('💡 My Skills');
 	var app = function (items) {
@@ -7655,14 +7652,193 @@ var $author$project$Skills$Main$view = function (_v0) {
 					$author$project$Skills$Class$h1,
 					_List_fromArray(
 						[
-							$elm$html$Html$text('My Top Skills')
+							$elm$html$Html$text('What I Do')
 						])),
 					A2(
-					$elm$html$Html$h3,
-					$author$project$Skills$Class$h3,
+					$elm$html$Html$div,
+					_List_fromArray(
+						[$author$project$Skills$Class$row]),
 					_List_fromArray(
 						[
-							$elm$html$Html$text('... and some funky projects')
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Back End')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('RESTful Microservices')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Go')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Python')
+												]))
+										]))
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('DevOps ')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('CI/CD, Server Management')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$docker, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Docker')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$ansible, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Ansible')
+												]))
+										]))
+								]))
+						])),
+					A2(
+					$elm$html$Html$div,
+					_List_fromArray(
+						[$author$project$Skills$Class$row]),
+					_List_fromArray(
+						[
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Front End')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Web Apps')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$elm, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Elm')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$vuejs, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Vue.js')
+												]))
+										]))
+								])),
+							A2(
+							$elm$html$Html$div,
+							_List_fromArray(
+								[$author$project$Skills$Class$card]),
+							_List_fromArray(
+								[
+									A2(
+									$elm$html$Html$h2,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Tutoring')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											$elm$html$Html$text('Zero-to-hero in programming')
+										])),
+									A2(
+									$elm$html$Html$p,
+									_List_Nil,
+									_List_fromArray(
+										[
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Go')
+												])),
+											A2(
+											$elm$html$Html$a,
+											_List_fromArray(
+												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
+											_List_fromArray(
+												[
+													$elm$html$Html$text('Python')
+												]))
+										]))
+								]))
 						]))
 				])));
 };
@@ -7674,7 +7850,6 @@ var $author$project$Vsh$Class$bg = _List_fromArray(
 	]);
 var $author$project$Vsh$Class$close = 'vsh-close';
 var $elm$html$Html$header = _VirtualDom_node('header');
-var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $author$project$Vsh$Class$textarea = 'vsh-textarea';
 var $author$project$Vsh$Class$topbar = 'vsh-topbar';

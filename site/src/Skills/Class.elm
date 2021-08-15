@@ -18,3 +18,18 @@ h1 =
 h3 : List (Attribute msg)
 h3 =
     [ class Class.h3, class "skills-h3" ]
+
+
+row : Attribute msg
+row =
+    class "skills-row"
+
+
+card : Attribute msg
+card =
+    class "skills-card"
+
+
+pill : Attribute msg
+pill =
+    class "skills-pill"

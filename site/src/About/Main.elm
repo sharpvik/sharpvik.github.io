@@ -73,18 +73,18 @@ view _ =
     entitled <|
         app
             [ a
-                [ href "https://github.com/sharpvik"
+                [ Link.github
                 , target "_blank"
                 , About.Class.github
                 ]
                 [ img [ src Asset.github ] [] ]
             , Element.button_ a
-                ([ Link.linkedin
+                ([ Link.mailto
                  , target "_blank"
                  ]
                     ++ About.Class.button
                 )
-                "HIRE ME!"
+                "SAY HI!"
             ]
 
 

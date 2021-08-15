@@ -2,6 +2,7 @@ module Skills.Main exposing (..)
 
 import Browser exposing (Document)
 import Common.Class as Class
+import Common.Link as Link
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
@@ -53,7 +54,6 @@ initModel =
 
 view : Model -> Document Msg
 view _ =
-    {- <div>Icons made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div> -}
     let
         entitled =
             Document "💡 My Skills"
@@ -65,8 +65,45 @@ view _ =
     in
     entitled <|
         app
-            [ h1 Skills.Class.h1 [ text "My Top Skills" ]
-            , h3 Skills.Class.h3 [ text "... and some funky projects" ]
+            [ h1 Skills.Class.h1 [ text "What I Do" ]
+
+            {- , h3 Skills.Class.h3 [ text "... and some funky projects" ] -}
+            , div [ Skills.Class.row ]
+                [ div [ Skills.Class.card ]
+                    [ h2 [] [ text "Back End" ]
+                    , p [] [ text "RESTful Microservices" ]
+                    , p []
+                        [ a [ Link.go, Skills.Class.pill ] [ text "Go" ]
+                        , a [ Link.python, Skills.Class.pill ] [ text "Python" ]
+                        ]
+                    ]
+                , div [ Skills.Class.card ]
+                    [ h2 [] [ text "DevOps " ]
+                    , p [] [ text "CI/CD, Server Management" ]
+                    , p []
+                        [ a [ Link.docker, Skills.Class.pill ] [ text "Docker" ]
+                        , a [ Link.ansible, Skills.Class.pill ] [ text "Ansible" ]
+                        ]
+                    ]
+                ]
+            , div [ Skills.Class.row ]
+                [ div [ Skills.Class.card ]
+                    [ h2 [] [ text "Front End" ]
+                    , p [] [ text "Web Apps" ]
+                    , p []
+                        [ a [ Link.elm, Skills.Class.pill ] [ text "Elm" ]
+                        , a [ Link.vuejs, Skills.Class.pill ] [ text "Vue.js" ]
+                        ]
+                    ]
+                , div [ Skills.Class.card ]
+                    [ h2 [] [ text "Tutoring" ]
+                    , p [] [ text "Zero-to-hero in programming" ]
+                    , p []
+                        [ a [ Link.go, Skills.Class.pill ] [ text "Go" ]
+                        , a [ Link.python, Skills.Class.pill ] [ text "Python" ]
+                        ]
+                    ]
+                ]
             ]
 
 
