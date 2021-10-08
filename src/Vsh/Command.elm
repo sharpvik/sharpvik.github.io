@@ -145,7 +145,7 @@ cv _ display =
     display
         ++ [ text "My curriculum vitae: "
            , a
-                [ href "https://docs.google.com/document/d/1hywF2mAq5So8Lvj9ckCM05n605-rYIurzZJud0y5izI/edit?usp=sharing" ]
+                [ href "https://docs.google.com/document/d/1stYuixTXS9gbvcs2KKHLZBax8JRrnxkKxXqT7A9d9RA/edit?usp=sharing" ]
                 [ text "Google Docs" ]
            ]
 
