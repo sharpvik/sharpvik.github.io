@@ -6896,7 +6896,8 @@ var $author$project$Vsh$Command$jobs = F2(
 			display,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Before you offer me a job, I\'d like to tell you a few things:\n\n    1. I specialise in cloud services and web development, but I\'m open to\n       interesting offers!\n    2. I am a uni student; during my term time, I can only work 20 hr./week.\n    3. Nevertheless, full-time work is possible during the term breaks.\n       \nUse the '),
+					A2($author$project$Vsh$Text$ctext, 0, 'I am currenly looking for a graduate role starting June 2022!'),
+					$elm$html$Html$text('\n                \nHere\'s a few things you should know:\n\n    1. I specialise in cloud services and web development, but I\'m open to\n       interesting offers!\n    2. I am a uni student; during my term time, I can only work 20 hr./week.\n    3. Nevertheless, full-time work is possible during the term breaks.\n       \nUse the '),
 					A2($author$project$Vsh$Text$ctext, 1, 'touch'),
 					$elm$html$Html$text(' command to get in touch.')
 				]));
@@ -6995,10 +6996,10 @@ var $author$project$Vsh$Command$top = F2(
 							_Utils_ap(
 								A2(skill, 'Vue.js', 16),
 								_Utils_ap(
-									A2(skill, 'JavaScript', 14),
+									A2(skill, 'Haskell', 12),
 									_Utils_ap(
-										A2(skill, 'Haskell', 12),
-										A2(skill, 'Elm', 9)))))))));
+										A2(skill, 'Elm', 9),
+										A2(skill, 'Ansible', 7)))))))));
 	});
 var $author$project$Vsh$Command$touch = F2(
 	function (_v0, display) {
