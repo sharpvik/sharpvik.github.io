@@ -135,9 +135,9 @@ top _ display =
         ++ skill "Python" 19
         ++ skill "Docker" 18
         ++ skill "Vue.js" 16
-        ++ skill "JavaScript" 14
         ++ skill "Haskell" 12
         ++ skill "Elm" 9
+        ++ skill "Ansible" 7
 
 
 cv : Command msg
@@ -153,8 +153,12 @@ cv _ display =
 jobs : Command msg
 jobs _ display =
     display
-        ++ [ text
-                """Before you offer me a job, I'd like to tell you a few things:
+        ++ [ Vsh.Text.ctext Yellow
+                "I am currenly looking for a graduate role starting June 2022!"
+           , text
+                """
+                
+Here's a few things you should know:
 
     1. I specialise in cloud services and web development, but I'm open to
        interesting offers!
