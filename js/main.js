@@ -5204,10 +5204,6 @@ var $author$project$Main$AboutModel = F2(
 	});
 var $author$project$About$Main$NoModel = 0;
 var $author$project$About$Main$initModel = 0;
-var $author$project$Main$ContactModel = F2(
-	function (a, b) {
-		return {$: 1, a: a, b: b};
-	});
 var $author$project$Main$GotAboutMsg = function (a) {
 	return {$: 0, a: a};
 };
@@ -5217,6 +5213,10 @@ var $author$project$Main$GotContactMsg = function (a) {
 var $author$project$Main$GotVshMsg = function (a) {
 	return {$: 2, a: a};
 };
+var $author$project$Main$SkillsModel = F2(
+	function (a, b) {
+		return {$: 1, a: a, b: b};
+	});
 var $author$project$Main$VshModel = F2(
 	function (a, b) {
 		return {$: 2, a: a, b: b};
@@ -6129,7 +6129,7 @@ var $author$project$Main$mux = F2(
 			case 1:
 				return A3(
 					norm,
-					$author$project$Main$ContactModel(key),
+					$author$project$Main$SkillsModel(key),
 					$author$project$Main$GotContactMsg,
 					$author$project$Skills$Main$init);
 			default:
@@ -7578,7 +7578,7 @@ var $author$project$About$Main$view = function (_v0) {
 								$elm$html$Html$Attributes$target('_blank')
 							]),
 						$author$project$About$Class$button),
-					'SAY HI!')
+					'EMAIL ME!')
 				])));
 };
 var $author$project$Common$Link$ansible = $elm$html$Html$Attributes$href('https://www.ansible.com/');
