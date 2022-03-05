@@ -84,7 +84,7 @@ view _ =
                  ]
                     ++ About.Class.button
                 )
-                "SAY HI!"
+                "EMAIL ME!"
             ]
 
 

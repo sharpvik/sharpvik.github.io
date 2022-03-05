@@ -43,7 +43,7 @@ type alias Flags =
 
 type Model
     = AboutModel Nav.Key About.Model
-    | ContactModel Nav.Key Contact.Model
+    | SkillsModel Nav.Key Contact.Model
     | VshModel Nav.Key Vsh.Model
 
 
@@ -53,7 +53,7 @@ toKey model =
         AboutModel key _ ->
             key
 
-        ContactModel key _ ->
+        SkillsModel key _ ->
             key
 
         VshModel key _ ->
@@ -66,7 +66,7 @@ toActiveIndex model =
         AboutModel _ _ ->
             0
 
-        ContactModel _ _ ->
+        SkillsModel _ _ ->
             1
 
         VshModel _ _ ->
@@ -116,7 +116,7 @@ mux model url =
             norm (AboutModel key) GotAboutMsg About.init
 
         SkillsRoute ->
-            norm (ContactModel key) GotContactMsg Contact.init
+            norm (SkillsModel key) GotContactMsg Contact.init
 
         VshRoute ->
             norm (VshModel key) GotVshMsg Vsh.init
@@ -141,7 +141,7 @@ view model =
         AboutModel _ mo ->
             norm GotAboutMsg <| About.view mo
 
-        ContactModel _ mo ->
+        SkillsModel _ mo ->
             norm GotContactMsg <| Contact.view mo
 
         VshModel _ mo ->
@@ -202,7 +202,7 @@ subscriptions model =
         AboutModel _ mo ->
             Sub.map GotAboutMsg <| About.subscriptions mo
 
-        ContactModel _ mo ->
+        SkillsModel _ mo ->
             Sub.map GotContactMsg <| Contact.subscriptions mo
 
         VshModel _ mo ->
