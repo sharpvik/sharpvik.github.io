@@ -34,9 +34,11 @@ vuejs =
     href "https://vuejs.org"
 
 
+docker : Attribute msg
 docker =
     href "https://www.docker.com"
 
 
+ansible : Attribute msg
 ansible =
     href "https://www.ansible.com/"
