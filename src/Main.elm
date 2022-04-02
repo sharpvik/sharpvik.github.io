@@ -8,7 +8,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
-import Skills.Main as Contact
+import Skills.Main as Skills
 import Url exposing (Url)
 import Vsh.Main as Vsh
 
@@ -43,7 +43,7 @@ type alias Flags =
 
 type Model
     = AboutModel Nav.Key About.Model
-    | SkillsModel Nav.Key Contact.Model
+    | SkillsModel Nav.Key Skills.Model
     | VshModel Nav.Key Vsh.Model
 
 
@@ -79,7 +79,7 @@ toActiveIndex model =
 
 type Msg
     = GotAboutMsg About.Msg
-    | GotContactMsg Contact.Msg
+    | GotContactMsg Skills.Msg
     | GotVshMsg Vsh.Msg
     | LinkClicked UrlRequest
     | LinkChanged Url
@@ -116,7 +116,7 @@ mux model url =
             norm (AboutModel key) GotAboutMsg About.init
 
         SkillsRoute ->
-            norm (SkillsModel key) GotContactMsg Contact.init
+            norm (SkillsModel key) GotContactMsg Skills.init
 
         VshRoute ->
             norm (VshModel key) GotVshMsg Vsh.init
@@ -142,7 +142,7 @@ view model =
             norm GotAboutMsg <| About.view mo
 
         SkillsModel _ mo ->
-            norm GotContactMsg <| Contact.view mo
+            norm GotContactMsg <| Skills.view mo
 
         VshModel _ mo ->
             norm GotVshMsg <| Vsh.view mo
@@ -203,7 +203,7 @@ subscriptions model =
             Sub.map GotAboutMsg <| About.subscriptions mo
 
         SkillsModel _ mo ->
-            Sub.map GotContactMsg <| Contact.subscriptions mo
+            Sub.map GotContactMsg <| Skills.subscriptions mo
 
         VshModel _ mo ->
             Sub.map GotVshMsg <| Vsh.subscriptions mo

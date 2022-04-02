@@ -1,7 +1,8 @@
 module Vsh.Command exposing (..)
 
+import Common.Link as Link
 import Html exposing (..)
-import Html.Attributes exposing (href)
+import Html.Attributes exposing (href, target)
 import Vsh.Text exposing (Color(..), ctext)
 
 
@@ -174,8 +175,11 @@ Use the """
 touch : Command msg
 touch _ display =
     let
-        linkWithTheSameText url =
-            a [ href url ] [ text <| url ]
+        linkTo url =
+            a [ href url, target "_blank" ] [ text <| url ]
+
+        mailTo email =
+            a [ href <| "mailto:" ++ email ] [ text email ]
 
         entry description link =
             [ text "\n    "
@@ -185,12 +189,9 @@ touch _ display =
     in
     display
         ++ [ text "Ways to get in touch:\n" ]
-        ++ entry "email"
-            (a [ href "mailto:sharp.vik@gmail.com" ] [ text "sharp.vik@gmail.com" ])
-        ++ entry "github"
-            (linkWithTheSameText "https://github.com/sharpvik")
-        ++ entry "linkedin"
-            (linkWithTheSameText "https://www.linkedin.com/in/sharpvik")
+        ++ entry "email" (mailTo Link.email)
+        ++ entry "github" (linkTo Link.github)
+        ++ entry "linkedin" (linkTo Link.linkedin)
 
 
 help : Command msg
@@ -246,9 +247,7 @@ git : Command msg
 git _ display =
     display
         ++ [ text "vsh on GitHub: "
-           , a
-                [ href "https://github.com/sharpvik/sharpvik.github.io" ]
-                [ text "https://github.com/sharpvik/sharpvik.github.io" ]
+           , a [ href Link.repo ] [ text Link.repo ]
            ]
 
 

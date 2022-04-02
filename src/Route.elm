@@ -22,7 +22,7 @@ repr route =
             "about"
 
         SkillsRoute ->
-            "contact"
+            "skills"
 
         VshRoute ->
             "vsh"
@@ -85,9 +85,9 @@ urlParser =
 fake : Url -> Url
 fake path =
     { protocol = Https
-    , host = "sharpvik.github.com"
+    , host = "sharpvik.github.io"
     , port_ = Nothing
-    , path = Maybe.withDefault "/about" path.fragment
+    , path = Maybe.withDefault "/#/about" path.fragment
     , query = Nothing
     , fragment = Nothing
     }

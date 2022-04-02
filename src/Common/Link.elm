@@ -4,14 +4,33 @@ import Html exposing (Attribute)
 import Html.Attributes exposing (href)
 
 
-mailto : Attribute msg
+email : String
+email =
+    "sharp.vik@gmail.com"
+
+
+mailto : String
 mailto =
-    href "mailto:sharp.vik@gmail.com"
+    "mailto:" ++ email
 
 
-github : Attribute msg
+linkedin : String
+linkedin =
+    "https://www.linkedin.com/in/sharpvik"
+
+
+github : String
 github =
-    href "https://github.com/sharpvik"
+    "https://github.com/sharpvik"
+
+
+repo : String
+repo =
+    "https://github.com/sharpvik/sharpvik.github.io"
+
+
+
+-- EXTERNAL
 
 
 go : Attribute msg
@@ -42,3 +61,8 @@ docker =
 ansible : Attribute msg
 ansible =
     href "https://www.ansible.com/"
+
+
+attr : String -> Attribute msg
+attr =
+    href

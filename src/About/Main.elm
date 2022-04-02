@@ -73,13 +73,13 @@ view _ =
     entitled <|
         app
             [ a
-                [ Link.github
+                [ Link.attr Link.github
                 , target "_blank"
                 , About.Class.github
                 ]
                 [ img [ src Asset.github ] [] ]
             , Element.button_ a
-                ([ Link.mailto
+                ([ Link.attr Link.mailto
                  , target "_blank"
                  ]
                     ++ About.Class.button
