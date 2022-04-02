@@ -5234,8 +5234,8 @@ var $elm$core$Maybe$withDefault = F2(
 var $author$project$Route$fake = function (path) {
 	return {
 		T: $elm$core$Maybe$Nothing,
-		ar: 'sharpvik.github.com',
-		ay: A2($elm$core$Maybe$withDefault, '/about', path.T),
+		ar: 'sharpvik.github.io',
+		ay: A2($elm$core$Maybe$withDefault, '/#/about', path.T),
 		az: $elm$core$Maybe$Nothing,
 		aA: 1,
 		aB: $elm$core$Maybe$Nothing
@@ -5939,7 +5939,7 @@ var $author$project$Route$repr = function (route) {
 		case 0:
 			return 'about';
 		case 1:
-			return 'contact';
+			return 'skills';
 		default:
 			return 'vsh';
 	}
@@ -6828,6 +6828,7 @@ var $author$project$Vsh$Command$exit = F2(
 					$elm$html$Html$text('Shutting down...')
 				]));
 	});
+var $author$project$Common$Link$repo = 'https://github.com/sharpvik/sharpvik.github.io';
 var $author$project$Vsh$Command$git = F2(
 	function (_v0, display) {
 		return _Utils_ap(
@@ -6839,11 +6840,11 @@ var $author$project$Vsh$Command$git = F2(
 					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$href('https://github.com/sharpvik/sharpvik.github.io')
+							$elm$html$Html$Attributes$href($author$project$Common$Link$repo)
 						]),
 					_List_fromArray(
 						[
-							$elm$html$Html$text('https://github.com/sharpvik/sharpvik.github.io')
+							$elm$html$Html$text($author$project$Common$Link$repo)
 						]))
 				]));
 	});
@@ -7001,14 +7002,31 @@ var $author$project$Vsh$Command$top = F2(
 										A2(skill, 'Elm', 9),
 										A2(skill, 'Ansible', 7)))))))));
 	});
+var $author$project$Common$Link$email = 'sharp.vik@gmail.com';
+var $author$project$Common$Link$github = 'https://github.com/sharpvik';
+var $author$project$Common$Link$linkedin = 'https://www.linkedin.com/in/sharpvik';
+var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $author$project$Vsh$Command$touch = F2(
 	function (_v0, display) {
-		var linkWithTheSameText = function (url) {
+		var mailTo = function (email) {
 			return A2(
 				$elm$html$Html$a,
 				_List_fromArray(
 					[
-						$elm$html$Html$Attributes$href(url)
+						$elm$html$Html$Attributes$href('mailto:' + email)
+					]),
+				_List_fromArray(
+					[
+						$elm$html$Html$text(email)
+					]));
+		};
+		var linkTo = function (url) {
+			return A2(
+				$elm$html$Html$a,
+				_List_fromArray(
+					[
+						$elm$html$Html$Attributes$href(url),
+						$elm$html$Html$Attributes$target('_blank')
 					]),
 				_List_fromArray(
 					[
@@ -7036,25 +7054,16 @@ var $author$project$Vsh$Command$touch = F2(
 					A2(
 						entry,
 						'email',
-						A2(
-							$elm$html$Html$a,
-							_List_fromArray(
-								[
-									$elm$html$Html$Attributes$href('mailto:sharp.vik@gmail.com')
-								]),
-							_List_fromArray(
-								[
-									$elm$html$Html$text('sharp.vik@gmail.com')
-								]))),
+						mailTo($author$project$Common$Link$email)),
 					_Utils_ap(
 						A2(
 							entry,
 							'github',
-							linkWithTheSameText('https://github.com/sharpvik')),
+							linkTo($author$project$Common$Link$github)),
 						A2(
 							entry,
 							'linkedin',
-							linkWithTheSameText('https://www.linkedin.com/in/sharpvik'))))));
+							linkTo($author$project$Common$Link$linkedin))))));
 	});
 var $author$project$Vsh$Command$whoami = F2(
 	function (_v0, display) {
@@ -7447,6 +7456,7 @@ var $elm$browser$Browser$Document = F2(
 		return {O: body, af: title};
 	});
 var $author$project$Common$Class$appCenter = 'app-center';
+var $author$project$Common$Link$attr = $elm$html$Html$Attributes$href;
 var $author$project$Common$Class$bg = 'bg';
 var $author$project$About$Class$bg = _List_fromArray(
 	[
@@ -7483,7 +7493,6 @@ var $author$project$About$Asset$github = $author$project$About$Asset$asset(
 	_List_fromArray(
 		['github.svg']));
 var $author$project$About$Class$github = $elm$html$Html$Attributes$class('about-github');
-var $author$project$Common$Link$github = $elm$html$Html$Attributes$href('https://github.com/sharpvik');
 var $author$project$Common$Class$h1 = 'h1';
 var $author$project$About$Class$h1 = _List_fromArray(
 	[
@@ -7499,14 +7508,13 @@ var $author$project$About$Class$h3 = _List_fromArray(
 	]);
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$img = _VirtualDom_node('img');
-var $author$project$Common$Link$mailto = $elm$html$Html$Attributes$href('mailto:sharp.vik@gmail.com');
+var $author$project$Common$Link$mailto = 'mailto:' + $author$project$Common$Link$email;
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
 		$elm$html$Html$Attributes$stringProperty,
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
-var $elm$html$Html$Attributes$target = $elm$html$Html$Attributes$stringProperty('target');
 var $author$project$About$Main$view = function (_v0) {
 	var general = $elm$core$Basics$append(
 		_List_fromArray(
@@ -7554,7 +7562,7 @@ var $author$project$About$Main$view = function (_v0) {
 					$elm$html$Html$a,
 					_List_fromArray(
 						[
-							$author$project$Common$Link$github,
+							$author$project$Common$Link$attr($author$project$Common$Link$github),
 							$elm$html$Html$Attributes$target('_blank'),
 							$author$project$About$Class$github
 						]),
@@ -7574,7 +7582,7 @@ var $author$project$About$Main$view = function (_v0) {
 					_Utils_ap(
 						_List_fromArray(
 							[
-								$author$project$Common$Link$mailto,
+								$author$project$Common$Link$attr($author$project$Common$Link$mailto),
 								$elm$html$Html$Attributes$target('_blank')
 							]),
 						$author$project$About$Class$button),
