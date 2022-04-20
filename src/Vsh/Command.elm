@@ -139,9 +139,9 @@ top _ display =
         ++ skill "Python" 19
         ++ skill "Docker" 18
         ++ skill "Vue.js" 16
+        ++ skill "Elm" 13
         ++ skill "Haskell" 12
-        ++ skill "Elm" 9
-        ++ skill "Ansible" 7
+        ++ skill "Ansible" 8
 
 
 cv : Command msg
