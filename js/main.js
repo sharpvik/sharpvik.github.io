@@ -7006,10 +7006,10 @@ var $author$project$Vsh$Command$top = F2(
 							_Utils_ap(
 								A2(skill, 'Vue.js', 16),
 								_Utils_ap(
-									A2(skill, 'Haskell', 12),
+									A2(skill, 'Elm', 13),
 									_Utils_ap(
-										A2(skill, 'Elm', 9),
-										A2(skill, 'Ansible', 7)))))))));
+										A2(skill, 'Haskell', 12),
+										A2(skill, 'Ansible', 8)))))))));
 	});
 var $author$project$Common$Link$email = 'sharp.vik@gmail.com';
 var $author$project$Common$Link$github = 'https://github.com/sharpvik';
