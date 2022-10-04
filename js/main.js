@@ -5207,19 +5207,12 @@ var $author$project$About$Main$initModel = 0;
 var $author$project$Main$GotAboutMsg = function (a) {
 	return {$: 0, a: a};
 };
-var $author$project$Main$GotContactMsg = function (a) {
-	return {$: 1, a: a};
-};
 var $author$project$Main$GotVshMsg = function (a) {
 	return {$: 2, a: a};
 };
-var $author$project$Main$SkillsModel = F2(
-	function (a, b) {
-		return {$: 1, a: a, b: b};
-	});
 var $author$project$Main$VshModel = F2(
 	function (a, b) {
-		return {$: 2, a: a, b: b};
+		return {$: 1, a: a, b: b};
 	});
 var $author$project$Route$AboutRoute = 0;
 var $elm$core$Maybe$withDefault = F2(
@@ -5935,31 +5928,15 @@ var $elm$url$Url$Parser$oneOf = function (parsers) {
 	};
 };
 var $author$project$Route$repr = function (route) {
-	switch (route) {
-		case 0:
-			return 'about';
-		case 1:
-			return 'skills';
-		default:
-			return 'vsh';
+	if (!route) {
+		return 'about';
+	} else {
+		return 'vsh';
 	}
 };
-var $author$project$Route$SkillsRoute = 1;
-var $author$project$Route$VshRoute = 2;
-var $author$project$Route$routes = function () {
-	var check = function (route) {
-		switch (route) {
-			case 0:
-				return 0;
-			case 1:
-				return 0;
-			default:
-				return 0;
-		}
-	};
-	return _List_fromArray(
-		[0, 1, 2]);
-}();
+var $author$project$Route$VshRoute = 1;
+var $author$project$Route$routes = _List_fromArray(
+	[0, 1]);
 var $elm$url$Url$Parser$s = function (str) {
 	return function (_v0) {
 		var visited = _v0.w;
@@ -6015,9 +5992,6 @@ var $author$project$Route$fromUrl = function (url) {
 var $elm$core$Platform$Cmd$batch = _Platform_batch;
 var $elm$core$Platform$Cmd$none = $elm$core$Platform$Cmd$batch(_List_Nil);
 var $author$project$About$Main$init = _Utils_Tuple2($author$project$About$Main$initModel, $elm$core$Platform$Cmd$none);
-var $author$project$Skills$Main$NoModel = 0;
-var $author$project$Skills$Main$initModel = 0;
-var $author$project$Skills$Main$init = _Utils_Tuple2($author$project$Skills$Main$initModel, $elm$core$Platform$Cmd$none);
 var $author$project$Vsh$History$History = F2(
 	function (history, ptr) {
 		return {o: history, u: ptr};
@@ -6095,16 +6069,12 @@ var $author$project$Vsh$Main$initModel = {k: '', B: $author$project$Vsh$Main$gre
 var $author$project$Vsh$Main$init = _Utils_Tuple2($author$project$Vsh$Main$initModel, $elm$core$Platform$Cmd$none);
 var $elm$core$Platform$Cmd$map = _Platform_map;
 var $author$project$Main$toKey = function (model) {
-	switch (model.$) {
-		case 0:
-			var key = model.a;
-			return key;
-		case 1:
-			var key = model.a;
-			return key;
-		default:
-			var key = model.a;
-			return key;
+	if (!model.$) {
+		var key = model.a;
+		return key;
+	} else {
+		var key = model.a;
+		return key;
 	}
 };
 var $author$project$Main$mux = F2(
@@ -6119,25 +6089,18 @@ var $author$project$Main$mux = F2(
 					A2($elm$core$Platform$Cmd$map, toMsg, cmd));
 			});
 		var key = $author$project$Main$toKey(model);
-		switch (route) {
-			case 0:
-				return A3(
-					norm,
-					$author$project$Main$AboutModel(key),
-					$author$project$Main$GotAboutMsg,
-					$author$project$About$Main$init);
-			case 1:
-				return A3(
-					norm,
-					$author$project$Main$SkillsModel(key),
-					$author$project$Main$GotContactMsg,
-					$author$project$Skills$Main$init);
-			default:
-				return A3(
-					norm,
-					$author$project$Main$VshModel(key),
-					$author$project$Main$GotVshMsg,
-					$author$project$Vsh$Main$init);
+		if (!route) {
+			return A3(
+				norm,
+				$author$project$Main$AboutModel(key),
+				$author$project$Main$GotAboutMsg,
+				$author$project$About$Main$init);
+		} else {
+			return A3(
+				norm,
+				$author$project$Main$VshModel(key),
+				$author$project$Main$GotVshMsg,
+				$author$project$Vsh$Main$init);
 		}
 	});
 var $author$project$Main$init = F3(
@@ -6151,9 +6114,6 @@ var $elm$core$Platform$Sub$map = _Platform_map;
 var $elm$core$Platform$Sub$batch = _Platform_batch;
 var $elm$core$Platform$Sub$none = $elm$core$Platform$Sub$batch(_List_Nil);
 var $author$project$About$Main$subscriptions = function (_v0) {
-	return $elm$core$Platform$Sub$none;
-};
-var $author$project$Skills$Main$subscriptions = function (_v0) {
 	return $elm$core$Platform$Sub$none;
 };
 var $elm$json$Json$Decode$bool = _Json_decodeBool;
@@ -6546,25 +6506,18 @@ var $author$project$Vsh$Main$subscriptions = function (_v0) {
 	return $elm$browser$Browser$Events$onKeyDown($author$project$Vsh$Main$keydownHandler);
 };
 var $author$project$Main$subscriptions = function (model) {
-	switch (model.$) {
-		case 0:
-			var mo = model.b;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$GotAboutMsg,
-				$author$project$About$Main$subscriptions(mo));
-		case 1:
-			var mo = model.b;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$GotContactMsg,
-				$author$project$Skills$Main$subscriptions(mo));
-		default:
-			var mo = model.b;
-			return A2(
-				$elm$core$Platform$Sub$map,
-				$author$project$Main$GotVshMsg,
-				$author$project$Vsh$Main$subscriptions(mo));
+	if (!model.$) {
+		var mo = model.b;
+		return A2(
+			$elm$core$Platform$Sub$map,
+			$author$project$Main$GotAboutMsg,
+			$author$project$About$Main$subscriptions(mo));
+	} else {
+		var mo = model.b;
+		return A2(
+			$elm$core$Platform$Sub$map,
+			$author$project$Main$GotVshMsg,
+			$author$project$Vsh$Main$subscriptions(mo));
 	}
 };
 var $elm$browser$Browser$Navigation$load = _Browser_load;
@@ -6802,32 +6755,6 @@ var $author$project$Vsh$Command$cut = F2(
 				A2(entry, 'CTRL+e', 'quit vsh'),
 				A2(entry, 'CTRL+;', 'clear screen')));
 	});
-var $elm$html$Html$a = _VirtualDom_node('a');
-var $elm$html$Html$Attributes$href = function (url) {
-	return A2(
-		$elm$html$Html$Attributes$stringProperty,
-		'href',
-		_VirtualDom_noJavaScriptUri(url));
-};
-var $author$project$Vsh$Command$cv = F2(
-	function (_v0, display) {
-		return _Utils_ap(
-			display,
-			_List_fromArray(
-				[
-					$elm$html$Html$text('My curriculum vitae: '),
-					A2(
-					$elm$html$Html$a,
-					_List_fromArray(
-						[
-							$elm$html$Html$Attributes$href('https://docs.google.com/document/d/1stYuixTXS9gbvcs2KKHLZBax8JRrnxkKxXqT7A9d9RA/edit?usp=sharing')
-						]),
-					_List_fromArray(
-						[
-							$elm$html$Html$text('Google Docs')
-						]))
-				]));
-	});
 var $author$project$Vsh$Command$exit = F2(
 	function (_v0, display) {
 		return _Utils_ap(
@@ -6837,6 +6764,13 @@ var $author$project$Vsh$Command$exit = F2(
 					$elm$html$Html$text('Shutting down...')
 				]));
 	});
+var $elm$html$Html$a = _VirtualDom_node('a');
+var $elm$html$Html$Attributes$href = function (url) {
+	return A2(
+		$elm$html$Html$Attributes$stringProperty,
+		'href',
+		_VirtualDom_noJavaScriptUri(url));
+};
 var $author$project$Common$Link$repo = 'https://github.com/sharpvik/sharpvik.github.io';
 var $author$project$Vsh$Command$git = F2(
 	function (_v0, display) {
@@ -6876,41 +6810,25 @@ var $author$project$Vsh$Command$help = F2(
 			_Utils_ap(
 				_List_fromArray(
 					[
-						$elm$html$Html$text('VSH is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history (unless it\'s empty).\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
+						$elm$html$Html$text('VSH is a terminal emulator that helps you learn about me.\nUse up and down arrow keys to browse command history.\nAnd most importantly -- have fun!\n\nAvailable commands:\n')
 					]),
 				_Utils_ap(
 					A2(entry, 'whoami', 'a bit about myself'),
 					_Utils_ap(
 						A2(entry, 'top', 'my top skills'),
 						_Utils_ap(
-							A2(entry, 'cv', 'my curriculum vitae'),
+							A2(entry, 'touch', 'ways to get in touch'),
 							_Utils_ap(
-								A2(entry, 'jobs', 'hire me if you\'re really impressed'),
+								A2(entry, 'help', 'display this message again'),
 								_Utils_ap(
-									A2(entry, 'touch', 'ways to get in touch\n'),
+									A2(entry, 'version', 'display vsh version'),
 									_Utils_ap(
-										A2(entry, 'help', 'display this message again'),
+										A2(entry, 'cut', 'keyboard shortcuts cheatsheet'),
 										_Utils_ap(
-											A2(entry, 'version', 'display vsh version'),
+											A2(entry, 'git', 'explore vsh source code'),
 											_Utils_ap(
-												A2(entry, 'cut', 'keyboard shortcuts cheatsheet'),
-												_Utils_ap(
-													A2(entry, 'git', 'explore vsh source code'),
-													_Utils_ap(
-														A2(entry, 'clear', 'clear screen'),
-														A2(entry, 'exit', 'exit vsh session')))))))))))));
-	});
-var $author$project$Vsh$Command$jobs = F2(
-	function (_v0, display) {
-		return _Utils_ap(
-			display,
-			_List_fromArray(
-				[
-					A2($author$project$Vsh$Text$ctext, 0, 'I am currenly looking for a graduate role starting June 2022!'),
-					$elm$html$Html$text('\n                \nHere\'s a few things you should know:\n\n    1. I specialise in cloud services and web development, but I\'m open to\n       interesting offers!\n    2. I am a uni student; during my term time, I can only work 20 hr./week.\n    3. Nevertheless, full-time work is possible during the term breaks.\n       \nUse the '),
-					A2($author$project$Vsh$Text$ctext, 1, 'touch'),
-					$elm$html$Html$text(' command to get in touch.')
-				]));
+												A2(entry, 'clear', 'clear screen'),
+												A2(entry, 'exit', 'exit vsh session')))))))))));
 	});
 var $elm$core$Basics$min = F2(
 	function (x, y) {
@@ -7004,12 +6922,12 @@ var $author$project$Vsh$Command$top = F2(
 						_Utils_ap(
 							A2(skill, 'Docker', 18),
 							_Utils_ap(
-								A2(skill, 'Vue.js', 16),
+								A2(skill, 'Ansible', 14),
 								_Utils_ap(
-									A2(skill, 'Elm', 13),
+									A2(skill, 'Vue.js', 13),
 									_Utils_ap(
 										A2(skill, 'Haskell', 12),
-										A2(skill, 'Ansible', 8)))))))));
+										A2(skill, 'Elm', 12)))))))));
 	});
 var $author$project$Common$Link$email = 'sharp.vik@gmail.com';
 var $author$project$Common$Link$github = 'https://github.com/sharpvik';
@@ -7080,7 +6998,7 @@ var $author$project$Vsh$Command$whoami = F2(
 			display,
 			_List_fromArray(
 				[
-					$elm$html$Html$text('Hey, my name is Viktor! \nI study Computer Science in the University of Southampton.\n\nAt work, I currently specialise in high-throughput microservices. I build them\nwith Go and Python. However, I also enjoy playing around with Haskell, Elm,\nVue.js, and Rust.\n\nIn my spare time, I dabble in compiler design and implementation. I love\ncreating new programming languages! Given a chance, I\'d like to do some\nprofessional research into deterministic garbage collection within pure\nfunctional languages.')
+					$elm$html$Html$text('Hey, my name is Viktor! \nI am a Software Engineer with a Bachelor\'s degree in Computer Science from\nUniversity of Southampton.\n\nMy primary tech stack is Go, Python, PostgreSQL, Redis, RabbitMQ and Docker.\nI use these tools to create server applications, high throughput microservices,\nand APIs (REST-ful or gRPC based).\n\nHowever, I also enjoy playing around with Rust, Haskell, Elm, and Vue.js.\n\nIn my spare time, I dabble in compiler design and implementation. I love\ncreating new programming languages! Given a chance, I\'d like to do some\nprofessional research into deterministic garbage collection within pure\nfunctional languages.')
 				]));
 	});
 var $author$project$Vsh$Command$eval = function (command) {
@@ -7089,10 +7007,6 @@ var $author$project$Vsh$Command$eval = function (command) {
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$whoami);
 		case 'top':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$top);
-		case 'cv':
-			return $elm$core$Maybe$Just($author$project$Vsh$Command$cv);
-		case 'jobs':
-			return $elm$core$Maybe$Just($author$project$Vsh$Command$jobs);
 		case 'touch':
 			return $elm$core$Maybe$Just($author$project$Vsh$Command$touch);
 		case 'help':
@@ -7356,7 +7270,7 @@ var $author$project$Main$update = F2(
 		while (true) {
 			switch (_v0.a.$) {
 				case 2:
-					if (_v0.b.$ === 2) {
+					if (_v0.b.$ === 1) {
 						var ms = _v0.a.a;
 						var _v1 = _v0.b;
 						var mo = _v1.b;
@@ -7420,8 +7334,7 @@ var $author$project$Common$Element$navbar = function (active) {
 	var sections = _List_fromArray(
 		[
 			_Utils_Tuple2(0, '👽'),
-			_Utils_Tuple2(1, '💡'),
-			_Utils_Tuple2(2, '⌨️')
+			_Utils_Tuple2(1, '⌨️')
 		]);
 	var mark = F2(
 		function (id, s) {
@@ -7453,13 +7366,10 @@ var $author$project$Common$Element$navbar = function (active) {
 		result);
 };
 var $author$project$Main$toActiveIndex = function (model) {
-	switch (model.$) {
-		case 0:
-			return 0;
-		case 1:
-			return 1;
-		default:
-			return 2;
+	if (!model.$) {
+		return 0;
+	} else {
+		return 1;
 	}
 };
 var $elm$browser$Browser$Document = F2(
@@ -7493,13 +7403,16 @@ var $author$project$Common$Element$button_ = F3(
 					$elm$html$Html$text(txt)
 				]));
 	});
-var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$About$Asset$asset = function (path) {
 	return A2(
 		$elm$url$Url$Builder$absolute,
 		A2($elm$core$List$cons, 'assets', path),
 		_List_Nil);
 };
+var $author$project$About$Asset$cv = $author$project$About$Asset$asset(
+	_List_fromArray(
+		['cv.pdf']));
+var $elm$html$Html$div = _VirtualDom_node('div');
 var $author$project$About$Asset$github = $author$project$About$Asset$asset(
 	_List_fromArray(
 		['github.svg']));
@@ -7526,6 +7439,13 @@ var $elm$html$Html$Attributes$src = function (url) {
 		'src',
 		_VirtualDom_noJavaScriptOrHtmlUri(url));
 };
+var $elm$virtual_dom$VirtualDom$style = _VirtualDom_style;
+var $elm$html$Html$Attributes$style = $elm$virtual_dom$VirtualDom$style;
+var $author$project$Common$Element$textCenter = $elm$html$Html$div(
+	_List_fromArray(
+		[
+			A2($elm$html$Html$Attributes$style, 'text-align', 'center')
+		]));
 var $author$project$About$Main$view = function (_v0) {
 	var general = $elm$core$Basics$append(
 		_List_fromArray(
@@ -7542,7 +7462,7 @@ var $author$project$About$Main$view = function (_v0) {
 				$author$project$About$Class$h3,
 				_List_fromArray(
 					[
-						$elm$html$Html$text('💻 Full Stack Web Developer')
+						$elm$html$Html$text('💻 Senior Software Engineer')
 					])),
 				A2(
 				$elm$html$Html$h3,
@@ -7587,254 +7507,35 @@ var $author$project$About$Main$view = function (_v0) {
 								]),
 							_List_Nil)
 						])),
-					A3(
-					$author$project$Common$Element$button_,
-					$elm$html$Html$a,
-					_Utils_ap(
-						_List_fromArray(
-							[
-								$author$project$Common$Link$attr($author$project$Common$Link$mailto),
-								$elm$html$Html$Attributes$target('_blank')
-							]),
-						$author$project$About$Class$button),
-					'EMAIL ME!')
-				])));
-};
-var $author$project$Common$Link$ansible = $elm$html$Html$Attributes$href('https://www.ansible.com/');
-var $author$project$Common$Class$appTop = 'app-top';
-var $author$project$Skills$Class$bg = _List_fromArray(
-	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
-		$elm$html$Html$Attributes$class('skills-bg')
-	]);
-var $author$project$Skills$Class$card = $elm$html$Html$Attributes$class('skills-card');
-var $author$project$Common$Link$docker = $elm$html$Html$Attributes$href('https://www.docker.com');
-var $author$project$Common$Link$elm = $elm$html$Html$Attributes$href('https://elm-lang.org');
-var $author$project$Common$Link$go = $elm$html$Html$Attributes$href('https://golang.org');
-var $author$project$Skills$Class$h1 = _List_fromArray(
-	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
-		$elm$html$Html$Attributes$class('skills-h1')
-	]);
-var $elm$html$Html$h2 = _VirtualDom_node('h2');
-var $elm$html$Html$p = _VirtualDom_node('p');
-var $author$project$Skills$Class$pill = $elm$html$Html$Attributes$class('skills-pill');
-var $author$project$Common$Link$python = $elm$html$Html$Attributes$href('https://www.python.org/about');
-var $author$project$Skills$Class$row = $elm$html$Html$Attributes$class('skills-row');
-var $author$project$Common$Link$vuejs = $elm$html$Html$Attributes$href('https://vuejs.org');
-var $author$project$Skills$Main$view = function (_v0) {
-	var entitled = $elm$browser$Browser$Document('💡 My Skills');
-	var app = function (items) {
-		return _List_fromArray(
-			[
-				A2(
-				$elm$html$Html$div,
-				A2(
-					$elm$core$List$cons,
-					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
-					$author$project$Skills$Class$bg),
-				items)
-			]);
-	};
-	return entitled(
-		app(
-			_List_fromArray(
-				[
-					A2(
-					$elm$html$Html$h1,
-					$author$project$Skills$Class$h1,
+					$author$project$Common$Element$textCenter(
 					_List_fromArray(
 						[
-							$elm$html$Html$text('What I Do')
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[$author$project$Skills$Class$row]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[$author$project$Skills$Class$card]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$h2,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('Back End')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('RESTful Microservices')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Go')
-												])),
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Python')
-												]))
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[$author$project$Skills$Class$card]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$h2,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('DevOps ')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('CI/CD, Server Management')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$docker, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Docker')
-												])),
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$ansible, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Ansible')
-												]))
-										]))
-								]))
-						])),
-					A2(
-					$elm$html$Html$div,
-					_List_fromArray(
-						[$author$project$Skills$Class$row]),
-					_List_fromArray(
-						[
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[$author$project$Skills$Class$card]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$h2,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('Front End')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('Web Apps')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$elm, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Elm')
-												])),
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$vuejs, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Vue.js')
-												]))
-										]))
-								])),
-							A2(
-							$elm$html$Html$div,
-							_List_fromArray(
-								[$author$project$Skills$Class$card]),
-							_List_fromArray(
-								[
-									A2(
-									$elm$html$Html$h2,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('Tutoring')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											$elm$html$Html$text('Zero-to-hero in programming')
-										])),
-									A2(
-									$elm$html$Html$p,
-									_List_Nil,
-									_List_fromArray(
-										[
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$go, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Go')
-												])),
-											A2(
-											$elm$html$Html$a,
-											_List_fromArray(
-												[$author$project$Common$Link$python, $author$project$Skills$Class$pill]),
-											_List_fromArray(
-												[
-													$elm$html$Html$text('Python')
-												]))
-										]))
-								]))
+							A3(
+							$author$project$Common$Element$button_,
+							$elm$html$Html$a,
+							_Utils_ap(
+								_List_fromArray(
+									[
+										$author$project$Common$Link$attr($author$project$Common$Link$mailto),
+										$elm$html$Html$Attributes$target('_blank')
+									]),
+								$author$project$About$Class$button),
+							'EMAIL ME!'),
+							A3(
+							$author$project$Common$Element$button_,
+							$elm$html$Html$a,
+							_Utils_ap(
+								_List_fromArray(
+									[
+										$author$project$Common$Link$attr($author$project$About$Asset$cv),
+										$elm$html$Html$Attributes$target('_blank')
+									]),
+								$author$project$About$Class$button),
+							'VIEW CV')
 						]))
 				])));
 };
+var $author$project$Common$Class$appTop = 'app-top';
 var $author$project$Vsh$Class$bg = _List_fromArray(
 	[
 		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
@@ -7847,6 +7548,7 @@ var $author$project$Vsh$Class$h1 = _List_fromArray(
 	]);
 var $author$project$Vsh$Class$close = 'vsh-close';
 var $elm$html$Html$header = _VirtualDom_node('header');
+var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
 var $author$project$Vsh$Class$textarea = 'vsh-textarea';
 var $author$project$Vsh$Class$topbar = 'vsh-topbar';
@@ -7947,25 +7649,18 @@ var $author$project$Main$view = function (model) {
 				af: title
 			};
 		});
-	switch (model.$) {
-		case 0:
-			var mo = model.b;
-			return A2(
-				norm,
-				$author$project$Main$GotAboutMsg,
-				$author$project$About$Main$view(mo));
-		case 1:
-			var mo = model.b;
-			return A2(
-				norm,
-				$author$project$Main$GotContactMsg,
-				$author$project$Skills$Main$view(mo));
-		default:
-			var mo = model.b;
-			return A2(
-				norm,
-				$author$project$Main$GotVshMsg,
-				$author$project$Vsh$Main$view(mo));
+	if (!model.$) {
+		var mo = model.b;
+		return A2(
+			norm,
+			$author$project$Main$GotAboutMsg,
+			$author$project$About$Main$view(mo));
+	} else {
+		var mo = model.b;
+		return A2(
+			norm,
+			$author$project$Main$GotVshMsg,
+			$author$project$Vsh$Main$view(mo));
 	}
 };
 var $author$project$Main$main = $elm$browser$Browser$application(
