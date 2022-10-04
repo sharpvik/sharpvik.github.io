@@ -18,7 +18,7 @@ jobs:
       - name: 🔧 Build Release
         run: |
           rm dist/.gitignore  
-          ./release
+          make prod
 
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
