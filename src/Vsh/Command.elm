@@ -41,12 +41,6 @@ eval command =
         "top" ->
             Just top
 
-        "cv" ->
-            Just cv
-
-        "jobs" ->
-            Just jobs
-
         "touch" ->
             Just touch
 
@@ -80,11 +74,14 @@ whoami _ display =
     display
         ++ [ text
                 """Hey, my name is Viktor! 
-I study Computer Science in the University of Southampton.
+I am a Software Engineer with a Bachelor's degree in Computer Science from
+University of Southampton.
 
-At work, I currently specialise in high-throughput microservices. I build them
-with Go and Python. However, I also enjoy playing around with Haskell, Elm,
-Vue.js, and Rust.
+My primary tech stack is Go, Python, PostgreSQL, Redis, RabbitMQ and Docker.
+I use these tools to create server applications, high throughput microservices,
+and APIs (REST-ful or gRPC based).
+
+However, I also enjoy playing around with Rust, Haskell, Elm, and Vue.js.
 
 In my spare time, I dabble in compiler design and implementation. I love
 creating new programming languages! Given a chance, I'd like to do some
@@ -138,41 +135,10 @@ top _ display =
         ++ skill "Go" 20
         ++ skill "Python" 19
         ++ skill "Docker" 18
-        ++ skill "Vue.js" 16
-        ++ skill "Elm" 13
+        ++ skill "Ansible" 14
+        ++ skill "Vue.js" 13
         ++ skill "Haskell" 12
-        ++ skill "Ansible" 8
-
-
-cv : Command msg
-cv _ display =
-    display
-        ++ [ text "My curriculum vitae: "
-           , a
-                [ href "https://docs.google.com/document/d/1stYuixTXS9gbvcs2KKHLZBax8JRrnxkKxXqT7A9d9RA/edit?usp=sharing" ]
-                [ text "Google Docs" ]
-           ]
-
-
-jobs : Command msg
-jobs _ display =
-    display
-        ++ [ Vsh.Text.ctext Yellow
-                "I am currenly looking for a graduate role starting June 2022!"
-           , text
-                """
-                
-Here's a few things you should know:
-
-    1. I specialise in cloud services and web development, but I'm open to
-       interesting offers!
-    2. I am a uni student; during my term time, I can only work 20 hr./week.
-    3. Nevertheless, full-time work is possible during the term breaks.
-       
-Use the """
-           , Vsh.Text.ctext Green "touch"
-           , text " command to get in touch."
-           ]
+        ++ skill "Elm" 12
 
 
 touch : Command msg
@@ -208,16 +174,14 @@ help _ display =
     in
     display
         ++ [ text """VSH is a terminal emulator that helps you learn about me.
-Use up and down arrow keys to browse command history (unless it's empty).
+Use up and down arrow keys to browse command history.
 And most importantly -- have fun!
 
 Available commands:
 """ ]
         ++ entry "whoami" "a bit about myself"
         ++ entry "top" "my top skills"
-        ++ entry "cv" "my curriculum vitae"
-        ++ entry "jobs" "hire me if you're really impressed"
-        ++ entry "touch" "ways to get in touch\n"
+        ++ entry "touch" "ways to get in touch"
         ++ entry "help" "display this message again"
         ++ entry "version" "display vsh version"
         ++ entry "cut" "keyboard shortcuts cheatsheet"
