@@ -1,4 +1,5 @@
 dev:
+	elm-format src/
 	elm make src/Main.elm --output dist/js/main.js
 
 prod:

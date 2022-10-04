@@ -1,4 +1,4 @@
-module About.Asset exposing (github)
+module About.Asset exposing (cv, github)
 
 import Url.Builder exposing (absolute)
 
@@ -11,3 +11,8 @@ asset path =
 github : String
 github =
     asset [ "github.svg" ]
+
+
+cv : String
+cv =
+    asset [ "cv.pdf" ]

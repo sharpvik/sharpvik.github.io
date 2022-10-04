@@ -45,3 +45,8 @@ button_ :
     -> Html msg
 button_ elem attrs txt =
     elem (class Class.button :: attrs) [ text txt ]
+
+
+textCenter : List (Html msg) -> Html msg
+textCenter =
+    div [ style "text-align" "center" ]

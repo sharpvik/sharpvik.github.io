@@ -66,7 +66,7 @@ view _ =
         general =
             (++)
                 [ h1 About.Class.h1 [ text "Hey, I'm Viktor!" ]
-                , h3 About.Class.h3 [ text "💻 Full Stack Web Developer" ]
+                , h3 About.Class.h3 [ text "💻 Senior Software Engineer" ]
                 , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
                 ]
     in
@@ -78,13 +78,22 @@ view _ =
                 , About.Class.github
                 ]
                 [ img [ src Asset.github ] [] ]
-            , Element.button_ a
-                ([ Link.attr Link.mailto
-                 , target "_blank"
-                 ]
-                    ++ About.Class.button
-                )
-                "EMAIL ME!"
+            , Element.textCenter
+                [ Element.button_ a
+                    ([ Link.attr Link.mailto
+                     , target "_blank"
+                     ]
+                        ++ About.Class.button
+                    )
+                    "EMAIL ME!"
+                , Element.button_ a
+                    ([ Link.attr Asset.cv
+                     , target "_blank"
+                     ]
+                        ++ About.Class.button
+                    )
+                    "VIEW CV"
+                ]
             ]
 
 

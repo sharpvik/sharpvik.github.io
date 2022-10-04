@@ -14,6 +14,8 @@
   background-color: #79db75;
   color: #006b47;
   transition: all 0.3s;
+  display: inline-block;
+  margin: 15px 10px;
 }
 .about-button:hover {
   -webkit-box-shadow: 0px 5px 10px 0px rgba(0, 0, 0, 0.5);
