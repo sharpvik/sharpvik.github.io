@@ -11,7 +11,6 @@ type alias UrlParser a =
 
 type Route
     = AboutRoute
-    | SkillsRoute
     | VshRoute
 
 
@@ -21,32 +20,13 @@ repr route =
         AboutRoute ->
             "about"
 
-        SkillsRoute ->
-            "skills"
-
         VshRoute ->
             "vsh"
 
 
 routes : List Route
 routes =
-    let
-        {- This check will prevent you from forgetting to update routes
-           upon new Route creation.
-        -}
-        check route =
-            case route of
-                AboutRoute ->
-                    ()
-
-                SkillsRoute ->
-                    ()
-
-                VshRoute ->
-                    ()
-    in
     [ AboutRoute
-    , SkillsRoute
     , VshRoute
     ]
 

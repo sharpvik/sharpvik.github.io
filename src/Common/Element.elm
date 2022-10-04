@@ -11,7 +11,6 @@ navbar active =
     let
         sections =
             [ ( AboutRoute, "👽" )
-            , ( SkillsRoute, "💡" )
             , ( VshRoute, "⌨️" )
             ]
 

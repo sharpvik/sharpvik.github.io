@@ -43,7 +43,6 @@ type alias Flags =
 
 type Model
     = AboutModel Nav.Key About.Model
-    | SkillsModel Nav.Key Skills.Model
     | VshModel Nav.Key Vsh.Model
 
 
@@ -51,9 +50,6 @@ toKey : Model -> Nav.Key
 toKey model =
     case model of
         AboutModel key _ ->
-            key
-
-        SkillsModel key _ ->
             key
 
         VshModel key _ ->
@@ -66,11 +62,8 @@ toActiveIndex model =
         AboutModel _ _ ->
             0
 
-        SkillsModel _ _ ->
-            1
-
         VshModel _ _ ->
-            2
+            1
 
 
 
@@ -115,9 +108,6 @@ mux model url =
         AboutRoute ->
             norm (AboutModel key) GotAboutMsg About.init
 
-        SkillsRoute ->
-            norm (SkillsModel key) GotContactMsg Skills.init
-
         VshRoute ->
             norm (VshModel key) GotVshMsg Vsh.init
 
@@ -140,9 +130,6 @@ view model =
     case model of
         AboutModel _ mo ->
             norm GotAboutMsg <| About.view mo
-
-        SkillsModel _ mo ->
-            norm GotContactMsg <| Skills.view mo
 
         VshModel _ mo ->
             norm GotVshMsg <| Vsh.view mo
@@ -201,9 +188,6 @@ subscriptions model =
     case model of
         AboutModel _ mo ->
             Sub.map GotAboutMsg <| About.subscriptions mo
-
-        SkillsModel _ mo ->
-            Sub.map GotContactMsg <| Skills.subscriptions mo
 
         VshModel _ mo ->
             Sub.map GotVshMsg <| Vsh.subscriptions mo
