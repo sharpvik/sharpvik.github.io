@@ -4410,10 +4410,10 @@ var _Bitwise_shiftRightZfBy = F2(function(offset, a)
 	return a >>> offset;
 });
 var $author$project$Main$LinkChanged = function (a) {
-	return {$: 4, a: a};
+	return {$: 3, a: a};
 };
 var $author$project$Main$LinkClicked = function (a) {
-	return {$: 3, a: a};
+	return {$: 2, a: a};
 };
 var $elm$core$Basics$EQ = 1;
 var $elm$core$Basics$GT = 2;
@@ -5208,7 +5208,7 @@ var $author$project$Main$GotAboutMsg = function (a) {
 	return {$: 0, a: a};
 };
 var $author$project$Main$GotVshMsg = function (a) {
-	return {$: 2, a: a};
+	return {$: 1, a: a};
 };
 var $author$project$Main$VshModel = F2(
 	function (a, b) {
@@ -7269,7 +7269,7 @@ var $author$project$Main$update = F2(
 		_v0$4:
 		while (true) {
 			switch (_v0.a.$) {
-				case 2:
+				case 1:
 					if (_v0.b.$ === 1) {
 						var ms = _v0.a.a;
 						var _v1 = _v0.b;
@@ -7295,10 +7295,10 @@ var $author$project$Main$update = F2(
 					} else {
 						break _v0$4;
 					}
-				case 4:
+				case 3:
 					var url = _v0.a.a;
 					return A2($author$project$Main$mux, model, url);
-				case 3:
+				default:
 					var urlRequest = _v0.a.a;
 					if (!urlRequest.$) {
 						var url = urlRequest.a;
@@ -7314,8 +7314,6 @@ var $author$project$Main$update = F2(
 							model,
 							$elm$browser$Browser$Navigation$load(href));
 					}
-				default:
-					break _v0$4;
 			}
 		}
 		return _Utils_Tuple2(model, $elm$core$Platform$Cmd$none);
@@ -7323,9 +7321,9 @@ var $author$project$Main$update = F2(
 var $elm$virtual_dom$VirtualDom$map = _VirtualDom_map;
 var $elm$html$Html$map = $elm$virtual_dom$VirtualDom$map;
 var $elm$html$Html$nav = _VirtualDom_node('nav');
-var $author$project$Common$Class$navbar = 'navbar';
-var $author$project$Common$Class$navbarIcon = 'navbar-icon';
-var $author$project$Common$Class$navbarIconActive = 'navbar-icon-active';
+var $author$project$Common$Class$navbar = $elm$html$Html$Attributes$class('navbar');
+var $author$project$Common$Class$navbarIcon = $elm$html$Html$Attributes$class('navbar-icon');
+var $author$project$Common$Class$navbarIconActive = $elm$html$Html$Attributes$class('navbar-icon-active');
 var $elm$core$Tuple$second = function (_v0) {
 	var y = _v0.b;
 	return y;
@@ -7336,18 +7334,19 @@ var $author$project$Common$Element$navbar = function (active) {
 			_Utils_Tuple2(0, '👽'),
 			_Utils_Tuple2(1, '⌨️')
 		]);
+	var activated = function (id) {
+		return _Utils_eq(id, active) ? _List_fromArray(
+			[$author$project$Common$Class$navbarIconActive]) : _List_Nil;
+	};
 	var mark = F2(
 		function (id, s) {
 			return A2(
 				$elm$html$Html$a,
 				_Utils_ap(
-					_Utils_eq(id, active) ? _List_fromArray(
-						[
-							$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIconActive)
-						]) : _List_Nil,
+					activated(id),
 					_List_fromArray(
 						[
-							$elm$html$Html$Attributes$class($author$project$Common$Class$navbarIcon),
+							$author$project$Common$Class$navbarIcon,
 							$elm$html$Html$Attributes$href(
 							$author$project$Route$toString(s.a))
 						])),
@@ -7360,9 +7359,7 @@ var $author$project$Common$Element$navbar = function (active) {
 	return A2(
 		$elm$html$Html$nav,
 		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class($author$project$Common$Class$navbar)
-			]),
+			[$author$project$Common$Class$navbar]),
 		result);
 };
 var $author$project$Main$toActiveIndex = function (model) {
@@ -7376,28 +7373,25 @@ var $elm$browser$Browser$Document = F2(
 	function (title, body) {
 		return {O: body, af: title};
 	});
-var $author$project$Common$Class$appCenter = 'app-center';
+var $author$project$Common$Class$appCenter = $elm$html$Html$Attributes$class('app-center');
 var $author$project$Common$Link$attr = $elm$html$Html$Attributes$href;
-var $author$project$Common$Class$bg = 'bg';
+var $author$project$Common$Class$bg = $elm$html$Html$Attributes$class('bg');
 var $author$project$About$Class$bg = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$author$project$Common$Class$bg,
 		$elm$html$Html$Attributes$class('about-bg')
 	]);
-var $author$project$Common$Class$button = 'button';
+var $author$project$Common$Class$button = $elm$html$Html$Attributes$class('button');
 var $author$project$About$Class$button = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$button),
+		$author$project$Common$Class$button,
 		$elm$html$Html$Attributes$class('about-button')
 	]);
 var $author$project$Common$Element$button_ = F3(
 	function (elem, attrs, txt) {
 		return A2(
 			elem,
-			A2(
-				$elm$core$List$cons,
-				$elm$html$Html$Attributes$class($author$project$Common$Class$button),
-				attrs),
+			A2($elm$core$List$cons, $author$project$Common$Class$button, attrs),
 			_List_fromArray(
 				[
 					$elm$html$Html$text(txt)
@@ -7417,21 +7411,22 @@ var $author$project$About$Asset$github = $author$project$About$Asset$asset(
 	_List_fromArray(
 		['github.svg']));
 var $author$project$About$Class$github = $elm$html$Html$Attributes$class('about-github');
-var $author$project$Common$Class$h1 = 'h1';
+var $author$project$Common$Class$h1 = $elm$html$Html$Attributes$class('h1');
 var $author$project$About$Class$h1 = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$author$project$Common$Class$h1,
 		$elm$html$Html$Attributes$class('about-h1')
 	]);
 var $elm$html$Html$h1 = _VirtualDom_node('h1');
-var $author$project$Common$Class$h3 = 'h3';
+var $author$project$Common$Class$h3 = $elm$html$Html$Attributes$class('h3');
 var $author$project$About$Class$h3 = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$h3),
+		$author$project$Common$Class$h3,
 		$elm$html$Html$Attributes$class('about-h3')
 	]);
 var $elm$html$Html$h3 = _VirtualDom_node('h3');
 var $elm$html$Html$img = _VirtualDom_node('img');
+var $author$project$Common$Class$link = $elm$html$Html$Attributes$class('link');
 var $author$project$Common$Link$mailto = 'mailto:' + $author$project$Common$Link$email;
 var $elm$html$Html$Attributes$src = function (url) {
 	return A2(
@@ -7470,6 +7465,35 @@ var $author$project$About$Main$view = function (_v0) {
 				_List_fromArray(
 					[
 						$elm$html$Html$text('🎓 University of Southampton')
+					])),
+				A2(
+				$elm$html$Html$h3,
+				$author$project$About$Class$h3,
+				_List_fromArray(
+					[
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$author$project$Common$Class$link,
+								$elm$html$Html$Attributes$href('https://uw.co.uk/')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('@utilitywarehouse')
+							])),
+						$elm$html$Html$text(' '),
+						A2(
+						$elm$html$Html$a,
+						_List_fromArray(
+							[
+								$author$project$Common$Class$link,
+								$elm$html$Html$Attributes$href('https://aquilex.org/')
+							]),
+						_List_fromArray(
+							[
+								$elm$html$Html$text('@aquilex')
+							]))
 					]))
 			]));
 	var entitled = $elm$browser$Browser$Document('👽 About Me');
@@ -7478,10 +7502,7 @@ var $author$project$About$Main$view = function (_v0) {
 			[
 				A2(
 				$elm$html$Html$div,
-				A2(
-					$elm$core$List$cons,
-					$elm$html$Html$Attributes$class($author$project$Common$Class$appCenter),
-					$author$project$About$Class$bg),
+				A2($elm$core$List$cons, $author$project$Common$Class$appCenter, $author$project$About$Class$bg),
 				general(items))
 			]);
 	};
@@ -7535,39 +7556,35 @@ var $author$project$About$Main$view = function (_v0) {
 						]))
 				])));
 };
-var $author$project$Common$Class$appTop = 'app-top';
+var $author$project$Common$Class$appTop = $elm$html$Html$Attributes$class('app-top');
 var $author$project$Vsh$Class$bg = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$bg),
+		$author$project$Common$Class$bg,
 		$elm$html$Html$Attributes$class('vsh-bg')
 	]);
 var $author$project$Vsh$Class$h1 = _List_fromArray(
 	[
-		$elm$html$Html$Attributes$class($author$project$Common$Class$h1),
+		$author$project$Common$Class$h1,
 		$elm$html$Html$Attributes$class('vsh-h1')
 	]);
-var $author$project$Vsh$Class$close = 'vsh-close';
+var $author$project$Vsh$Class$close = $elm$html$Html$Attributes$class('vsh-close');
 var $elm$html$Html$header = _VirtualDom_node('header');
 var $elm$html$Html$p = _VirtualDom_node('p');
 var $elm$html$Html$pre = _VirtualDom_node('pre');
-var $author$project$Vsh$Class$textarea = 'vsh-textarea';
-var $author$project$Vsh$Class$topbar = 'vsh-topbar';
-var $author$project$Vsh$Class$window = 'vsh-window';
+var $author$project$Vsh$Class$textarea = $elm$html$Html$Attributes$class('vsh-textarea');
+var $author$project$Vsh$Class$topbar = $elm$html$Html$Attributes$class('vsh-topbar');
+var $author$project$Vsh$Class$window = $elm$html$Html$Attributes$class('vsh-window');
 var $author$project$Vsh$Main$vshDisplay = function (display) {
 	return A2(
 		$elm$html$Html$div,
 		_List_fromArray(
-			[
-				$elm$html$Html$Attributes$class($author$project$Vsh$Class$window)
-			]),
+			[$author$project$Vsh$Class$window]),
 		_List_fromArray(
 			[
 				A2(
 				$elm$html$Html$header,
 				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$Vsh$Class$topbar)
-					]),
+					[$author$project$Vsh$Class$topbar]),
 				_List_fromArray(
 					[
 						A2(
@@ -7581,7 +7598,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 						$elm$html$Html$a,
 						_List_fromArray(
 							[
-								$elm$html$Html$Attributes$class($author$project$Vsh$Class$close),
+								$author$project$Vsh$Class$close,
 								$elm$html$Html$Attributes$href(
 								$author$project$Route$toString(0))
 							]),
@@ -7590,9 +7607,7 @@ var $author$project$Vsh$Main$vshDisplay = function (display) {
 				A2(
 				$elm$html$Html$pre,
 				_List_fromArray(
-					[
-						$elm$html$Html$Attributes$class($author$project$Vsh$Class$textarea)
-					]),
+					[$author$project$Vsh$Class$textarea]),
 				_Utils_ap(
 					display,
 					_List_fromArray(
@@ -7607,10 +7622,7 @@ var $author$project$Vsh$Main$view = function (model) {
 			[
 				A2(
 				$elm$html$Html$div,
-				A2(
-					$elm$core$List$cons,
-					$elm$html$Html$Attributes$class($author$project$Common$Class$appTop),
-					$author$project$Vsh$Class$bg),
+				A2($elm$core$List$cons, $author$project$Common$Class$appTop, $author$project$Vsh$Class$bg),
 				_List_fromArray(
 					[
 						A2(
