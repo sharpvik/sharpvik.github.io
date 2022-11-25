@@ -14,15 +14,17 @@ navbar active =
             , ( VshRoute, "⌨️" )
             ]
 
+        activated id =
+            if id == active then
+                [ Class.navbarIconActive ]
+
+            else
+                []
+
         mark id s =
             a
-                ((if id == active then
-                    [ class Class.navbarIconActive ]
-
-                  else
-                    []
-                 )
-                    ++ [ class Class.navbarIcon
+                (activated id
+                    ++ [ Class.navbarIcon
                        , href <| Route.toString <| Tuple.first s
                        ]
                 )
@@ -31,7 +33,7 @@ navbar active =
         result =
             List.indexedMap mark sections
     in
-    nav [ class Class.navbar ] result
+    nav [ Class.navbar ] result
 
 
 button_ :
@@ -43,7 +45,7 @@ button_ :
     -> String
     -> Html msg
 button_ elem attrs txt =
-    elem (class Class.button :: attrs) [ text txt ]
+    elem (Class.button :: attrs) [ text txt ]
 
 
 textCenter : List (Html msg) -> Html msg

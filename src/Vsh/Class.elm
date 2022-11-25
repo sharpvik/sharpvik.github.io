@@ -7,34 +7,34 @@ import Html.Attributes exposing (class)
 
 h1 : List (Attribute msg)
 h1 =
-    [ class Class.h1, class "vsh-h1" ]
+    [ Class.h1, class "vsh-h1" ]
 
 
 bg : List (Attribute msg)
 bg =
-    [ class Class.bg, class "vsh-bg" ]
+    [ Class.bg, class "vsh-bg" ]
 
 
-window : String
+window : Attribute msg
 window =
-    "vsh-window"
+    class "vsh-window"
 
 
-topbar : String
+topbar : Attribute msg
 topbar =
-    "vsh-topbar"
+    class "vsh-topbar"
 
 
-close : String
+close : Attribute msg
 close =
-    "vsh-close"
+    class "vsh-close"
 
 
-textarea : String
+textarea : Attribute msg
 textarea =
-    "vsh-textarea"
+    class "vsh-textarea"
 
 
-text : String
+text : Attribute msg
 text =
-    "vsh-text"
+    class "vsh-text"

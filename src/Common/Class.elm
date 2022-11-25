@@ -1,65 +1,70 @@
 module Common.Class exposing (..)
 
+import Html exposing (Attribute)
+import Html.Attributes exposing (class)
+
+
+
 -- APP
 
 
-appCenter : String
+appCenter : Attribute msg
 appCenter =
-    "app-center"
+    class "app-center"
 
 
-appTop : String
+appTop : Attribute msg
 appTop =
-    "app-top"
+    class "app-top"
 
 
 
 -- ELEMENTS
 
 
-bg : String
+bg : Attribute msg
 bg =
-    "bg"
+    class "bg"
 
 
-h1 : String
+h1 : Attribute msg
 h1 =
-    "h1"
+    class "h1"
 
 
-h3 : String
+h3 : Attribute msg
 h3 =
-    "h3"
+    class "h3"
 
 
-link : String
+link : Attribute msg
 link =
-    "link"
+    class "link"
 
 
 
 -- BUTTON
 
 
-button : String
+button : Attribute msg
 button =
-    "button"
+    class "button"
 
 
 
 -- NAVBAR
 
 
-navbar : String
+navbar : Attribute msg
 navbar =
-    "navbar"
+    class "navbar"
 
 
-navbarIcon : String
+navbarIcon : Attribute msg
 navbarIcon =
-    "navbar-icon"
+    class "navbar-icon"
 
 
-navbarIconActive : String
+navbarIconActive : Attribute msg
 navbarIconActive =
-    "navbar-icon-active"
+    class "navbar-icon-active"

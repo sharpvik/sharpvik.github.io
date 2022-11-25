@@ -61,7 +61,7 @@ view _ =
             Document "👽 About Me"
 
         app items =
-            [ div (class Class.appCenter :: About.Class.bg) <| general items ]
+            [ div (Class.appCenter :: About.Class.bg) <| general items ]
 
         general =
             (++)
@@ -69,10 +69,10 @@ view _ =
                 , h3 About.Class.h3 [ text "💻 Senior Software Engineer" ]
                 , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
                 , h3 About.Class.h3
-                    [ a [ class Class.link, href "https://uw.co.uk/" ]
+                    [ a [ Class.link, href "https://uw.co.uk/" ]
                         [ text "@utilitywarehouse" ]
                     , text " "
-                    , a [ class Class.link, href "https://aquilex.org/" ]
+                    , a [ Class.link, href "https://aquilex.org/" ]
                         [ text "@aquilex" ]
                     ]
                 ]

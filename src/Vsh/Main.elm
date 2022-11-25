@@ -102,7 +102,7 @@ view : Model -> Document Msg
 view model =
     { title = "💻 ️VSH Shell"
     , body =
-        [ div (class Class.appTop :: Vsh.Class.bg)
+        [ div (Class.appTop :: Vsh.Class.bg)
             [ h1 Vsh.Class.h1 [ text "Hack Me 🤓" ]
             , vshDisplay <| model.display ++ [ text model.command ]
             ]
@@ -113,20 +113,20 @@ view model =
 vshDisplay : List (Html Msg) -> Html Msg
 vshDisplay display =
     div
-        [ class Vsh.Class.window
+        [ Vsh.Class.window
         ]
         [ header
-            [ class Vsh.Class.topbar ]
+            [ Vsh.Class.topbar ]
             [ p []
                 [ text "vsh shell" ]
             , a
-                [ class Vsh.Class.close
+                [ Vsh.Class.close
                 , href <| Route.toString AboutRoute
                 ]
                 []
             ]
         , pre
-            [ class Vsh.Class.textarea ]
+            [ Vsh.Class.textarea ]
             (display ++ [ text "█" ])
         ]
 
