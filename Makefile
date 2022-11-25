@@ -1,5 +1,7 @@
-dev:
+fmt:
 	elm-format src/
+
+dev:
 	elm make src/Main.elm --output dist/js/main.js
 
 prod:

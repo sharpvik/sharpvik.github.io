@@ -8,7 +8,6 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
-import Skills.Main as Skills
 import Url exposing (Url)
 import Vsh.Main as Vsh
 
@@ -72,7 +71,6 @@ toActiveIndex model =
 
 type Msg
     = GotAboutMsg About.Msg
-    | GotContactMsg Skills.Msg
     | GotVshMsg Vsh.Msg
     | LinkClicked UrlRequest
     | LinkChanged Url
