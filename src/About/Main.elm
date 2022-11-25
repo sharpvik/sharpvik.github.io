@@ -68,6 +68,13 @@ view _ =
                 [ h1 About.Class.h1 [ text "Hey, I'm Viktor!" ]
                 , h3 About.Class.h3 [ text "💻 Senior Software Engineer" ]
                 , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
+                , h3 About.Class.h3
+                    [ a [ class Class.link, href "https://uw.co.uk/" ]
+                        [ text "@utilitywarehouse" ]
+                    , text " "
+                    , a [ class Class.link, href "https://aquilex.org/" ]
+                        [ text "@aquilex" ]
+                    ]
                 ]
     in
     entitled <|

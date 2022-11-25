@@ -32,6 +32,11 @@ h3 =
     "h3"
 
 
+link : String
+link =
+    "link"
+
+
 
 -- BUTTON
 
