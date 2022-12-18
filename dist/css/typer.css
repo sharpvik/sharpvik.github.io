@@ -1,0 +1,9 @@
+.typer-text {
+    font-family: monospace;
+    font-size: 28px;
+    text-align: left;
+    width: 95%;
+    max-width: 750px;
+    margin: auto;
+    line-height: 1.5em;
+}

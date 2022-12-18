@@ -12,6 +12,7 @@ type alias UrlParser a =
 type Route
     = AboutRoute
     | VshRoute
+    | TyperRoute
 
 
 repr : Route -> String
@@ -23,11 +24,15 @@ repr route =
         VshRoute ->
             "vsh"
 
+        TyperRoute ->
+            "typer"
+
 
 routes : List Route
 routes =
     [ AboutRoute
     , VshRoute
+    , TyperRoute
     ]
 
 

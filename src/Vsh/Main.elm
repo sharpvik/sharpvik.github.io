@@ -216,6 +216,27 @@ subscriptions _ =
     Events.onKeyDown keydownHandler
 
 
+keydownHandler : Decode.Decoder Msg
+keydownHandler =
+    Decode.map toKeyDownMsg eventDecoder
+
+
+toKeyDownMsg : KeyboardEvent -> Msg
+toKeyDownMsg event =
+    case event of
+        Ctrl ';' ->
+            Clear
+
+        Ctrl 'e' ->
+            Exit
+
+        Other ->
+            Ignore
+
+        e ->
+            KeyDown e
+
+
 eventDecoder : Decode.Decoder KeyboardEvent
 eventDecoder =
     Decode.map3
@@ -266,27 +287,6 @@ specialKeyEvent event key =
 
             Nothing ->
                 Other
-
-
-keydownHandler : Decode.Decoder Msg
-keydownHandler =
-    Decode.map toKeyDownMsg eventDecoder
-
-
-toKeyDownMsg : KeyboardEvent -> Msg
-toKeyDownMsg event =
-    case event of
-        Ctrl ';' ->
-            Clear
-
-        Ctrl 'e' ->
-            Exit
-
-        Other ->
-            Ignore
-
-        e ->
-            KeyDown e
 
 
 

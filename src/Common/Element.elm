@@ -12,6 +12,7 @@ navbar active =
         sections =
             [ ( AboutRoute, "👽" )
             , ( VshRoute, "⌨️" )
+            , ( TyperRoute, "⚡" )
             ]
 
         activated id =
