@@ -1,16 +1,16 @@
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap");
 @import "common.css";
 @import "about.css";
-@import "skills.css";
 @import "vsh.css";
+@import "typer.css";
 
 * {
   padding: 0;
   margin: 0;
   outline: none;
-  font-family: "Open Sans", Helvetica, Tahoma, Geneva, Verdana, sans-serif;
 }
 
 body {
   height: 100vh;
+  font-family: "Open Sans", Helvetica, Tahoma, Geneva, Verdana, sans-serif;
 }

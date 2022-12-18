@@ -8,6 +8,7 @@ import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Route exposing (Route(..))
+import Typer.Main as Typer
 import Url exposing (Url)
 import Vsh.Main as Vsh
 
@@ -43,6 +44,7 @@ type alias Flags =
 type Model
     = AboutModel Nav.Key About.Model
     | VshModel Nav.Key Vsh.Model
+    | TyperModel Nav.Key Typer.Model
 
 
 toKey : Model -> Nav.Key
@@ -52,6 +54,9 @@ toKey model =
             key
 
         VshModel key _ ->
+            key
+
+        TyperModel key _ ->
             key
 
 
@@ -64,6 +69,9 @@ toActiveIndex model =
         VshModel _ _ ->
             1
 
+        TyperModel _ _ ->
+            2
+
 
 
 -- MSG
@@ -72,6 +80,7 @@ toActiveIndex model =
 type Msg
     = GotAboutMsg About.Msg
     | GotVshMsg Vsh.Msg
+    | GotTyperMsg Typer.Msg
     | LinkClicked UrlRequest
     | LinkChanged Url
 
@@ -109,6 +118,9 @@ mux model url =
         VshRoute ->
             norm (VshModel key) GotVshMsg Vsh.init
 
+        TyperRoute ->
+            norm (TyperModel key) GotTyperMsg Typer.init
+
 
 
 -- VIEW
@@ -132,6 +144,9 @@ view model =
         VshModel _ mo ->
             norm GotVshMsg <| Vsh.view mo
 
+        TyperModel _ mo ->
+            norm GotTyperMsg <| Typer.view mo
+
 
 
 -- UPDATE
@@ -152,11 +167,14 @@ update msg model =
             toKey model
     in
     case ( msg, model ) of
+        ( GotAboutMsg ms, AboutModel _ mo ) ->
+            norm (AboutModel key) GotAboutMsg <| About.update ms mo
+
         ( GotVshMsg ms, VshModel _ mo ) ->
             norm (VshModel key) GotVshMsg <| Vsh.update ms mo
 
-        ( GotAboutMsg ms, AboutModel _ mo ) ->
-            norm (AboutModel key) GotAboutMsg <| About.update ms mo
+        ( GotTyperMsg ms, TyperModel _ mo ) ->
+            norm (TyperModel key) GotTyperMsg <| Typer.update ms mo
 
         ( LinkChanged url, _ ) ->
             mux model url
@@ -189,3 +207,6 @@ subscriptions model =
 
         VshModel _ mo ->
             Sub.map GotVshMsg <| Vsh.subscriptions mo
+
+        TyperModel _ mo ->
+            Sub.map GotTyperMsg <| Typer.subscriptions mo
