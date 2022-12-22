@@ -70,7 +70,11 @@ viewSymbol symbol =
             span [ style "color" "green" ] [ text (String.fromChar char) ]
 
         Bad char ->
-            span [ style "color" "red" ] [ text (String.fromChar char) ]
+            span
+                [ style "color" "red"
+                , style "background-color" "pink"
+                ]
+                [ text (String.fromChar char) ]
 
 
 
