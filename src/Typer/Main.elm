@@ -84,13 +84,21 @@ view model =
 
         app items =
             [ div (Class.appCenter :: Typer.Class.bg) items ]
+
+        charsPerMinute =
+            round <|
+                toFloat model.text.correct
+                    / toFloat model.stopwatch.delta
+                    * 1000
+                    * 60
     in
     entitled <|
         app
             [ p Typer.Class.text <| Text.view model.text
-            , br [] []
             , p Typer.Class.text
                 [ text <| String.fromInt model.stopwatch.delta ++ " ms." ]
+            , p Typer.Class.text
+                [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
             ]
 
 
