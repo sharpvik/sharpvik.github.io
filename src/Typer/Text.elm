@@ -11,6 +11,7 @@ import Html.Attributes exposing (style)
 
 type alias Text =
     { pointer : Int
+    , correct : Int
     , symbols : Array Symbol
     }
 
@@ -24,7 +25,7 @@ fromString =
     String.toList
         >> List.map Unknown
         >> Array.fromList
-        >> Text 0
+        >> Text 0 0
 
 
 
@@ -93,8 +94,17 @@ update txt char =
 
 updateWithRatedSymbol : Text -> Char -> Bool -> Text
 updateWithRatedSymbol txt expect isGood =
+    let
+        boolToInt bool =
+            if bool then
+                1
+
+            else
+                0
+    in
     { pointer = txt.pointer + 1
     , symbols = Array.set txt.pointer (symbolFromBool isGood expect) txt.symbols
+    , correct = txt.correct + boolToInt isGood
     }
 
 
