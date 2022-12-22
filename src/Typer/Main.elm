@@ -8,7 +8,10 @@ import Html.Attributes exposing (..)
 import Html.Events exposing (..)
 import Json.Decode as Decode
 import Route exposing (Route(..))
+import Task
+import Time exposing (Posix)
 import Typer.Class
+import Typer.Stopwatch as Stopwatch exposing (Stopwatch)
 import Typer.Text as Text exposing (Text)
 
 
@@ -25,7 +28,9 @@ type alias Flags =
 
 
 type alias Model =
-    Text
+    { text : Text
+    , stopwatch : Stopwatch
+    }
 
 
 
@@ -35,6 +40,10 @@ type alias Model =
 type Msg
     = Ignore
     | GotSymbol Char
+    | GotStartTime Posix
+    | GotEndTime Posix
+    | Tick Posix
+    | GotResetSignal
 
 
 type KeyboardEvent
@@ -58,7 +67,9 @@ init =
 
 initModel : Model
 initModel =
-    Text.fromString "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id enim dui. Suspendisse id eros pretium, iaculis sem vel, venenatis ipsum. Nulla vel ullamcorper."
+    { text = Text.fromString "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id enim dui. Suspendisse id eros pretium, iaculis sem vel, venenatis ipsum. Nulla vel ullamcorper."
+    , stopwatch = Stopwatch.init
+    }
 
 
 
@@ -76,7 +87,10 @@ view model =
     in
     entitled <|
         app
-            [ p Typer.Class.text <| Text.view model
+            [ p Typer.Class.text <| Text.view model.text
+            , br [] []
+            , p Typer.Class.text
+                [ text <| String.fromInt model.stopwatch.delta ++ " ms." ]
             ]
 
 
@@ -86,12 +100,51 @@ view model =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    case msg of
-        GotSymbol letter ->
-            ( Text.update model letter, Cmd.none )
+    case Debug.log "msg" msg of
+        GotSymbol char ->
+            updateWithSymbol model char
 
         Ignore ->
             ( model, Cmd.none )
+
+        GotStartTime time ->
+            ( { model | stopwatch = Stopwatch.start model.stopwatch time }
+            , Cmd.none
+            )
+
+        GotEndTime time ->
+            ( { model | stopwatch = Stopwatch.end model.stopwatch time }
+            , Cmd.none
+            )
+
+        Tick time ->
+            ( { model | stopwatch = Stopwatch.update model.stopwatch time }
+            , Cmd.none
+            )
+
+        GotResetSignal ->
+            init
+
+
+updateWithSymbol : Model -> Char -> ( Model, Cmd Msg )
+updateWithSymbol model char =
+    let
+        newText =
+            Text.update model.text char
+
+        maybeRequestTime =
+            if Text.isUntouched model.text then
+                Task.perform GotStartTime Time.now
+
+            else if Stopwatch.isRunning model.stopwatch && Text.isComplete newText then
+                Task.perform GotEndTime Time.now
+
+            else
+                Cmd.none
+    in
+    ( { model | text = newText }
+    , maybeRequestTime
+    )
 
 
 
@@ -99,8 +152,16 @@ update msg model =
 
 
 subscriptions : Model -> Sub Msg
-subscriptions _ =
-    Events.onKeyDown keydownHandler
+subscriptions model =
+    let
+        handleKeydownEvents =
+            Events.onKeyDown keydownHandler
+    in
+    if Text.isUntouched model.text || Text.isComplete model.text then
+        handleKeydownEvents
+
+    else
+        Sub.batch [ handleKeydownEvents, Time.every 10 Tick ]
 
 
 keydownHandler : Decode.Decoder Msg
@@ -113,6 +174,9 @@ toKeyDownMsg event =
     case event of
         Symbol letter ->
             GotSymbol letter
+
+        Tab ->
+            GotResetSignal
 
         _ ->
             Ignore

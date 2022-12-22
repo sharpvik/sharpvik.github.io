@@ -28,7 +28,7 @@ fromString =
 
 
 
--- DESTRUCTORS
+-- QUERY
 
 
 symbols : Text -> List Symbol
@@ -39,6 +39,16 @@ symbols txt =
 expectedChar : Text -> Maybe Char
 expectedChar txt =
     Array.get txt.pointer txt.symbols |> Maybe.map symbolToChar
+
+
+isUntouched : Text -> Bool
+isUntouched txt =
+    txt.pointer == 0
+
+
+isComplete : Text -> Bool
+isComplete txt =
+    txt.pointer >= Array.length txt.symbols
 
 
 
