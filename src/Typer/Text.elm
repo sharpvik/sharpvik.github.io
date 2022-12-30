@@ -1,6 +1,7 @@
 module Typer.Text exposing (..)
 
 import Array exposing (Array)
+import Flip exposing (flip)
 import Html exposing (Html, span, text)
 import Typer.Class as Class exposing (Color(..))
 
@@ -18,6 +19,15 @@ type alias Text =
 
 
 -- CONSTRUCTORS
+
+
+fromWords : Array String -> List Int -> Text
+fromWords words =
+    let
+        pick =
+            flip Array.get words >> Maybe.withDefault "default"
+    in
+    List.map pick >> String.join " " >> fromString
 
 
 fromString : String -> Text

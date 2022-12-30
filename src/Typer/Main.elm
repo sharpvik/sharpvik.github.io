@@ -1,16 +1,20 @@
 module Typer.Main exposing (..)
 
+import Array exposing (Array)
 import Browser exposing (Document)
 import Browser.Events as Events
 import Common.Class as Class
 import Html exposing (..)
 import Html.Attributes exposing (..)
 import Html.Events exposing (..)
+import Http
 import Json.Decode as Decode
+import Random
 import Route exposing (Route(..))
 import Task
 import Time exposing (Posix)
 import Typer.Class exposing (Color(..))
+import Typer.Link
 import Typer.Stopwatch as Stopwatch exposing (Stopwatch)
 import Typer.Text as Text exposing (Text)
 
@@ -30,7 +34,14 @@ type alias Flags =
 type alias Model =
     { text : Text
     , stopwatch : Stopwatch
+    , words : Words
     }
+
+
+type Words
+    = Loading
+    | Failure
+    | Words (Array String)
 
 
 
@@ -44,6 +55,8 @@ type Msg
     | GotEndTime Posix
     | Tick Posix
     | GotResetSignal
+    | GotWords (Result Http.Error String)
+    | GotWordIndices (List Int)
 
 
 type KeyboardEvent
@@ -62,18 +75,45 @@ type KeyboardEvent
 
 init : ( Model, Cmd Msg )
 init =
-    ( initModel, Cmd.none )
+    initModelWithWords Loading
+
+
+initModelWithWords : Words -> ( Model, Cmd Msg )
+initModelWithWords words =
+    case words of
+        Loading ->
+            ( initModel, getWords )
+
+        Failure ->
+            ( { initModel
+                | text = Text.fromString "Failed to load words..."
+                , words = Failure
+              }
+            , Cmd.none
+            )
+
+        Words list ->
+            ( { initModel | words = Words list }, getRandomWordIndices list )
 
 
 initModel : Model
 initModel =
-    { text = Text.fromString "Lorem ipsum dolor sit amet."
+    { text = Text.fromString "Loading words..."
     , stopwatch = Stopwatch.init
+    , words = Loading
     }
 
 
+getWords : Cmd Msg
+getWords =
+    Http.get
+        { url = Typer.Link.words
+        , expect = Http.expectString GotWords
+        }
 
---VIEW
+
+
+-- VIEW
 
 
 view : Model -> Document Msg
@@ -136,7 +176,38 @@ update msg model =
             )
 
         GotResetSignal ->
-            init
+            initModelWithWords model.words
+
+        GotWords resp ->
+            case resp of
+                Ok body ->
+                    let
+                        words =
+                            body |> String.lines |> Array.fromList
+                    in
+                    ( { model | words = Words words }
+                    , getRandomWordIndices words
+                    )
+
+                Err _ ->
+                    ( { model | words = Failure }, Cmd.none )
+
+        GotWordIndices indices ->
+            case model.words of
+                Words words ->
+                    ( { model | text = Text.fromWords words indices }
+                    , Cmd.none
+                    )
+
+                _ ->
+                    ( model, Cmd.none )
+
+
+getRandomWordIndices : Array String -> Cmd Msg
+getRandomWordIndices words =
+    Random.generate GotWordIndices <|
+        Random.list 25 <|
+            Random.int 0 (Array.length words)
 
 
 updateWithSymbol : Model -> Char -> ( Model, Cmd Msg )
@@ -149,7 +220,10 @@ updateWithSymbol model char =
             if Text.isUntouched model.text then
                 Task.perform GotStartTime Time.now
 
-            else if Stopwatch.isRunning model.stopwatch && Text.isComplete newText then
+            else if
+                Stopwatch.isRunning model.stopwatch
+                    && Text.isComplete newText
+            then
                 Task.perform GotEndTime Time.now
 
             else
