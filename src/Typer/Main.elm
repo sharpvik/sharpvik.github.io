@@ -14,6 +14,7 @@ import Route exposing (Route(..))
 import Task
 import Time exposing (Posix)
 import Typer.Class exposing (Color(..))
+import Typer.Config
 import Typer.Link
 import Typer.Stopwatch as Stopwatch exposing (Stopwatch)
 import Typer.Text as Text exposing (Text)
@@ -125,13 +126,6 @@ view model =
         app items =
             [ div (Class.appCenter :: Typer.Class.bg) items ]
 
-        charsPerMinute =
-            round <|
-                toFloat model.text.correct
-                    / toFloat model.stopwatch.delta
-                    * 1000
-                    * 60
-
         body =
             if Text.isComplete model.text then
                 [ div []
@@ -143,6 +137,13 @@ view model =
             else
                 [ p [ Typer.Class.text ] <| Text.view model.text
                 ]
+
+        charsPerMinute =
+            round <|
+                toFloat model.text.correct
+                    / toFloat model.stopwatch.delta
+                    * 1000
+                    * 60
     in
     body |> app |> entitled
 
@@ -206,7 +207,7 @@ update msg model =
 getRandomWordIndices : Array String -> Cmd Msg
 getRandomWordIndices words =
     Random.generate GotWordIndices <|
-        Random.list 25 <|
+        Random.list Typer.Config.wordsPerBatch <|
             Random.int 0 (Array.length words)
 
 
@@ -248,7 +249,10 @@ subscriptions model =
         handleKeydownEvents
 
     else
-        Sub.batch [ handleKeydownEvents, Time.every 10 Tick ]
+        Sub.batch
+            [ handleKeydownEvents
+            , Time.every Typer.Config.millisBetweenTicks Tick
+            ]
 
 
 keydownHandler : Decode.Decoder Msg
