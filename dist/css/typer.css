@@ -1,9 +1,23 @@
+.typer-bg {
+  background-color: #efead0;
+}
+
 .typer-text {
-    font-family: monospace;
-    font-size: 28px;
-    text-align: left;
-    width: 95%;
-    max-width: 750px;
-    margin: auto;
-    line-height: 1.5em;
+  font-family: "Roboto Mono", monospace;
+  font-size: 28px;
+  text-align: left;
+  width: 95%;
+  max-width: 750px;
+  margin: auto;
+  line-height: 1.5em;
+}
+.typer-text-grey {
+  color: #8f8e84;
+}
+.typer-text-black {
+  color: #333538;
+}
+.typer-text-red {
+  color: #c43c53;
+  background-color: #ffced3;
 }

@@ -2,7 +2,7 @@ module Typer.Text exposing (..)
 
 import Array exposing (Array)
 import Html exposing (Html, span, text)
-import Html.Attributes exposing (style)
+import Typer.Class as Class exposing (Color(..))
 
 
 
@@ -63,19 +63,14 @@ view =
 
 viewSymbol : Symbol -> Html msg
 viewSymbol symbol =
-    case symbol of
-        Unknown char ->
-            span [ style "color" "grey" ] [ text (String.fromChar char) ]
+    let
+        colorClass =
+            symbol |> symbolToColor |> Class.colorToClass
 
-        Good char ->
-            span [ style "color" "green" ] [ text (String.fromChar char) ]
-
-        Bad char ->
-            span
-                [ style "color" "red"
-                , style "background-color" "pink"
-                ]
-                [ text (String.fromChar char) ]
+        symbolBody =
+            text (symbol |> symbolToChar |> String.fromChar)
+    in
+    span [ colorClass ] [ symbolBody ]
 
 
 
@@ -138,3 +133,16 @@ symbolToChar symbol =
 
         Bad char ->
             char
+
+
+symbolToColor : Symbol -> Color
+symbolToColor symbol =
+    case symbol of
+        Unknown _ ->
+            Grey
+
+        Good _ ->
+            Black
+
+        Bad _ ->
+            Red

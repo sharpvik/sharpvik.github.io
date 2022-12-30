@@ -10,7 +10,7 @@ import Json.Decode as Decode
 import Route exposing (Route(..))
 import Task
 import Time exposing (Posix)
-import Typer.Class
+import Typer.Class exposing (Color(..))
 import Typer.Stopwatch as Stopwatch exposing (Stopwatch)
 import Typer.Text as Text exposing (Text)
 
@@ -67,7 +67,7 @@ init =
 
 initModel : Model
 initModel =
-    { text = Text.fromString "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque id enim dui. Suspendisse id eros pretium, iaculis sem vel, venenatis ipsum. Nulla vel ullamcorper."
+    { text = Text.fromString "Lorem ipsum dolor sit amet."
     , stopwatch = Stopwatch.init
     }
 
@@ -91,15 +91,20 @@ view model =
                     / toFloat model.stopwatch.delta
                     * 1000
                     * 60
+
+        body =
+            if Text.isComplete model.text then
+                [ div []
+                    [ p [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                        [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
+                    ]
+                ]
+
+            else
+                [ p [ Typer.Class.text ] <| Text.view model.text
+                ]
     in
-    entitled <|
-        app
-            [ p Typer.Class.text <| Text.view model.text
-            , p Typer.Class.text
-                [ text <| String.fromInt model.stopwatch.delta ++ " ms." ]
-            , p Typer.Class.text
-                [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
-            ]
+    body |> app |> entitled
 
 
 
@@ -108,7 +113,7 @@ view model =
 
 update : Msg -> Model -> ( Model, Cmd Msg )
 update msg model =
-    case Debug.log "msg" msg of
+    case msg of
         GotSymbol char ->
             updateWithSymbol model char
 

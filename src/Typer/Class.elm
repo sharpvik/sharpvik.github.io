@@ -7,9 +7,32 @@ import Html.Attributes exposing (class)
 
 bg : List (Attribute msg)
 bg =
-    [ Class.bg, class "about-bg" ]
+    [ Class.bg, class "typer-bg" ]
 
 
-text : List (Attribute msg)
+
+-- TEXT
+
+
+type Color
+    = Grey
+    | Black
+    | Red
+
+
+colorToClass : Color -> Attribute msg
+colorToClass color =
+    case color of
+        Grey ->
+            class "typer-text-grey"
+
+        Black ->
+            class "typer-text-black"
+
+        Red ->
+            class "typer-text-red"
+
+
+text : Attribute msg
 text =
-    [ class "typer-text" ]
+    class "typer-text"
