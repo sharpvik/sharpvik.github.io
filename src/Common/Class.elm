@@ -68,3 +68,12 @@ navbarIcon =
 navbarIconActive : Attribute msg
 navbarIconActive =
     class "navbar-icon-active"
+
+
+
+-- DESCRIPTORS
+
+
+transparent : Attribute msg
+transparent =
+    class "transparent"

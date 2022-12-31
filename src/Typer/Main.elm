@@ -118,25 +118,51 @@ getWords =
 
 
 view : Model -> Document Msg
-view model =
+view =
     let
         entitled =
             Document "⚡ Typer"
 
-        app items =
-            [ div (Class.appCenter :: Typer.Class.bg) items ]
+        app =
+            div (Class.appCenter :: Typer.Class.bg) >> List.singleton
+    in
+    viewBody >> app >> entitled
 
-        body =
-            if Text.isComplete model.text then
-                [ div []
-                    [ p [ Typer.Class.text, Typer.Class.colorToClass Black ]
-                        [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
-                    ]
-                ]
+
+viewBody : Model -> List (Html Msg)
+viewBody model =
+    let
+        isTransparent =
+            if Text.isUntouched model.text then
+                []
 
             else
-                [ p [ Typer.Class.text ] <| Text.view model.text
+                [ Class.transparent ]
+
+        header_ =
+            [ h1 Typer.Class.h1 [ text "Type Fast" ]
+            , h3 Typer.Class.h3 [ text "Physical keyboards only" ]
+            ]
+
+        footer_ =
+            [ h3 Typer.Class.h3
+                [ span [ Typer.Class.highlight ] [ text "tab ⇥" ]
+                , text " to restart"
                 ]
+            , h3 Typer.Class.h3
+                [ span [ Typer.Class.highlight ] [ text "❮ backspace" ]
+                , text " to erase last symbol"
+                ]
+            ]
+
+        txt =
+            if Text.isComplete model.text then
+                p
+                    [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                    [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
+
+            else
+                p [ Typer.Class.text ] <| Text.view model.text
 
         charsPerMinute =
             round <|
@@ -145,7 +171,10 @@ view model =
                     * 1000
                     * 60
     in
-    body |> app |> entitled
+    [ header (Typer.Class.info :: isTransparent) header_
+    , txt
+    , footer (Typer.Class.info :: isTransparent) footer_
+    ]
 
 
 
