@@ -99,18 +99,41 @@ update txt char =
 
 updateWithRatedSymbol : Text -> Char -> Bool -> Text
 updateWithRatedSymbol txt expect isGood =
-    let
-        boolToInt bool =
-            if bool then
-                1
-
-            else
-                0
-    in
     { pointer = txt.pointer + 1
     , symbols = Array.set txt.pointer (symbolFromBool isGood expect) txt.symbols
     , correct = txt.correct + boolToInt isGood
     }
+
+
+erase : Text -> Text
+erase txt =
+    let
+        pointerLeftShift =
+            txt.pointer - 1
+
+        lastEnteredSymbol =
+            Array.get pointerLeftShift txt.symbols
+                |> Maybe.withDefault (Unknown '?')
+
+        lastEnteredSymbolAsUnkown =
+            lastEnteredSymbol |> symbolToUnknown
+    in
+    if isUntouched txt || isComplete txt then
+        txt
+
+    else
+        { pointer = pointerLeftShift
+        , correct = txt.correct - (boolToInt <| symbolIsGood lastEnteredSymbol)
+        , symbols = Array.set pointerLeftShift lastEnteredSymbolAsUnkown txt.symbols
+        }
+
+
+boolToInt bool =
+    if bool then
+        1
+
+    else
+        0
 
 
 
@@ -156,3 +179,18 @@ symbolToColor symbol =
 
         Bad _ ->
             Red
+
+
+symbolToUnknown : Symbol -> Symbol
+symbolToUnknown =
+    symbolToChar >> Unknown
+
+
+symbolIsGood : Symbol -> Bool
+symbolIsGood symbol =
+    case symbol of
+        Good _ ->
+            True
+
+        _ ->
+            False
