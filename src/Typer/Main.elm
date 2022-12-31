@@ -56,6 +56,7 @@ type Msg
     | GotEndTime Posix
     | Tick Posix
     | GotResetSignal
+    | GotEraseSignal
     | GotWords (Result Http.Error String)
     | GotWordIndices (List Int)
 
@@ -208,6 +209,9 @@ update msg model =
         GotResetSignal ->
             initModelWithWords model.words
 
+        GotEraseSignal ->
+            ( { model | text = Text.erase model.text }, Cmd.none )
+
         GotWords resp ->
             case resp of
                 Ok body ->
@@ -297,6 +301,9 @@ toKeyDownMsg event =
 
         Tab ->
             GotResetSignal
+
+        Backspace ->
+            GotEraseSignal
 
         _ ->
             Ignore
