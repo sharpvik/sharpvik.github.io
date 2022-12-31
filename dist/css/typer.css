@@ -1,5 +1,36 @@
 .typer-bg {
+  padding: 25px 0;
   background-color: #efead0;
+  min-height: calc(100% - 50px);
+}
+
+.typer-info {
+  height: 140px;
+  opacity: 1;
+  transition: opacity 0.3s;
+}
+
+.typer-h1 {
+  color: #333538;
+}
+
+.typer-h3 {
+  color: #8f8e84;
+  line-height: 1.8rem;
+  margin: 5px 0;
+}
+
+.typer-url {
+  color: #333538;
+  text-decoration: underline;
+}
+
+.typer-highlight {
+  display: inline-block;
+  padding: 0 8px;
+  background-color: #333538;
+  color: #efead0;
+  border-radius: 5px;
 }
 
 .typer-text {
