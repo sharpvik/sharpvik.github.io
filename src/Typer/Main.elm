@@ -158,9 +158,20 @@ viewBody model =
 
         txt =
             if Text.isComplete model.text then
-                p
-                    [ Typer.Class.text, Typer.Class.colorToClass Black ]
-                    [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
+                div []
+                    [ p
+                        [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                        [ text <| String.fromInt charsPerMinute ++ " chars/min." ]
+                    , p
+                        [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                        [ text <| String.fromInt model.text.correct ++ " correct" ]
+                    , p
+                        [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                        [ text <| String.fromInt (Text.errors model.text) ++ " incorrect" ]
+                    , p
+                        [ Typer.Class.text, Typer.Class.colorToClass Black ]
+                        [ text <| String.fromFloat (Stopwatch.deltaInSeconds model.stopwatch) ++ " sec. in total" ]
+                    ]
 
             else
                 p [ Typer.Class.text ] <| Text.view model.text

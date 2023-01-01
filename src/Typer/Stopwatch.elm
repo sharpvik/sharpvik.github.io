@@ -61,6 +61,11 @@ isRunning stopwatch =
     Maybex.isNothing stopwatch.end
 
 
+deltaInSeconds : Stopwatch -> Float
+deltaInSeconds stopwatch =
+    toFloat stopwatch.delta / 1000
+
+
 
 -- UTIL
 

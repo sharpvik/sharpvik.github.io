@@ -62,6 +62,11 @@ isComplete txt =
     txt.pointer >= Array.length txt.symbols
 
 
+errors : Text -> Int
+errors txt =
+    Array.length txt.symbols - txt.correct
+
+
 
 -- VIEW
 
