@@ -133,12 +133,12 @@ top _ display =
     display
         ++ [ text "My top skills:\n" ]
         ++ skill "Go" 20
-        ++ skill "Python" 19
-        ++ skill "Docker" 18
-        ++ skill "Ansible" 14
-        ++ skill "Vue.js" 13
+        ++ skill "Python" 20
+        ++ skill "JavaScript" 19
+        ++ skill "Docker" 19
+        ++ skill "Elm" 17
+        ++ skill "Rust" 15
         ++ skill "Haskell" 12
-        ++ skill "Elm" 12
 
 
 touch : Command msg

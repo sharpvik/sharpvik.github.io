@@ -1,8 +1,10 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - master
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -16,9 +18,7 @@ jobs:
           elm-version: 0.19.1
 
       - name: 🔧 Build Release
-        run: |
-          rm dist/.gitignore  
-          make prod
+        run: make release
 
       - name: 🚀 Deploy
         uses: JamesIves/github-pages-deploy-action@4.1.4
