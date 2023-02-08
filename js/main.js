@@ -8257,16 +8257,16 @@ var $author$project$Vsh$Command$top = F2(
 				_Utils_ap(
 					A2(skill, 'Go', 20),
 					_Utils_ap(
-						A2(skill, 'Python', 19),
+						A2(skill, 'Python', 20),
 						_Utils_ap(
-							A2(skill, 'Docker', 18),
+							A2(skill, 'JavaScript', 19),
 							_Utils_ap(
-								A2(skill, 'Ansible', 14),
+								A2(skill, 'Docker', 19),
 								_Utils_ap(
-									A2(skill, 'Vue.js', 13),
+									A2(skill, 'Elm', 17),
 									_Utils_ap(
-										A2(skill, 'Haskell', 12),
-										A2(skill, 'Elm', 12)))))))));
+										A2(skill, 'Rust', 15),
+										A2(skill, 'Haskell', 12)))))))));
 	});
 var $author$project$Common$Link$email = 'sharp.vik@gmail.com';
 var $author$project$Common$Link$github = 'https://github.com/sharpvik';
