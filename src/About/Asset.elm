@@ -15,4 +15,4 @@ github =
 
 cv : String
 cv =
-    asset [ "cv.pdf" ]
+    asset [ "Resume.pdf" ]

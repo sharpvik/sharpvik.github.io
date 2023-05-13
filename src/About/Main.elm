@@ -66,15 +66,19 @@ view _ =
         general =
             (++)
                 [ h1 About.Class.h1 [ text "Hey, I'm Viktor!" ]
-                , h3 About.Class.h3 [ text "💻 Senior Software Engineer" ]
-                , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
                 , h3 About.Class.h3
-                    [ a [ Class.link, href "https://uw.co.uk/" ]
-                        [ text "@utilitywarehouse" ]
-                    , text " "
+                    [ text "🔥 Blog post writer "
+                    , a
+                        [ Class.link, href "https://t.me/recreational_computation" ]
+                        [ text "@rc" ]
+                    ]
+                , h3 About.Class.h3
+                    [ text "👨\u{200D}💼 Co-founder "
                     , a [ Class.link, href "https://aquilex.org/" ]
                         [ text "@aquilex" ]
                     ]
+                , h3 About.Class.h3 [ text "💻 Senior Software Engineer" ]
+                , h3 About.Class.h3 [ text "🎓 University of Southampton" ]
                 ]
     in
     entitled <|
@@ -99,7 +103,7 @@ view _ =
                      ]
                         ++ About.Class.button
                     )
-                    "VIEW CV"
+                    "READ MY CV"
                 ]
             ]
 
